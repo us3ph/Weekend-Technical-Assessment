@@ -1,6 +1,6 @@
 # Atlas Fresh — Step-by-step agent execution guide
 
-Status: Steps 01–06 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
+Status: Steps 01–07 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
 
 This guide implements [PROJECT_PLAN.md](PROJECT_PLAN.md), the planning file already present in this directory. There is no separate `plan.md`. Read that plan for the full business contract and source references. Use English throughout. The selected AI provider is **OpenRouter with free hosted models only**.
 
@@ -192,12 +192,12 @@ Exit condition: the full server-calculated plan reaches one coherent workspace. 
 
 Objective: the committee understands the current situation in the first viewport.
 
-- [ ] Show data-health/source status separately from business exceptions.
-- [ ] Lead with expected vs actual tonnes, export station usage/capacity, export rate, local tonnes/value, export revenue, total value, and at-risk count.
-- [ ] Show A/B/C/D expected/actual comparisons with useful signed variances. Use clear units and consistent EUR/tonnage formatting.
-- [ ] Add a short result-driven exception summary for segment gaps, client risk, and local impact; wire its links into the workspace selection state.
-- [ ] Display uncalculated plan metrics as not yet calculated, not zero. Handle genuine zero values and N/A ratios explicitly.
-- [ ] Keep 60 t and all other baseline figures out of runtime copy constants; derive headings and summaries from the current result.
+- [x] Show data-health/source status separately from business exceptions.
+- [x] Lead with expected vs actual tonnes, export station usage/capacity, export rate, local tonnes/value, export revenue, total value, and at-risk count.
+- [x] Show A/B/C/D expected/actual comparisons with useful signed variances. Use clear units and consistent EUR/tonnage formatting.
+- [x] Add a short result-driven exception summary for segment gaps, client risk, and local impact; wire its links into the workspace selection state.
+- [x] Display uncalculated plan metrics as not yet calculated, not zero. Handle genuine zero values and N/A ratios explicitly.
+- [x] Keep 60 t and all other baseline figures out of runtime copy constants; derive headings and summaries from the current result.
 
 Verification: baseline cards match the server response, and loading/reset states do not show misleading figures. Check the main decision content at 1024 px and 1440 px.
 
@@ -413,7 +413,7 @@ Do not pre-check these while writing documentation. Update each only after execu
 - [x] Step 04 — Planning engine.
 - [x] Step 05 — Six core test groups.
 - [x] Step 06 — Routes and workspace state.
-- [ ] Step 07 — Overview.
+- [x] Step 07 — Overview.
 - [ ] Step 08 — Production.
 - [ ] Step 09 — Commercial.
 - [ ] Step 10 — Allocation/local trace.

@@ -3,7 +3,18 @@ import type {
   PlanningResult,
   ValidationIssue,
   WorkbookData,
+  Segment,
 } from "./types";
+
+/**
+ * A lightweight hand-off from overview exceptions to the detail views that
+ * follow in later steps. The overview records the manager's intended next
+ * inspection without pretending that those detail views exist yet.
+ */
+export type WorkspaceSelection =
+  | { readonly kind: "segment"; readonly segment: Segment }
+  | { readonly kind: "client"; readonly clientId: string }
+  | { readonly kind: "local"; readonly segment: Segment | null };
 
 export type WorkspaceState =
   | { readonly status: "unloaded" }

@@ -203,6 +203,11 @@
   gap: 1.25rem;
 }
 
+.decisionStack {
+  display: grid;
+  gap: 1.25rem;
+}
+
 .healthPanel {
   display: flex;
   align-items: center;
@@ -215,8 +220,7 @@
   font-size: 1.1rem;
 }
 
-.healthList,
-.kpiGrid {
+.healthList {
   display: grid;
   gap: 0.8rem;
   margin: 0;
@@ -226,20 +230,17 @@
   grid-template-columns: repeat(3, minmax(6rem, 1fr));
 }
 
-.healthList div,
-.kpiGrid div {
+.healthList div {
   min-width: 0;
 }
 
-.healthList dt,
-.kpiGrid dt {
+.healthList dt {
   color: var(--muted);
   font-size: 0.72rem;
   font-weight: 700;
 }
 
-.healthList dd,
-.kpiGrid dd {
+.healthList dd {
   margin: 0.15rem 0 0;
   font-size: 1.05rem;
   font-weight: 800;
@@ -258,6 +259,158 @@
 
 .card h3 {
   font-size: 1.25rem;
+}
+
+.overviewCard {
+  padding-bottom: 1.25rem;
+}
+
+.overviewLead {
+  max-width: 42rem;
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.metricGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.35rem;
+}
+
+.metricCard {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: var(--background);
+}
+
+.productionMetric {
+  grid-column: span 2;
+  background: var(--accent-soft);
+}
+
+.metricLabel,
+.exceptionLabel {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.metricValue {
+  margin: 0.5rem 0 0;
+  color: var(--ink);
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.metricDetail {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.metricPair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.6rem;
+}
+
+.metricPair div {
+  min-width: 0;
+}
+
+.metricPair span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.metricPair strong {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.notCalculated {
+  color: var(--muted);
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.naValue {
+  color: var(--warning);
+}
+
+.negativeVariance {
+  color: var(--danger);
+}
+
+.positiveVariance {
+  color: var(--success);
+}
+
+.neutralVariance {
+  color: var(--muted);
+}
+
+.selectionBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--accent);
+  border-radius: 0.65rem;
+  background: var(--accent-soft);
+}
+
+.selectionBanner p {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.65rem;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.selectionKicker {
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.inlineButton,
+.segmentButton,
+.exceptionButton {
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.inlineButton {
+  padding: 0.25rem 0;
+  background: transparent;
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 .comparisonNote {
@@ -303,6 +456,26 @@
   font-weight: 800;
 }
 
+.segmentButton {
+  padding: 0.25rem 0.45rem;
+  border-radius: 0.35rem;
+  background: transparent;
+  color: var(--accent);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.segmentButton[aria-pressed="true"] {
+  background: var(--accent-soft);
+  text-decoration: none;
+}
+
+.selectedRow th,
+.selectedRow td {
+  background: var(--accent-soft);
+}
+
 .totalRow th,
 .totalRow td {
   border-bottom: 0;
@@ -310,13 +483,100 @@
   font-weight: 800;
 }
 
-.planPanel {
+.exceptionSection {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--surface);
+}
+
+.exceptionHeading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.exceptionHeading h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+.exceptionGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.15rem;
+}
+
+.exceptionCard {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: var(--background);
+}
+
+.exceptionCard h4 {
+  margin: 0.35rem 0 0;
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+
+.exceptionText,
+.exceptionFootnote,
+.zeroState {
+  margin: 0.65rem 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.exceptionList {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.exceptionButton {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
+  gap: 0.75rem;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 0.45rem;
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 0.82rem;
+  text-align: left;
+}
+
+.exceptionButton:hover {
   border-color: var(--accent);
 }
 
-.kpiGrid {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  margin-top: 1.35rem;
+.exceptionButton span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.exceptionButton strong {
+  flex: 0 0 auto;
+  color: var(--danger);
+  font-size: 0.78rem;
+}
+
+.exceptionCard > .exceptionButton {
+  margin-top: 0.85rem;
+}
+
+.exceptionFootnote {
+  font-size: 0.75rem;
 }
 
 .recommendationNote {
@@ -358,8 +618,22 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .kpiGrid {
+  .metricGrid,
+  .exceptionGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .productionMetric {
+    grid-column: span 2;
+  }
+
+  .exceptionCard:last-child {
+    grid-column: span 2;
+  }
+
+  .selectionBanner {
+    align-items: start;
+    flex-direction: column;
   }
 }
 
@@ -372,5 +646,19 @@
 
   .healthList {
     grid-template-columns: 1fr;
+  }
+
+  .metricGrid,
+  .exceptionGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .productionMetric,
+  .exceptionCard:last-child {
+    grid-column: auto;
+  }
+
+  .metricPair {
+    gap: 0.5rem;
   }
 }

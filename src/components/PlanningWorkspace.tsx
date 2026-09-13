@@ -1,26 +1,18 @@
 "use client";
 
-import { useRef, useReducer } from "react";
+import { useRef, useReducer, useState } from "react";
+import DecisionOverview from "@/components/DecisionOverview";
 import {
   initialWorkspaceState,
   workspaceReducer,
   type WorkspaceFailure,
+  type WorkspaceSelection,
   type WorkspaceState,
 } from "@/lib/workspace";
 import type { InputVersion, ValidationIssue, WorkbookData } from "@/lib/types";
 import styles from "./PlanningWorkspace.module.css";
 
 const tonnesFormatter = new Intl.NumberFormat("en-GB", { maximumFractionDigits: 1 });
-const euroFormatter = new Intl.NumberFormat("en-GB", {
-  currency: "EUR",
-  maximumFractionDigits: 0,
-  style: "currency",
-});
-const percentFormatter = new Intl.NumberFormat("en-GB", {
-  maximumFractionDigits: 1,
-  style: "percent",
-});
-
 type JsonRecord = Record<string, unknown>;
 
 function isRecord(value: unknown): value is JsonRecord {
@@ -119,18 +111,6 @@ async function responseBody(response: Response): Promise<unknown> {
 
 function formatTonnes(value: number): string {
   return `${tonnesFormatter.format(value)} t`;
-}
-
-function formatCurrency(value: number): string {
-  return euroFormatter.format(value);
-}
-
-function formatPercent(value: number | null): string {
-  return value === null ? "N/A" : percentFormatter.format(value);
-}
-
-function formatVariance(value: number): string {
-  return `${value > 0 ? "+" : ""}${tonnesFormatter.format(value)} t`;
 }
 
 function workbookFromState(state: WorkspaceState): WorkbookData | undefined {
@@ -265,115 +245,9 @@ function DataHealthPanel({ workbook }: { readonly workbook: WorkbookData }) {
   );
 }
 
-function ComparisonPanel({ workbook }: { readonly workbook: WorkbookData }) {
-  return (
-    <section className={styles.card} aria-labelledby="comparison-title">
-      <div className={styles.cardHeading}>
-        <div>
-          <p className={styles.sectionKicker}>Compare</p>
-          <h3 id="comparison-title">Expected production versus actual receipts</h3>
-        </div>
-        <p className={styles.comparisonNote}>Actual receipts are the planning supply.</p>
-      </div>
-      <div className={styles.tableWrap}>
-        <table className={styles.comparisonTable}>
-          <caption className={styles.visuallyHidden}>Expected and actual tonnes by segment</caption>
-          <thead>
-            <tr>
-              <th scope="col">Segment</th>
-              <th scope="col">Expected</th>
-              <th scope="col">Actual receipts</th>
-              <th scope="col">Variance</th>
-            </tr>
-          </thead>
-          <tbody>
-            {workbook.production.segments.map((comparison) => (
-              <tr key={comparison.segment}>
-                <th scope="row">{comparison.segment}</th>
-                <td>{formatTonnes(comparison.expectedTonnes)}</td>
-                <td>{formatTonnes(comparison.actualTonnes)}</td>
-                <td>{formatVariance(comparison.varianceTonnes)}</td>
-              </tr>
-            ))}
-            <tr className={styles.totalRow}>
-              <th scope="row">Total</th>
-              <td>{formatTonnes(workbook.production.expectedTotalTonnes)}</td>
-              <td>{formatTonnes(workbook.production.actualTotalTonnes)}</td>
-              <td>{formatVariance(workbook.production.varianceTonnes)}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-  );
-}
-
-function PlanPanel({ state }: { readonly state: WorkspaceState }) {
-  if (state.status === "planning") {
-    return (
-      <section className={`${styles.card} ${styles.planPanel}`} aria-labelledby="plan-title" aria-busy="true">
-        <p className={styles.sectionKicker}>Plan</p>
-        <h3 id="plan-title">Generating recommendation</h3>
-        <p className={styles.mutedText}>
-          The server is reloading the validated source and applying the deterministic allocation policy.
-        </p>
-      </section>
-    );
-  }
-
-  if (state.status !== "planned") {
-    return (
-      <section className={`${styles.card} ${styles.planPanel}`} aria-labelledby="plan-title">
-        <p className={styles.sectionKicker}>Plan</p>
-        <h3 id="plan-title">No recommendation generated yet</h3>
-        <p className={styles.mutedText}>
-          Generate a server-calculated recommendation after reviewing the production comparison.
-        </p>
-      </section>
-    );
-  }
-
-  const { kpis } = state.plan;
-  return (
-    <section className={`${styles.card} ${styles.planPanel}`} aria-labelledby="plan-title">
-      <div className={styles.cardHeading}>
-        <div>
-          <p className={styles.sectionKicker}>Plan</p>
-          <h3 id="plan-title">Recommendation prepared</h3>
-        </div>
-        <span className={styles.successBadge}>Server result</span>
-      </div>
-      <dl className={styles.kpiGrid}>
-        <div>
-          <dt>Export recommendation</dt>
-          <dd>{formatTonnes(kpis.exportedTonnes)}</dd>
-        </div>
-        <div>
-          <dt>Local residual</dt>
-          <dd>{formatTonnes(kpis.localTonnes)}</dd>
-        </div>
-        <div>
-          <dt>Export rate</dt>
-          <dd>{formatPercent(kpis.exportRate)}</dd>
-        </div>
-        <div>
-          <dt>Total value</dt>
-          <dd>{formatCurrency(kpis.totalValueEur)}</dd>
-        </div>
-        <div>
-          <dt>At-risk clients</dt>
-          <dd>{kpis.atRiskCount}</dd>
-        </div>
-      </dl>
-      <p className={styles.recommendationNote}>
-        This is a recommendation for Production and Commercial review. The workspace does not approve or execute it.
-      </p>
-    </section>
-  );
-}
-
 export default function PlanningWorkspace() {
   const [state, dispatch] = useReducer(workspaceReducer, initialWorkspaceState);
+  const [selection, setSelection] = useState<WorkspaceSelection | null>(null);
   const requestSequence = useRef(0);
   const activeRequest = useRef<number | null>(null);
 
@@ -384,6 +258,7 @@ export default function PlanningWorkspace() {
 
   function startLoad(): void {
     if (activeRequest.current !== null) return;
+    setSelection(null);
     const requestId = nextRequestId();
     activeRequest.current = requestId;
     dispatch({ type: "LOAD_STARTED", requestId });
@@ -434,6 +309,7 @@ export default function PlanningWorkspace() {
       (state.status === "server-error" && state.operation === "plan" && state.workbook !== undefined);
     if (workbook === undefined || !canRetryPlan) return;
 
+    setSelection(null);
     const requestId = nextRequestId();
     activeRequest.current = requestId;
     dispatch({ type: "PLAN_STARTED", requestId });
@@ -482,6 +358,7 @@ export default function PlanningWorkspace() {
 
   function resetWorkspace(): void {
     activeRequest.current = null;
+    setSelection(null);
     dispatch({ type: "RESET" });
   }
 
@@ -543,10 +420,13 @@ export default function PlanningWorkspace() {
       {workbook ? (
         <div className={styles.contentStack}>
           <DataHealthPanel workbook={workbook} />
-          <ComparisonPanel workbook={workbook} />
-          {state.status === "loaded" || state.status === "planning" || state.status === "planned" ? (
-            <PlanPanel state={state} />
-          ) : null}
+          <DecisionOverview
+            workbook={workbook}
+            plan={state.status === "planned" ? state.plan : undefined}
+            selection={selection}
+            onSelect={setSelection}
+            onClearSelection={() => setSelection(null)}
+          />
         </div>
       ) : null}
     </section>

@@ -4,7 +4,7 @@ A browser workspace for the daily Production–Commercial committee: compare exp
 
 ## Current status
 
-Step 06 connects the server-owned deterministic planning engine to an interactive Load → Compare → Plan workspace. The supplied XLSX is read and validated, source cells are retained, inputs are versioned by content, and the browser can request a complete plan using only that version. Decision detail views, evidence, and the OpenRouter assistant remain later steps.
+Step 07 adds a decision overview to the server-owned Load → Compare → Plan workspace. After loading, the first decision view separates source health from business impact, compares expected and actual tonnes, shows plan-dependent station/value/risk metrics honestly, and offers keyboard-operable exception selections for later detail views. Decision detail views, evidence, and the OpenRouter assistant remain later steps.
 
 Follow [steps.md](steps.md) one step at a time. The technical/business specification is in [PROJECT_PLAN.md](PROJECT_PLAN.md); actual progress and checks are recorded in [docs/work-log.md](docs/work-log.md).
 
@@ -67,11 +67,11 @@ Reload the workspace or request `http://localhost:3000/api/workbook` again after
 - Next.js App Router with React and TypeScript keeps the interface and future server routes in one application with one install/start path.
 - CSS Modules and system fonts provide a small, maintainable visual foundation without a UI framework or build-time font download.
 - `src/lib/types.ts` defines source-backed inputs separately from calculated outputs; `src/lib/validation.ts` applies Zod structure checks and Decimal-based domain rules without importing React, Next.js, or network code. `src/lib/planner.ts` applies the exact price/ID, compatibility, quality-fit, 5 t, capacity, shortage-reason, residual, and conservation policy on the server.
-- Vitest is configured for `tests/**/*.test.ts` in a Node environment. The suite covers validation, workbook loading, and six explicit offline core groups (T1–T6), including changed-input and invariant checks; assistant checks arrive in Step 13.
+- Vitest is configured for `tests/**/*.test.ts` in a Node environment. The suite covers validation, workbook loading, the decision overview projection, and six explicit offline core groups (T1–T6), including changed-input and invariant checks; assistant checks arrive in Step 13.
 - The supplied workbook is the authoritative input. Computed results will remain transient; this single-snapshot assessment does not need database persistence.
 - OpenRouter will use native server-side `fetch`; the model will explain server-calculated facts and will never choose allocations or calculate KPIs.
 
-The current source is `src/app` (layout, root page, global/page CSS, and the workbook/plan routes), `src/components` (shared header and planning workspace), and `src/lib` (domain contracts, validation, workbook parsing, production calculations, planning, and workspace state). Dependencies are exact-pinned in `package.json` with transitive versions captured in `package-lock.json`.
+The current source is `src/app` (layout, root page, global/page CSS, and the workbook/plan routes), `src/components` (shared header, planning workspace, and decision overview), and `src/lib` (domain contracts, validation, workbook parsing, production calculations, planning, overview projection, and workspace state). Dependencies are exact-pinned in `package.json` with transitive versions captured in `package-lock.json`.
 
 ## Domain contract and validation
 
@@ -101,4 +101,4 @@ Use a separate workbook copy for future changed-input checks. Do not replace the
 
 ## Transparency
 
-This is an incomplete assessment implementation at Step 06. Workbook loading, validation, production comparisons, the deterministic planning engine, six core offline test groups, the planning route, and the Load → Compare → Plan workspace are available. Business drill-downs, the evidence catalog, and live AI integration remain for later steps. [The work log](docs/work-log.md) records AI coding assistance, actual checks, time evidence, and remaining work. The final delivery notes, clean-clone acceptance audit, and 3–5-minute walkthrough are scheduled in later steps.
+This is an incomplete assessment implementation at Step 07. Workbook loading, validation, production comparisons, the deterministic planning engine, six core offline test groups, the planning route, the Load → Compare → Plan workspace, and the decision overview are available. Production/commercial drill-downs, the evidence catalog, and live AI integration remain for later steps. [The work log](docs/work-log.md) records AI coding assistance, actual checks, time evidence, and remaining work. The final delivery notes, clean-clone acceptance audit, and 3–5-minute walkthrough are scheduled in later steps.
