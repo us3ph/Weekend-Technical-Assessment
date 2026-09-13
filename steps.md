@@ -1,6 +1,6 @@
 # Atlas Fresh — Step-by-step agent execution guide
 
-Status: Steps 01–16 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
+Status: Steps 01–17 are complete. Step 18 has not started; unchecked tasks are not claims of completed work.
 
 This guide implements [PROJECT_PLAN.md](PROJECT_PLAN.md), the planning file already present in this directory. There is no separate `plan.md`. Read that plan for the full business contract and source references. Use English throughout. The selected AI provider is **OpenRouter with free hosted models only**.
 
@@ -401,17 +401,27 @@ Exit condition: clean-clone installation, tests, build, and production workflow 
 
 Objective: deliver concise instructions and evidence that a reviewer can trust.
 
-- [ ] Finish the root README: product purpose, prerequisites/pinned runtime, exact working directory, one clean-start path, local URL, test/lint/typecheck/build/start commands, and dev/production alternatives.
-- [ ] Explain the server routes, pure planning engine, workbook parsing/validation, deterministic ordering, decimal/5 t arithmetic, evidence boundary, and why no persistence is needed.
-- [ ] Document the default workbook and edited-copy override/reload procedure, layout assumptions, zero-demand/zero-denominator behavior, and unchanged-source policy.
-- [ ] Document optional OpenRouter setup: private API key configuration, default free route, verified free-model alternative if used, required internet, rate/availability limitations, and restart instructions. Include no-key/provider-failure behavior and live verification status.
-- [ ] Create `docs/delivery-notes.md`: what works, known failures/unverified paths, intentional omissions, actual approximate time, AI coding tools used and their roles, and what the candidate independently verified.
-- [ ] Distinguish AI used to help write code from the OpenRouter model used inside the product. Do not claim tests, a real model response, or a usability session that did not happen.
-- [ ] Include the next three production steps from the plan: validate the workflow/policy with users; add versioned daily snapshots and explicit human approval records; harden access, monitoring, and provider reliability.
-- [ ] Explain important trade-offs and how the work addresses E1–E5. Link to the verification record without turning the README into an oversized process log.
-- [ ] Confirm final instructions match Step 16, record any remaining mandatory omissions explicitly, and make a documentation milestone commit.
+- [x] Finish the root README: product purpose, prerequisites/pinned runtime, exact working directory, one clean-start path, local URL, test/lint/typecheck/build/start commands, and dev/production alternatives.
+- [x] Explain the server routes, pure planning engine, workbook parsing/validation, deterministic ordering, decimal/5 t arithmetic, evidence boundary, and why no persistence is needed.
+- [x] Document the default workbook and edited-copy override/reload procedure, layout assumptions, zero-demand/zero-denominator behavior, and unchanged-source policy.
+- [x] Document optional OpenRouter setup: private API key configuration, default free route, verified free-model alternative if used, required internet, rate/availability limitations, and restart instructions. Include no-key/provider-failure behavior and live verification status.
+- [x] Create `docs/delivery-notes.md`: what works, known failures/unverified paths, intentional omissions, actual approximate time, AI coding tools used and their roles, and what the candidate independently verified.
+- [x] Distinguish AI used to help write code from the OpenRouter model used inside the product. Do not claim tests, a real model response, or a usability session that did not happen.
+- [x] Include the next three production steps from the plan: validate the workflow/policy with users; add versioned daily snapshots and explicit human approval records; harden access, monitoring, and provider reliability.
+- [x] Explain important trade-offs and how the work addresses E1–E5. Link to the verification record without turning the README into an oversized process log.
+- [x] Confirm final instructions match Step 16, record any remaining mandatory omissions explicitly, and make a documentation milestone commit.
 
 Exit condition: setup, technical justification, actual verification, and limitations are understandable without the conversation. Handoff: Step 18.
+
+### Step 17 completion record — 13 September 2026
+
+- Completed Step 17 only. Approximate active effort: 30 minutes, including the final README pass, delivery disclosure, cross-checking implementation details against the verification record, and documentation validation; idle wall-clock time is excluded.
+- Finalized `README.md` with the product purpose, exact repository-root working-directory guidance, pinned Node.js/npm clean start, development and production alternatives, route/data-flow summary, deterministic policy, arithmetic and validation boundaries, workbook-copy procedure, layout assumptions, OpenRouter setup/failure behavior, E1–E5 trade-offs, and next three production steps.
+- Added `docs/delivery-notes.md` with what works, the recorded clean-clone and browser evidence, known/unverified paths, intentional omissions, actual timed effort, Codex/OpenRouter disclosure, independent-verification limitation, evaluation coverage, and production follow-ups.
+- Updated the Step 17 tracker and `PROJECT_PLAN.md` completion state. Step 18 remains intentionally pending for walkthrough, repository/video access, optional deployment, and submission-email preparation; no publication, upload, deployment, or email action was performed.
+- Verified documentation links, command names, runtime versions, route names, baseline metrics, live-provider limitation, source-integrity policy, and time totals against the repository and [docs/verification.md](docs/verification.md). No application code or authoritative source material changed.
+- Remaining mandatory omissions are explicit: successful live OpenRouter inference, a real screen-reader session, an independent usability session, and all account-dependent delivery assets remain unverified or pending.
+- Commit: single Step 17 implementation/documentation milestone; the identifier is reported in the final handoff.
 
 ## Step 18 — Prepare the walkthrough and submission
 
@@ -474,5 +484,5 @@ Do not pre-check these while writing documentation. Update each only after execu
 - [x] Step 14 — UX/accessibility/failure review (screen-reader session not performed; live inference remains unverified).
 - [x] Step 15 — Acceptance and changed inputs.
 - [x] Step 16 — Clean-clone proof.
-- [ ] Step 17 — README and transparency.
+- [x] Step 17 — README and transparency.
 - [ ] Step 18 — Walkthrough and submission assets.
