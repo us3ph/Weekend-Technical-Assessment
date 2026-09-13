@@ -4,7 +4,7 @@ A browser workspace for the daily Production–Commercial committee: compare exp
 
 ## Current status
 
-Step 05 establishes the pure server-side deterministic planning engine and its six core test groups: the supplied XLSX is read and validated, source cells are retained, validated inputs are versioned by content, production comparisons are calculated with Decimal arithmetic, and allocations/residuals/KPIs are calculated from actual receipts. The browser workspace and OpenRouter assistant are not implemented yet; the page still shows no invented results.
+Step 06 connects the server-owned deterministic planning engine to an interactive Load → Compare → Plan workspace. The supplied XLSX is read and validated, source cells are retained, inputs are versioned by content, and the browser can request a complete plan using only that version. Decision detail views, evidence, and the OpenRouter assistant remain later steps.
 
 Follow [steps.md](steps.md) one step at a time. The technical/business specification is in [PROJECT_PLAN.md](PROJECT_PLAN.md); actual progress and checks are recorded in [docs/work-log.md](docs/work-log.md).
 
@@ -71,7 +71,7 @@ Reload the workspace or request `http://localhost:3000/api/workbook` again after
 - The supplied workbook is the authoritative input. Computed results will remain transient; this single-snapshot assessment does not need database persistence.
 - OpenRouter will use native server-side `fetch`; the model will explain server-calculated facts and will never choose allocations or calculate KPIs.
 
-The current source is `src/app` (layout, root page, global/page CSS, and the workbook route), `src/components` (shared header), and `src/lib` (domain contracts, validation, workbook parsing, and production calculations). Dependencies are exact-pinned in `package.json` with transitive versions captured in `package-lock.json`.
+The current source is `src/app` (layout, root page, global/page CSS, and the workbook/plan routes), `src/components` (shared header and planning workspace), and `src/lib` (domain contracts, validation, workbook parsing, production calculations, planning, and workspace state). Dependencies are exact-pinned in `package.json` with transitive versions captured in `package-lock.json`.
 
 ## Domain contract and validation
 
@@ -101,4 +101,4 @@ Use a separate workbook copy for future changed-input checks. Do not replace the
 
 ## Transparency
 
-This is an incomplete assessment implementation at Step 05. Workbook loading, validation, production comparisons, the deterministic planning engine, and six core offline test groups are available server-side. The business UI, planning route, evidence catalog, and live AI integration remain for later steps. [The work log](docs/work-log.md) records AI coding assistance, actual checks, time evidence, and remaining work. The final delivery notes, clean-clone acceptance audit, and 3–5-minute walkthrough are scheduled in later steps.
+This is an incomplete assessment implementation at Step 06. Workbook loading, validation, production comparisons, the deterministic planning engine, six core offline test groups, the planning route, and the Load → Compare → Plan workspace are available. Business drill-downs, the evidence catalog, and live AI integration remain for later steps. [The work log](docs/work-log.md) records AI coding assistance, actual checks, time evidence, and remaining work. The final delivery notes, clean-clone acceptance audit, and 3–5-minute walkthrough are scheduled in later steps.

@@ -1,6 +1,6 @@
 # Atlas Fresh — Daily Apple Export Planner: Project Plan
 
-Status: Steps 01–04 application foundation, validation, workbook loading, production comparisons, and deterministic planning are complete; later implementation steps have not started.
+Status: Steps 01–06 application foundation, validation, workbook loading, production comparisons, deterministic planning, and the initial planning workspace are complete; later implementation steps have not started.
 
 Execution guide: [steps.md](steps.md) translates this plan into individually executable agent tasks. The selected model provider is OpenRouter, using free hosted models only.
 
@@ -373,5 +373,6 @@ Proposed next three production steps to describe, without implementing them in t
 - [x] Complete Step 03 workbook loading, source-aware parsing, and production comparisons.
 - [x] Complete Step 04 deterministic planning policy, balances, residuals, KPIs, and focused T1–T5 checks.
 - [x] Complete Step 05 six meaningful core test groups, including the full parameterized T6 validation matrix.
+- [x] Complete Step 06 planning route, version guard, workspace state model, and Load → Compare → Plan shell.
 
-The next implementation step is Step 06: connect planning routes and workspace state. Assistant checks remain intentionally pending until Step 13.
+The next implementation step is Step 07: build the decision overview. Assistant checks remain intentionally pending until Step 13.

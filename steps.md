@@ -1,6 +1,6 @@
 # Atlas Fresh — Step-by-step agent execution guide
 
-Status: Steps 01–05 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
+Status: Steps 01–06 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
 
 This guide implements [PROJECT_PLAN.md](PROJECT_PLAN.md), the planning file already present in this directory. There is no separate `plan.md`. Read that plan for the full business contract and source references. Use English throughout. The selected AI provider is **OpenRouter with free hosted models only**.
 
@@ -177,12 +177,12 @@ Exit condition: all six groups pass offline, including changed valid input and i
 
 Objective: establish Load → Compare → Plan without browser-side business calculations.
 
-- [ ] Implement uncached `POST /api/plan`: read and validate the server workbook, verify the requested input version, calculate the plan, and return the complete structured result.
-- [ ] Reject malformed requests and changed snapshots clearly. Never accept authoritative allocations, KPIs, or arbitrary file paths from the browser.
-- [ ] Create a workspace state model for unloaded, loading, loaded/unplanned, planning, planned, invalid-data, server-error, and stale-result states.
-- [ ] Wire Load workbook, Generate plan, and reload/reset controls. Disable actions while invalid or pending and prevent out-of-order responses from mixing snapshots.
-- [ ] Keep generation separate from approval: the app prepares a recommendation and has no execution-confirmation action.
-- [ ] Add the shared overview/detail shell and API error presentation. Clear dependent results/assistant answers when their input version changes.
+- [x] Implement uncached `POST /api/plan`: read and validate the server workbook, verify the requested input version, calculate the plan, and return the complete structured result.
+- [x] Reject malformed requests and changed snapshots clearly. Never accept authoritative allocations, KPIs, or arbitrary file paths from the browser.
+- [x] Create a workspace state model for unloaded, loading, loaded/unplanned, planning, planned, invalid-data, server-error, and stale-result states.
+- [x] Wire Load workbook, Generate plan, and reload/reset controls. Disable actions while invalid or pending and prevent out-of-order responses from mixing snapshots.
+- [x] Keep generation separate from approval: the app prepares a recommendation and has no execution-confirmation action.
+- [x] Add the shared overview/detail shell and API error presentation. Reload/reset clears dependent plan state; assistant answers do not exist until Step 13.
 
 Verification: load, compare, generate, reload, and fail/retry work through the browser and routes. A version mismatch offers reload, and a client-supplied result cannot override the engine.
 
@@ -412,7 +412,7 @@ Do not pre-check these while writing documentation. Update each only after execu
 - [x] Step 03 — Workbook and production comparisons.
 - [x] Step 04 — Planning engine.
 - [x] Step 05 — Six core test groups.
-- [ ] Step 06 — Routes and workspace state.
+- [x] Step 06 — Routes and workspace state.
 - [ ] Step 07 — Overview.
 - [ ] Step 08 — Production.
 - [ ] Step 09 — Commercial.

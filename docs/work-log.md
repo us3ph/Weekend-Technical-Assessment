@@ -80,3 +80,15 @@ Record actual work and checks, not the schedule's estimates. Dates below use UTC
 - Verification passed under Node.js 24.21.0 / npm 11.19.0: `npm test` (64 tests across 4 files), `npm run lint`, `npm run typecheck`, and `npm run build`. `git diff --check` and `sha256sum --check docs/source-checksums.sha256` also passed; all three preserved source hashes remain unchanged.
 - Limitation: the browser planning route/workspace and OpenRouter assistant remain unimplemented by design; live inference was not attempted because it is outside this step.
 - Milestone commit: `90753c1` (`test: complete six core test groups`).
+
+## Step 06 — Planning routes and workspace state — 13 September 2026
+
+- Completed the Load → Compare → Plan connection. Approximate active effort: 35 minutes, including Next.js guidance review, route/workspace implementation, one CSS Modules build fix, tests, and production-route smoke checks; idle wall-clock time is excluded.
+- Added uncached `POST /api/plan`. It accepts only a strict SHA-256 input version, reloads the server-configured workbook, validates it, rejects stale versions with HTTP 409, returns source issues with HTTP 422, and never accepts browser allocations, KPIs, or filesystem paths.
+- Added `src/lib/workspace.ts` with explicit unloaded, loading, loaded, planning, planned, invalid-data, server-error, and stale-result states. Request IDs ignore late responses, reset clears dependent results, and matching input versions are required before a plan enters the workspace.
+- Replaced the truthful empty page with an interactive client workspace. Load/reload, Generate/Regenerate plan, Reset, loading/error/retry states, source health, server-produced comparisons, and a recommendation-only result shell are wired without browser-side business calculations or approval/execution controls.
+- Added route and reducer coverage in `tests/plan-route.test.ts` and `tests/workspace.test.ts`. The assistant remains intentionally absent until Steps 11–13, so there are no assistant answers to preserve across a version change.
+- Verification passed: `npm test` (71 tests across 6 files), `npm run lint`, `npm run typecheck`, `npm run build`, `git diff --check`, and a production server smoke check. The smoke check returned page 200, workbook 200 with actual 560 t, matching plan 200 with 500 t export/60 t local, and stale plan 409 with `STALE_INPUT_VERSION`; the plan response was `no-store`.
+- The first production build exposed unscoped element selectors in the new CSS Module; scoping table rules to the local comparison-table class fixed it before the successful build. No source workbook, PDF, or credential files were changed.
+- Limitation: the detailed decision overview, production/commercial drill-downs, trace navigation, evidence catalog, and assistant are intentionally deferred to later steps. The production smoke check exercised the routes and server-rendered initial shell; a manual visual/keyboard review remains in Step 14.
+- Implementation milestone commit: `feaa849` (`feat: connect planning routes and workspace state`).
