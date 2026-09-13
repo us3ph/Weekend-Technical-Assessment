@@ -79,4 +79,4 @@ Record actual work and checks, not the schedule's estimates. Dates below use UTC
 - Approximate active effort: 55 minutes, including requirements review, fixture/test implementation, two expectation corrections found by the first run, strict TypeScript fixes, and final checks. Idle wall-clock time is excluded.
 - Verification passed under Node.js 24.21.0 / npm 11.19.0: `npm test` (64 tests across 4 files), `npm run lint`, `npm run typecheck`, and `npm run build`. `git diff --check` and `sha256sum --check docs/source-checksums.sha256` also passed; all three preserved source hashes remain unchanged.
 - Limitation: the browser planning route/workspace and OpenRouter assistant remain unimplemented by design; live inference was not attempted because it is outside this step.
-- Milestone commit: to be recorded after the final verification commit.
+- Milestone commit: `90753c1` (`test: complete six core test groups`).
