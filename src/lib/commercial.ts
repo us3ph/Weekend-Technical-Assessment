@@ -8,6 +8,7 @@ import type {
   Segment,
   WorkbookData,
 } from "./types";
+import type { WorkspaceSelection } from "./workspace";
 
 const QUALITY_RANK: Record<Segment, number> = { A: 0, B: 1, C: 2, D: 3 };
 const tonnesFormatter = new Intl.NumberFormat("en-GB", { maximumFractionDigits: 1 });
@@ -218,10 +219,13 @@ export function deriveCommercialClientFacts(
 
 export function isCommercialFocus(
   facts: CommercialClientFacts,
-  selection: { readonly kind: "segment"; readonly segment: Segment } | { readonly kind: "client"; readonly clientId: string } | { readonly kind: "local"; readonly segment: Segment | null } | null,
+  selection: WorkspaceSelection | null,
 ): boolean {
   if (selection === null || facts.outcome === null) return false;
   if (selection.kind === "client") return facts.client.clientId === selection.clientId;
+  if (selection.kind === "allocation") {
+    return facts.allocations.some((allocation) => allocation.allocationId === selection.allocationId);
+  }
   if (selection.kind === "segment") {
     return facts.evidence?.compatibleSegments.includes(selection.segment) ?? false;
   }

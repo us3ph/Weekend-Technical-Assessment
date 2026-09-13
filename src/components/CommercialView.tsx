@@ -58,6 +58,14 @@ function clientFocusLabel(
     const client = workbook.snapshot.clients.find((candidate) => candidate.clientId === selection.clientId);
     return `${selection.clientId} selected${client === undefined ? "" : ` · ${client.clientName}`}`;
   }
+  if (selection.kind === "allocation") {
+    const allocation = facts
+      .flatMap((clientFacts) => clientFacts.allocations)
+      .find((candidate) => candidate.allocationId === selection.allocationId);
+    return allocation === undefined
+      ? `${selection.allocationId} allocation selected`
+      : `${selection.allocationId} · ${allocation.clientId} allocation selected`;
+  }
   if (selection.kind === "segment") {
     const count = facts.filter((clientFacts) => isCommercialFocus(clientFacts, selection)).length;
     return `Segment ${selection.segment} compatible demand focus · ${count} clients in view`;
@@ -86,6 +94,8 @@ function FocusBar({
             ? "Select a client to connect its demand to supplying farms in Production."
             : selection.kind === "client"
               ? "The selected client stays open below; its supplying farms are highlighted in Production."
+              : selection.kind === "allocation"
+                ? "The selected allocation is highlighted in this client and the connected farm and trace views."
               : "All clients remain listed; compatible demand is highlighted for the selected segment."}
         </p>
       </div>
@@ -101,9 +111,11 @@ function FocusBar({
 function AllocationTable({
   allocations,
   workbook,
+  onSelect,
 }: {
   readonly allocations: readonly Allocation[];
   readonly workbook: WorkbookData;
+  readonly onSelect: (selection: WorkspaceSelection) => void;
 }) {
   if (allocations.length === 0) {
     return (
@@ -132,10 +144,14 @@ function AllocationTable({
           {allocations.map((allocation) => (
             <tr key={allocation.allocationId}>
               <th scope="row">
-                <a className={styles.farmLink} href={`#farm-${allocation.farmId}`}>
+                <button
+                  className={styles.farmLink}
+                  type="button"
+                  onClick={() => onSelect({ kind: "allocation", allocationId: allocation.allocationId })}
+                >
                   <span>{allocation.farmId}</span>
                   <small>{farmName(workbook, allocation.farmId)}</small>
-                </a>
+                </button>
               </th>
               <td>{allocation.segment}</td>
               <td>{allocation.requestedSegment}</td>
@@ -158,9 +174,11 @@ function AllocationTable({
 function Evidence({
   facts,
   clientNames,
+  onSelect,
 }: {
   readonly facts: CommercialClientFacts;
   readonly clientNames: ReadonlyMap<string, string>;
+  readonly onSelect: (selection: WorkspaceSelection) => void;
 }) {
   if (facts.evidence === null || facts.outcome === null) {
     return (
@@ -201,9 +219,13 @@ function Evidence({
         <strong>{shortageReasonLabel(outcome.shortageReason)}:</strong>{" "}
         {explainClientOutcome(facts, clientNames)}
       </p>
-      <a className={styles.productionLink} href="#production-view">
+      <button
+        className={styles.productionLink}
+        type="button"
+        onClick={() => onSelect({ kind: "segment", segment: facts.client.requestedSegment })}
+      >
         Review {facts.client.requestedSegment} production comparison
-      </a>
+      </button>
     </div>
   );
 }
@@ -221,7 +243,9 @@ function ClientCard({
   readonly clientNames: ReadonlyMap<string, string>;
   readonly onSelect: (selection: WorkspaceSelection) => void;
 }) {
-  const selected = selection?.kind === "client" && selection.clientId === facts.client.clientId;
+  const selected =
+    (selection?.kind === "client" && selection.clientId === facts.client.clientId) ||
+    (selection?.kind === "allocation" && facts.allocations.some((allocation) => allocation.allocationId === selection.allocationId));
   const focused = isCommercialFocus(facts, selection);
   const [expanded, setExpanded] = useState(selected);
 
@@ -296,8 +320,8 @@ function ClientCard({
             </button>
           </div>
 
-          <AllocationTable allocations={facts.allocations} workbook={workbook} />
-          <Evidence facts={facts} clientNames={clientNames} />
+          <AllocationTable allocations={facts.allocations} workbook={workbook} onSelect={onSelect} />
+          <Evidence facts={facts} clientNames={clientNames} onSelect={onSelect} />
         </div>
       </details>
     </article>

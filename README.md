@@ -4,7 +4,7 @@ A browser workspace for the daily Production–Commercial committee: compare exp
 
 ## Current status
 
-Step 09 adds connected Production and Commercial views to the server-owned Load → Compare → Plan workspace. After loading, the decision overview can focus all 20 farm records on a segment, client, or local residual; each farm keeps planned capacity/mix separate from actual receipts and exposes keyboard-operable expected/actual, balance, residual, and served-client details. After plan generation, Commercial prioritizes the three at-risk clients while retaining all seven complete orders, with processing-point shortage evidence and farm-segment allocation drill-downs. Allocation/local trace, evidence, and the OpenRouter assistant remain later steps.
+Step 10 completes the connected Production, Commercial, and Allocation & Local trace workspace. After loading, the decision overview can focus all 20 farm records on a segment, client, or local residual; each farm keeps planned capacity/mix separate from actual receipts and exposes keyboard-operable expected/actual, balance, residual, and served-client details. After plan generation, Commercial prioritizes the three at-risk clients while retaining all seven complete orders, with processing-point shortage evidence and farm-segment allocation drill-downs. The trace view lists every export allocation and local residual, exposes per-farm/segment conservation, and carries allocation/local row selections through shared navigation. Evidence catalog and OpenRouter assistant work remain later steps.
 
 Follow [steps.md](steps.md) one step at a time. The technical/business specification is in [PROJECT_PLAN.md](PROJECT_PLAN.md); actual progress and checks are recorded in [docs/work-log.md](docs/work-log.md).
 
@@ -37,7 +37,7 @@ Run from the repository root after `npm ci`:
 | `npm run build` | Build the production application. |
 | `npm start` | Serve the existing production build on port 3000. |
 
-Stop the development server before serving production on the same port. Validation coverage begins in Step 02 and is completed across the core test groups in Step 05; assistant checks arrive in Step 13. Step 01 smoke checks are recorded separately, not represented as domain coverage.
+Stop the development server before serving production on the same port. Validation coverage begins in Step 02 and is completed across the core test groups in Step 05; allocation/local trace checks are covered in Step 10; assistant checks arrive in Step 13. Step 01 smoke checks are recorded separately, not represented as domain coverage.
 
 ## Configuration
 
@@ -67,11 +67,11 @@ Reload the workspace or request `http://localhost:3000/api/workbook` again after
 - Next.js App Router with React and TypeScript keeps the interface and future server routes in one application with one install/start path.
 - CSS Modules and system fonts provide a small, maintainable visual foundation without a UI framework or build-time font download.
 - `src/lib/types.ts` defines source-backed inputs separately from calculated outputs; `src/lib/validation.ts` applies Zod structure checks and Decimal-based domain rules without importing React, Next.js, or network code. `src/lib/planner.ts` applies the exact price/ID, compatibility, quality-fit, 5 t, capacity, shortage-reason, residual, and conservation policy on the server.
-- Vitest is configured for `tests/**/*.test.ts` in a Node environment. The suite covers validation, workbook loading, the decision overview projection, and six explicit offline core groups (T1–T6), including changed-input and invariant checks; assistant checks arrive in Step 13.
+- Vitest is configured for `tests/**/*.test.ts` in a Node environment. The suite covers validation, workbook loading, the decision overview projection, six explicit offline core groups (T1–T6), and allocation/local trace projections and rendering, including changed-input and invariant checks; assistant checks arrive in Step 13.
 - The supplied workbook is the authoritative input. Computed results will remain transient; this single-snapshot assessment does not need database persistence.
 - OpenRouter will use native server-side `fetch`; the model will explain server-calculated facts and will never choose allocations or calculate KPIs.
 
-The current source is `src/app` (layout, root page, global/page CSS, and the workbook/plan routes), `src/components` (shared header, planning workspace, decision overview, Production view, and Commercial view), and `src/lib` (domain contracts, validation, workbook parsing, production calculations, planning, overview, farm and client projections, and workspace state). Dependencies are exact-pinned in `package.json` with transitive versions captured in `package-lock.json`.
+The current source is `src/app` (layout, root page, global/page CSS, and the workbook/plan routes), `src/components` (shared header, planning workspace, decision overview, Production view, Commercial view, and Allocation & Local trace), and `src/lib` (domain contracts, validation, workbook parsing, production calculations, planning, overview, farm/client/trace projections, and workspace state). Dependencies are exact-pinned in `package.json` with transitive versions captured in `package-lock.json`.
 
 ## Domain contract and validation
 
@@ -101,4 +101,4 @@ Use a separate workbook copy for future changed-input checks. Do not replace the
 
 ## Transparency
 
-This is an incomplete assessment implementation at Step 09. Workbook loading, validation, production comparisons, the deterministic planning engine, six core offline test groups, the planning route, the Load → Compare → Plan workspace, the decision overview, the farm-level Production view, and the client-level Commercial view are available. The allocation/local trace, evidence catalog, and live AI integration remain for later steps. [The work log](docs/work-log.md) records AI coding assistance, actual checks, time evidence, and remaining work. The final delivery notes, clean-clone acceptance audit, and 3–5-minute walkthrough are scheduled in later steps.
+This is an incomplete assessment implementation at Step 10. Workbook loading, validation, production comparisons, the deterministic planning engine, six core offline test groups, the planning route, the Load → Compare → Plan workspace, the decision overview, farm-level Production view, client-level Commercial view, and connected Allocation & Local trace are available. The evidence catalog and live AI integration remain for later steps. [The work log](docs/work-log.md) records AI coding assistance, actual checks, time evidence, and remaining work. The final delivery notes, clean-clone acceptance audit, and 3–5-minute walkthrough are scheduled in later steps.

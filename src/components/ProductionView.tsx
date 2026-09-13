@@ -33,9 +33,17 @@ function segmentAnchor(farmId: string, segment: Segment): string {
   return `${farmAnchor(farmId)}-${segment}`;
 }
 
-function selectedSegment(selection: WorkspaceSelection | null): Segment | undefined {
+function selectedSegment(
+  facts: readonly ProductionFarmFacts[],
+  selection: WorkspaceSelection | null,
+): Segment | undefined {
   if (selection?.kind === "segment") return selection.segment;
   if (selection?.kind === "local") return selection.segment ?? undefined;
+  if (selection?.kind === "allocation") {
+    return facts
+      .flatMap((farmFacts) => farmFacts.allocations)
+      .find((allocation) => allocation.allocationId === selection.allocationId)?.segment;
+  }
   return undefined;
 }
 
@@ -53,11 +61,15 @@ function isFocusedFarm(
     return facts.allocations.some((allocation) => allocation.clientId === selection.clientId);
   }
 
+  if (selection.kind === "allocation") {
+    return facts.allocations.some((allocation) => allocation.allocationId === selection.allocationId);
+  }
+
   if (selection.kind === "local") {
     return facts.localTonnes !== null && SEGMENTS.some((segment) =>
       (selection.segment === null || segment === selection.segment) &&
       (segmentBalance(facts, segment)?.localTonnes ?? 0) > 0,
-    );
+      );
   }
 
   return SEGMENTS.some((segment) => {
@@ -85,6 +97,9 @@ function focusLabel(
     return selection.segment === null
       ? `Local residual focus · ${count} farms in view`
       : `Local residual ${selection.segment} focus · ${count} farms in view`;
+  }
+  if (selection.kind === "allocation") {
+    return `${selection.allocationId} allocation focus · ${count} farms in view`;
   }
   return `${selection.clientId} supply focus · ${count} supplying farms in view`;
 }
@@ -251,9 +266,14 @@ function FarmDetail({
                     className={focused ? styles.selectedSegmentRow : undefined}
                   >
                     <th scope="row">
-                      <a className={styles.segmentAnchor} href={`#${segmentAnchor(facts.farm.farmId, segment)}`}>
+                      <button
+                        className={styles.segmentAnchor}
+                        type="button"
+                        aria-pressed={focused}
+                        onClick={() => onSelect({ kind: "segment", segment })}
+                      >
                         {segment}
-                      </a>
+                      </button>
                     </th>
                     <td>{formatPercent(facts.farm.expectedMix[segment])}</td>
                     <td className={styles.plannedCell}>{formatTonnes(comparison.expectedTonnes)}</td>
@@ -262,7 +282,21 @@ function FarmDetail({
                       {formatVariance(comparison.varianceTonnes)}
                     </td>
                     <td>{balance === undefined ? "Not calculated yet" : formatTonnes(balance.exportedTonnes)}</td>
-                    <td>{balance === undefined ? "Not calculated yet" : formatTonnes(balance.localTonnes)}</td>
+                    <td>
+                      {balance === undefined ? (
+                        "Not calculated yet"
+                      ) : balance.localTonnes > 0 ? (
+                        <button
+                          className={styles.localButton}
+                          type="button"
+                          onClick={() => onSelect({ kind: "local", farmId: facts.farm.farmId, segment })}
+                        >
+                          {formatTonnes(balance.localTonnes)}
+                        </button>
+                      ) : (
+                        formatTonnes(balance.localTonnes)
+                      )}
+                    </td>
                   </tr>
                 );
               })}
@@ -329,7 +363,7 @@ export default function ProductionView({
   readonly onClearSelection: () => void;
 }) {
   const facts = deriveProductionFarmFacts(workbook, plan);
-  const selectedSegmentValue = selectedSegment(selection);
+  const selectedSegmentValue = selectedSegment(facts, selection);
   const focusedCount = focusCount(facts, selection);
   const planReady = plan !== undefined;
 

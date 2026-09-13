@@ -55,7 +55,12 @@ function selectionLabel(workbook: WorkbookData, selection: WorkspaceSelection): 
       return `Segment ${selection.segment}`;
     case "client":
       return `${selection.clientId} · ${clientName(workbook, selection.clientId)}`;
+    case "allocation":
+      return `${selection.allocationId} · allocation trace`;
     case "local":
+      if (selection.residualId !== undefined) {
+        return `${selection.residualId} · ${selection.farmId ?? "local residual"}`;
+      }
       return selection.segment === null
         ? "Local residuals"
         : `Local residual · segment ${selection.segment}`;

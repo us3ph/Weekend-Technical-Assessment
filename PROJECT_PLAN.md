@@ -1,6 +1,6 @@
 # Atlas Fresh — Daily Apple Export Planner: Project Plan
 
-Status: Steps 01–09 application foundation, validation, workbook loading, production comparisons, deterministic planning, the initial planning workspace, the decision overview, the Production view, and the Commercial view are complete; later implementation steps have not started.
+Status: Steps 01–10 application foundation, validation, workbook loading, production comparisons, deterministic planning, the initial planning workspace, the decision overview, the Production view, the Commercial view, and the Allocation & Local trace are complete; later implementation steps have not started.
 
 Execution guide: [steps.md](steps.md) translates this plan into individually executable agent tasks. The selected model provider is OpenRouter, using free hosted models only.
 
@@ -377,5 +377,6 @@ Proposed next three production steps to describe, without implementing them in t
 - [x] Complete Step 07 decision overview with truthful plan states, business exception summary, and linked selections.
 - [x] Complete Step 08 Production view with farm comparisons, local balances, served-client details, and connected focus selections.
 - [x] Complete Step 09 Commercial view with all-client outcomes, processing-point shortage explanations, allocation drill-downs, and production links.
+- [x] Complete Step 10 Allocation & Local trace with per-row navigation, conservation audit, and shared connected selections.
 
-The next implementation step is Step 10: complete allocation/local trace and connected drill-downs. Assistant checks remain intentionally pending until Step 13.
+The next implementation step is Step 11: build the evidence catalog and deterministic summaries. Assistant checks remain intentionally pending until Step 13.

@@ -1,6 +1,6 @@
 # Atlas Fresh — Step-by-step agent execution guide
 
-Status: Steps 01–09 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
+Status: Steps 01–10 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
 
 This guide implements [PROJECT_PLAN.md](PROJECT_PLAN.md), the planning file already present in this directory. There is no separate `plan.md`. Read that plan for the full business contract and source references. Use English throughout. The selected AI provider is **OpenRouter with free hosted models only**.
 
@@ -242,17 +242,25 @@ Exit condition: each client risk has a useful explanation and an allocation dril
 
 Objective: every exported or local tonne has a visible source and destination.
 
-- [ ] Show allocation rows with farm ID, segment, client ID, tonnes, quality upgrade, and export revenue.
-- [ ] Show a separate local residual table with farm ID, segment, residual tonnes, local unit price, and local value, plus totals.
-- [ ] Connect overview, farm, client, segment, allocation, and local selections through one predictable navigation/filter pattern with a reset action.
-- [ ] Explain why remaining D cannot satisfy A/B requirements and why the final eligible D order is constrained by station capacity.
-- [ ] Avoid inventing farm-client obligations. Show shared supply evidence; do not claim a specific farm caused a specific shortage without source support.
-- [ ] Preserve the distinction between production-plan gaps and demand shortages: C production is below forecast while baseline C orders are complete.
-- [ ] If a reference-price discount is displayed, label it as a reference comparison, never guaranteed lost profit or achievable additional sales.
+- [x] Show allocation rows with farm ID, segment, client ID, tonnes, quality upgrade, and export revenue.
+- [x] Show a separate local residual table with farm ID, segment, residual tonnes, local unit price, and local value, plus totals.
+- [x] Connect overview, farm, client, segment, allocation, and local selections through one predictable navigation/filter pattern with a reset action.
+- [x] Explain why remaining D cannot satisfy A/B requirements and why the final eligible D order is constrained by station capacity.
+- [x] Avoid inventing farm-client obligations. Show shared supply evidence; do not claim a specific farm caused a specific shortage without source support.
+- [x] Preserve the distinction between production-plan gaps and demand shortages: C production is below forecast while baseline C orders are complete.
+- [x] If a reference-price discount is displayed, label it as a reference comparison, never guaranteed lost profit or achievable additional sales.
 
 Verification: follow at least one client → allocation → farm path and one farm → local path. Totals reconcile: export + local = actual, including per farm/segment.
 
 Exit condition: the manager can trace a shortage or allocation in under three minutes. Handoff: Step 11.
+
+- Completed the Allocation & Local trace and connected navigation only. Added a pure trace projection and a plan-linked view with every allocation row, every positive local residual, totals, and an expandable per-farm/segment conservation audit.
+- Extended the shared selection state with allocation IDs and local residual/farm identity. Overview, Production, Commercial, and trace row actions now carry one focus across sections and Reset clears it. Client allocation rows focus the connected farm/client/trace evidence; farm local cells focus the exact farm/segment residual.
+- Added server-fact explanations for the remaining D quality constraint, the final D-eligible station-capacity case, and the C production-gap versus complete-C-demand distinction. Copy explicitly describes shared supply evidence and labels local values as calculated reference comparisons rather than guaranteed lost profit.
+- Added `tests/trace.test.ts` covering baseline export/local totals, residual rows and conservation, selection targeting, explanations, rendered trace tables, and honest pre-plan absence.
+- Verification passed under Node.js 24.21.0 / npm 11.19.0: `npm test` (81 tests across 10 files), `npm run lint`, `npm run typecheck`, `npm run build`, `git diff --check`, and original-source checksum verification. Browser smoke confirmed the existing Load → Generate plan journey and the new trace sections at the target widths; no source workbook or credentials were changed.
+- Limitation: evidence catalog, assistant, formal keyboard/responsive audit, changed-input acceptance pass, and delivery work remain intentionally deferred to later steps.
+- Commit: single Step 10 implementation/documentation milestone; the hash is recorded in the final handoff.
 
 ## Step 11 — Create grounded facts and deterministic summaries
 
@@ -423,7 +431,7 @@ Do not pre-check these while writing documentation. Update each only after execu
 - [x] Step 07 — Overview.
 - [x] Step 08 — Production.
 - [x] Step 09 — Commercial.
-- [ ] Step 10 — Allocation/local trace.
+- [x] Step 10 — Allocation/local trace.
 - [ ] Step 11 — Evidence and summaries.
 - [ ] Step 12 — OpenRouter adapter and recorded live-check status.
 - [ ] Step 13 — Assistant panel and tests.

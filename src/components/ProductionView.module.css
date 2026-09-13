@@ -96,7 +96,8 @@
 
 .clearFocusButton,
 .clientButton,
-.segmentAnchor {
+.segmentAnchor,
+.localButton {
   border: 0;
   font: inherit;
   cursor: pointer;
@@ -433,6 +434,20 @@
 }
 
 .clientButton:hover {
+  background: var(--accent-soft);
+}
+
+.localButton {
+  padding: 0.2rem 0.35rem;
+  border-radius: 0.3rem;
+  background: transparent;
+  color: var(--accent);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.localButton:hover {
   background: var(--accent-soft);
 }
 
