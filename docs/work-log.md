@@ -53,4 +53,4 @@ Record actual work and checks, not the schedule's estimates. Dates below use UTC
 - The shell initially had Node 20.20.0 despite the prior setup note; installed and used the pinned Node 24.21.0 / npm 11.19.0 before final checks. This installation is outside the repository.
 - Verification passed under Node 24.21.0 / npm 11.19.0: `npm test` (20 tests), `npm run lint`, `npm run typecheck`, `npm run build`, `git diff --check`, and `sha256sum --check docs/source-checksums.sha256`. The build reports `/api/workbook` as dynamic. No OpenRouter request was made; it is outside this step.
 - Limitation: the browser shell is not connected to the workbook route, and allocation/planning/business views remain for later steps. Workbook support intentionally targets the supplied literal-cell table layout rather than a generic spreadsheet importer.
-- The Step 03 implementation milestone commit is recorded in the final handoff after commit creation.
+- Implementation milestone commit: `faec61c` (`feat: add workbook loading and production comparisons`).
