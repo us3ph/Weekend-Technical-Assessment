@@ -11,6 +11,7 @@ next-env.d.ts
 # Private configuration; only the blank template belongs in Git
 .env*
 !.env.example
+.env.local
 
 # Local logs, operating-system files, and deployment metadata
 *.log

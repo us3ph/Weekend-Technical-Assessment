@@ -1,6 +1,6 @@
 # Atlas Fresh — Daily Apple Export Planner: Project Plan
 
-Status: Steps 01–15 application foundation, validation, workbook loading, production comparisons, deterministic planning, the planning workspace, connected decision views, grounded evidence, the real free-only OpenRouter server path, the browser assistant panel, the responsive/accessibility review, and the acceptance/changed-input audit are complete; clean-clone and delivery steps have not started.
+Status: Steps 01–16 application foundation, validation, workbook loading, production comparisons, deterministic planning, the planning workspace, connected decision views, grounded evidence, the real free-only OpenRouter server path, the browser assistant panel, the responsive/accessibility review, the acceptance/changed-input audit, and clean-clone/production startup proof are complete; delivery steps have not started.
 
 Execution guide: [steps.md](steps.md) translates this plan into individually executable agent tasks. The selected model provider is OpenRouter, using free hosted models only.
 
@@ -382,6 +382,7 @@ Proposed next three production steps to describe, without implementing them in t
 - [x] Complete Step 12 free-only OpenRouter adapter, authoritative assistant route, strict output validation, sanitized failures, deterministic fallback, and mocked provider checks. Live inference remains unverified without a private key.
 - [x] Complete Step 13 browser assistant panel, three suggested questions, bounded free-text input, grounded answer/citation rendering, stale/failure/cooldown states, and T7/T8 assistant groups. A live smoke returned `TRUNCATED_OUTPUT`, so successful live inference remains unverified.
 - [x] Complete Step 14 responsive/accessibility/failure-state review: target widths, assistant placement, contained table scrolling, keyboard/focus behavior, status announcements, and representative recovery states. A real screen-reader session remains unperformed; live successful inference remains unverified.
-- [x] Complete Step 15 acceptance and changed-input audit: baseline API/UI values, valid 495 t capacity copy, invalid F01 copy and recovery, stale assistant reset, unsupported/no-key behavior, timed self-review, original-source hashes, and A–I/E1–E5 evidence. Acceptance I remains pending the Step 16 clean-clone proof; live successful inference and independent usability/screen-reader sessions remain unverified.
+- [x] Complete Step 15 acceptance and changed-input audit: baseline API/UI values, valid 495 t capacity copy, invalid F01 copy and recovery, stale assistant reset, unsupported/no-key behavior, timed self-review, original-source hashes, and A–I/E1–E5 evidence. Live successful inference and independent usability/screen-reader sessions remain unverified.
+- [x] Complete Step 16 clean-clone and production-startup proof: pinned Node/npm install, 117 offline tests, lint, typecheck, build, production and development route smokes, default workbook resolution outside the source directory, deterministic no-key summary, and tracked-file/secret audit. No dependency, runtime, or command fix was required.
 
-The next implementation step is Step 16: verify a clean clone and production startup. Delivery checks remain pending.
+The next implementation step is Step 17: finalize README, decisions, and transparency. Delivery checks remain pending.

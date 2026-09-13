@@ -1,6 +1,6 @@
 # Atlas Fresh — Step-by-step agent execution guide
 
-Status: Steps 01–15 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
+Status: Steps 01–16 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
 
 This guide implements [PROJECT_PLAN.md](PROJECT_PLAN.md), the planning file already present in this directory. There is no separate `plan.md`. Read that plan for the full business contract and source references. Use English throughout. The selected AI provider is **OpenRouter with free hosted models only**.
 
@@ -353,14 +353,6 @@ Verification: passed under Node.js 24.21.0 / npm 11.19.0 with the full Load → 
 
 Exit condition: mandatory UX states and accessibility checks are recorded as passed with the screen-reader limitation above. Handoff: Step 15.
 
-### Step 14 completion record — 13 September 2026
-
-- Completed Step 14 only. Approximate active effort: 45 minutes, including the repository/Next.js accessibility-guide review, browser review, focused implementation, state probes, strict checks, and documentation; idle wall-clock time is excluded.
-- Added a wide-layout grid that places the assistant beside the trace at 1440 px and returns it below the workspace at 1024 px. Added contained, keyboard-focusable labelled regions for dense tables, reduced-motion-aware destination scrolling, predictable focus restoration after closing farm/client/conservation disclosures, and focusable destination view landmarks.
-- Strengthened loading, focus, selection, answer, cooldown, invalid-data, server-error, stale-result, and assistant failure announcements with native status/alert semantics and atomic updates. Non-2xx assistant responses explicitly state that no model answer was used.
-- Browser review passed at 1024 px and 1440 px with document width equal to the viewport, correct assistant placement, no unnamed buttons, captions on all tables, labelled scroll regions, keyboard disclosure/focus checks, and selection navigation. Response fixtures exercised unloaded, loading, valid zero-data, validation-error, source/server-error, stale-result, no-key, provider-failure, deterministic successful-result, and recovery states without editing the authoritative workbook.
-- Remaining limitation: no real screen-reader session was run; live successful OpenRouter inference remains unverified because the earlier configured smoke returned `TRUNCATED_OUTPUT`. The next step is Step 15.
-- Commit: final single Step 14 implementation/documentation milestone; the hash is reported in the handoff.
 
 ## Step 15 — Audit every acceptance criterion and changed inputs
 
@@ -378,30 +370,32 @@ Objective: prove the product matches the brief, including evaluator changes.
 
 Exit condition: A–I and E1–E5 have recorded evidence, and all in-scope fixable blockers are resolved within the timebox. Handoff: Step 16.
 
-### Step 15 completion record — 13 September 2026
-
-- Completed Step 15 only. Approximate active effort: 1 hour 5 minutes, including the acceptance evidence record, default and changed-input API/UI checks, invalid-copy recovery, stale-answer review, timed self-review, strict checks, and documentation; idle wall-clock time is excluded.
-- Added [docs/verification.md](docs/verification.md), a concise actual-results checklist for acceptance A–I and email criteria E1–E5. It records the exact default and 495 t capacity results, C02/C09/C08 outcomes, invalid F01 validation/recovery, stale/unsupported/no-key behavior, provider status, and original-source integrity.
-- No application code change was required: the existing implementation passed all Step 15 checks. The valid temporary copy changed only Station `B5` from 500 to 495; the invalid temporary copy changed only Farms `H5` for F01 from 25 to 27. Both remained outside the repository.
-- Verification passed under Node.js 24.21.0 / npm 11.19.0: `npm test` (117 tests across 14 files), `npm run lint`, `npm run typecheck`, `npm run build`, `git diff --check`, and `sha256sum --check docs/source-checksums.sha256`. Chrome self-review covered default/changed metrics, plan-dependent UI, C02/C09/C08 cards, dynamic local evidence, invalid-source recovery, stale answer removal, unsupported no-request, and no-key fallback.
-- Actual provider status: the existing configured smoke returned `TRUNCATED_OUTPUT`; no model answer or citation was accepted. Changed-input checks forced blank provider variables and returned `MISSING_API_KEY`; successful live inference remains unverified. No real screen-reader or independent usability session was performed; the timed result is explicitly self-reviewed.
-- Acceptance I is recorded as pending Step 16 clean-clone proof. The original workbook, PDF, preserved pack README, checksum manifest, and credential files were unchanged. The pre-existing `.gitignore` edit and `steps.md` Step 14-record removal were preserved.
-- Next step: Step 16 — Verify a clean clone and production startup.
 
 ## Step 16 — Verify a clean clone and production startup
 
 Objective: the evaluator can reproduce the project without the development environment.
 
-- [ ] Ensure necessary source/configuration/lockfiles are committed, and private environment files/build artifacts are excluded. Inspect pending changes before creating the verification clone.
-- [ ] Make a fresh local clone in a separate temporary directory, preserving the working directory and user's files. Use the documented runtime and README instructions only.
-- [ ] With no API key or private `.env` file, run `npm ci`, `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build`.
-- [ ] Run `npm start` after the build and exercise the seeded workspace and deterministic summary. Also verify the documented development command if not already proven from this clone.
-- [ ] Confirm workbook paths work outside the original absolute directory and that production routes can read the bundled/source workbook correctly.
-- [ ] Confirm installation/build/tests require no inference call, private account, database, local model runtime, or paid service. Document that initial package installation requires network access.
-- [ ] Inspect tracked files for accidental secrets; verify `.env.example` contains placeholders only. Do not print secret values during inspection.
-- [ ] Record commands and actual outcomes in `docs/verification.md`. If a fix changes dependencies, runtime behavior, or commands, recheck the affected clean-clone path.
+- [x] Ensure necessary source/configuration/lockfiles are committed, and private environment files/build artifacts are excluded. Inspect pending changes before creating the verification clone.
+- [x] Make a fresh local clone in a separate temporary directory, preserving the working directory and user's files. Use the documented runtime and README instructions only.
+- [x] With no API key or private `.env` file, run `npm ci`, `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build`.
+- [x] Run `npm start` after the build and exercise the seeded workspace and deterministic summary. Also verify the documented development command if not already proven from this clone.
+- [x] Confirm workbook paths work outside the original absolute directory and that production routes can read the bundled/source workbook correctly.
+- [x] Confirm installation/build/tests require no inference call, private account, database, local model runtime, or paid service. Document that initial package installation requires network access.
+- [x] Inspect tracked files for accidental secrets; verify `.env.example` contains placeholders only. Do not print secret values during inspection.
+- [x] Record commands and actual outcomes in `docs/verification.md`. If a fix changes dependencies, runtime behavior, or commands, recheck the affected clean-clone path.
 
 Exit condition: clean-clone installation, tests, build, and production workflow succeed as documented, with any real limitation explicit. Handoff: Step 17.
+
+### Step 16 completion record — 13 September 2026
+
+- Completed Step 16 only. Approximate active effort: 35 minutes, including the repository/runtime review, isolated clone, dependency installation, automated checks, production/development smokes, security audit, documentation, and final staging; idle wall-clock time is excluded.
+- Inspected the pending `.gitignore` and `steps.md` changes before cloning and preserved them. The required `.nvmrc`, `package.json`, `package-lock.json`, `.npmrc`, `.env.example`, workbook, PDF, and application source are tracked. Private environment files, `node_modules`, and `.next` are ignored and absent from the clean clone.
+- Created a fresh clone at `/tmp/atlas-fresh-step16.so2ehV/repo` outside the original absolute directory. With `OPENROUTER_API_KEY`, `OPENROUTER_MODEL`, and `WORKBOOK_PATH` unset, `npm ci` added 381 packages and audited 382 with 0 vulnerabilities. The existing ESLint deprecation and npm install-script notices were informational only.
+- Under Node.js 24.21.0 and npm 11.19.0, `npm test` passed with 117 tests across 14 files, `npm run lint` passed with zero warnings, `npm run typecheck` passed, and `npm run build` passed with the workbook/plan/assistant routes built.
+- `npm start` served the seeded page and read the bundled workbook from the clone: 20 farms, 10 clients, valid source version `46620fea508ebcdac184c5f8514d7f15f44c9863380ee8e410a1b1091bb923cb`. `POST /api/plan` returned 500 t export, 60 t local, EUR 549,500 export revenue, EUR 4,500 local value, and 3 at-risk clients. With no key, `POST /api/assistant` returned `Deterministic summary — no model used`, status `unavailable`, code `MISSING_API_KEY`, and three facts. The documented `npm run dev` command also served the page and valid workbook from the clone.
+- Confirmed the clean-clone workflow made no inference call, private-account, database, local-model, paid-service, or API key requirement. Initial package installation does require network access. The tracked-file audit found no likely provider keys/private-key markers; `.env.example` has a blank key and placeholders only. Original workbook/PDF/checksum materials were not modified.
+- The first combined verification process was abandoned before installation completed, and two initial probe assertions used incorrect response nesting/baseline expectations; the documented commands and corrected source-derived assertions were rerun successfully. No dependency, runtime, or command fix was required.
+- Commit: single Step 16 implementation/documentation milestone; the hash is reported in the final handoff. Next step: Step 17 — Finalize README, decisions, and transparency.
 
 ## Step 17 — Finalize README, decisions, and transparency
 
@@ -478,7 +472,7 @@ Do not pre-check these while writing documentation. Update each only after execu
 - [x] Step 12 — OpenRouter adapter and recorded live-check status (live inference unverified without a private key).
 - [x] Step 13 — Assistant panel and tests (live inference remains unverified without a private key).
 - [x] Step 14 — UX/accessibility/failure review (screen-reader session not performed; live inference remains unverified).
-- [x] Step 15 — Acceptance and changed inputs (acceptance I awaits Step 16 clean-clone proof).
-- [ ] Step 16 — Clean-clone proof.
+- [x] Step 15 — Acceptance and changed inputs.
+- [x] Step 16 — Clean-clone proof.
 - [ ] Step 17 — README and transparency.
 - [ ] Step 18 — Walkthrough and submission assets.
