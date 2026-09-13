@@ -7,6 +7,15 @@
   --border: #dce4da;
   --accent: #25583f;
   --accent-soft: #eaf1e8;
+  --border-strong: #bdcbbd;
+  --success: #21613f;
+  --success-soft: #e5f2e8;
+  --danger: #9a3f2f;
+  --danger-border: #e8b8ad;
+  --danger-soft: #fff2ef;
+  --warning: #765719;
+  --warning-border: #e5cb8c;
+  --warning-soft: #fff9e9;
 }
 
 * {

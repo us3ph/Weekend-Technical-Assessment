@@ -1,4 +1,5 @@
 import AppHeader from "@/components/AppHeader";
+import PlanningWorkspace from "@/components/PlanningWorkspace";
 import styles from "./page.module.css";
 
 export default function HomePage() {
@@ -13,14 +14,7 @@ export default function HomePage() {
           prepare the daily export decision.
         </p>
 
-        <section className={styles.emptyState} aria-labelledby="workspace-status">
-          <span className={styles.badge}>Workspace preview</span>
-          <h2 id="workspace-status">Your daily plan starts here</h2>
-          <p>
-            No workbook has been loaded. Planning tools are not available yet;
-            no allocations or financial results have been calculated.
-          </p>
-        </section>
+        <PlanningWorkspace />
       </main>
       <footer className={styles.footer}>
         Production and Commercial remain responsible for approving execution.

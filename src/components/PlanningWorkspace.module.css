@@ -1,0 +1,376 @@
+.workspace {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.workspaceHeader {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--surface);
+}
+
+.workspaceHeader h2,
+.card h3,
+.healthPanel h3,
+.messagePanel h3,
+.emptyState h3,
+.loadingState h3 {
+  margin: 0;
+  line-height: 1.3;
+}
+
+.workspaceHeader h2 {
+  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+}
+
+.sectionKicker,
+.messageKicker {
+  margin: 0 0 0.35rem;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.statusText {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.actionRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 0.65rem;
+}
+
+.primaryButton,
+.secondaryButton,
+.tertiaryButton {
+  min-height: 2.6rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 0.55rem;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primaryButton {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--surface);
+}
+
+.secondaryButton {
+  border: 1px solid var(--accent);
+  background: var(--surface);
+  color: var(--accent);
+}
+
+.tertiaryButton {
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--ink);
+}
+
+.primaryButton:hover:not(:disabled),
+.secondaryButton:hover:not(:disabled),
+.tertiaryButton:hover:not(:disabled) {
+  filter: brightness(0.96);
+}
+
+.primaryButton:disabled,
+.secondaryButton:disabled,
+.tertiaryButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.emptyState,
+.loadingState,
+.messagePanel,
+.healthPanel,
+.card {
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--surface);
+}
+
+.emptyState {
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.emptyState p,
+.loadingState p,
+.messagePanel p,
+.mutedText,
+.recommendationNote {
+  max-width: 48rem;
+  margin: 0.65rem 0 0;
+  color: var(--muted);
+}
+
+.badge,
+.successBadge {
+  display: inline-block;
+  padding: 0.25rem 0.7rem;
+  border-radius: 1rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.badge {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.successBadge {
+  background: var(--success-soft);
+  color: var(--success);
+  white-space: nowrap;
+}
+
+.loadingState {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.35rem 1.5rem;
+}
+
+.loadingDot {
+  width: 0.75rem;
+  height: 0.75rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0.3rem var(--accent-soft);
+}
+
+.messagePanel {
+  padding: 1.35rem 1.5rem;
+}
+
+.messagePanel h3 {
+  font-size: 1.1rem;
+}
+
+.messagePanel .secondaryButton {
+  margin-top: 1rem;
+}
+
+.messageKicker {
+  color: var(--danger);
+}
+
+.warningPanel {
+  border-color: var(--warning-border);
+  background: var(--warning-soft);
+}
+
+.warningPanel .messageKicker {
+  color: var(--warning);
+}
+
+.invalidPanel {
+  border-color: var(--danger-border);
+  background: var(--danger-soft);
+}
+
+.errorPanel {
+  border-color: var(--danger-border);
+  background: var(--surface);
+}
+
+.issueList {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding-left: 1.25rem;
+  color: var(--ink);
+  font-size: 0.875rem;
+}
+
+.contentStack {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.healthPanel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.healthPanel h3 {
+  font-size: 1.1rem;
+}
+
+.healthList,
+.kpiGrid {
+  display: grid;
+  gap: 0.8rem;
+  margin: 0;
+}
+
+.healthList {
+  grid-template-columns: repeat(3, minmax(6rem, 1fr));
+}
+
+.healthList div,
+.kpiGrid div {
+  min-width: 0;
+}
+
+.healthList dt,
+.kpiGrid dt {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.healthList dd,
+.kpiGrid dd {
+  margin: 0.15rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.card {
+  padding: 1.5rem;
+}
+
+.cardHeading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.card h3 {
+  font-size: 1.25rem;
+}
+
+.comparisonNote {
+  max-width: 15rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+.tableWrap {
+  margin-top: 1.15rem;
+  overflow-x: auto;
+}
+
+.comparisonTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.comparisonTable th,
+.comparisonTable td {
+  padding: 0.75rem 0.65rem;
+  border-bottom: 1px solid var(--border);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.comparisonTable th:first-child,
+.comparisonTable td:first-child {
+  text-align: left;
+}
+
+.comparisonTable thead th {
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.comparisonTable tbody th {
+  font-weight: 800;
+}
+
+.totalRow th,
+.totalRow td {
+  border-bottom: 0;
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.planPanel {
+  border-color: var(--accent);
+}
+
+.kpiGrid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 1.35rem;
+}
+
+.recommendationNote {
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.82rem;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 760px) {
+  .workspaceHeader,
+  .healthPanel,
+  .cardHeading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .actionRow {
+    justify-content: start;
+  }
+
+  .comparisonNote {
+    max-width: none;
+    text-align: left;
+  }
+
+  .healthList {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .kpiGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .primaryButton,
+  .secondaryButton,
+  .tertiaryButton {
+    flex: 1 1 100%;
+  }
+
+  .healthList {
+    grid-template-columns: 1fr;
+  }
+}
