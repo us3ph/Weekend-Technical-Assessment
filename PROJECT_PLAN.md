@@ -1,6 +1,6 @@
 # Atlas Fresh — Daily Apple Export Planner: Project Plan
 
-Status: Steps 01–12 application foundation, validation, workbook loading, production comparisons, deterministic planning, the initial planning workspace, the decision overview, the Production view, the Commercial view, the Allocation & Local trace, the grounded evidence/deterministic-summary boundary, and the real free-only OpenRouter server path are complete; later implementation steps have not started.
+Status: Steps 01–13 application foundation, validation, workbook loading, production comparisons, deterministic planning, the initial planning workspace, the decision overview, the Production view, the Commercial view, the Allocation & Local trace, the grounded evidence/deterministic-summary boundary, the real free-only OpenRouter server path, and the browser assistant panel are complete; later implementation steps have not started.
 
 Execution guide: [steps.md](steps.md) translates this plan into individually executable agent tasks. The selected model provider is OpenRouter, using free hosted models only.
 
@@ -380,5 +380,6 @@ Proposed next three production steps to describe, without implementing them in t
 - [x] Complete Step 10 Allocation & Local trace with per-row navigation, conservation audit, and shared connected selections.
 - [x] Complete Step 11 evidence catalog, intent-specific contexts, strict fact selection validation, and deterministic no-key summaries.
 - [x] Complete Step 12 free-only OpenRouter adapter, authoritative assistant route, strict output validation, sanitized failures, deterministic fallback, and mocked provider checks. Live inference remains unverified without a private key.
+- [x] Complete Step 13 browser assistant panel, three suggested questions, bounded free-text input, grounded answer/citation rendering, stale/failure/cooldown states, and T7/T8 assistant groups. A live smoke returned `TRUNCATED_OUTPUT`, so successful live inference remains unverified.
 
-The next implementation step is Step 13: build the browser assistant panel and its two assistant test groups. Formal UX/accessibility review and later acceptance/delivery checks remain pending.
+The next implementation step is Step 14: review responsive behavior, accessibility, and failure states across the full workspace. Later acceptance and delivery checks remain pending.

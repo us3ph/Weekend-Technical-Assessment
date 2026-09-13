@@ -1,6 +1,6 @@
 # Atlas Fresh — Step-by-step agent execution guide
 
-Status: Steps 01–12 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
+Status: Steps 01–13 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
 
 This guide implements [PROJECT_PLAN.md](PROJECT_PLAN.md), the planning file already present in this directory. There is no separate `plan.md`. Read that plan for the full business contract and source references. Use English throughout. The selected AI provider is **OpenRouter with free hosted models only**.
 
@@ -318,14 +318,20 @@ Exit condition: real OpenRouter adapter and honest failure states exist; actual 
 
 Objective: managers can ask supported questions and inspect their evidence.
 
-- [ ] Add three suggested questions for client risk, farm/segment gaps, and local residual/value, plus a small free-text input limited to those topics.
-- [ ] Derive the local question's quantity from the current plan. Disable questions until a valid plan exists and prevent simultaneous duplicate requests.
-- [ ] Show thinking/loading, validated model answer, no-key summary, unsupported question, timeout/provider failure, invalid-output, and stale-snapshot states honestly.
-- [ ] Label summaries `Deterministic summary — no model used`; do not imply a failed model response was accepted. Make retry predictable and respect rate-limit cooldowns.
-- [ ] Link every cited farm/client/segment to the correct detail and make navigation usable with the keyboard. Clear answers on data reset/version change.
-- [ ] T7: test supported grounded answers against server facts and resolvable references, including all required risk/local facts and no invented numeric content.
-- [ ] T8: parameterize unsupported questions, unknown/mismatched IDs, malformed/incomplete output, missing/invalid keys, account/rate/provider errors, timeout/refusal/truncation, paid-model configuration, and tampered browser data; assert honest handling and unchanged allocations.
-- [ ] Run all eight test groups offline and create a meaningful assistant milestone commit with the real-provider verification status.
+- [x] Add three suggested questions for client risk, farm/segment gaps, and local residual/value, plus a small free-text input limited to those topics.
+- [x] Derive the local question's quantity from the current plan. Disable questions until a valid plan exists and prevent simultaneous duplicate requests.
+- [x] Show thinking/loading, validated model answer, no-key summary, unsupported question, timeout/provider failure, invalid-output, and stale-snapshot states honestly.
+- [x] Label summaries `Deterministic summary — no model used`; do not imply a failed model response was accepted. Make retry predictable and respect rate-limit cooldowns.
+- [x] Link every cited farm/client/segment to the correct detail and make navigation usable with the keyboard. Clear answers on data reset/version change.
+- [x] T7: test supported grounded answers against server facts and resolvable references, including all required risk/local facts and no invented numeric content.
+- [x] T8: parameterize unsupported questions, unknown/mismatched IDs, malformed/incomplete output, missing/invalid keys, account/rate/provider errors, timeout/refusal/truncation, paid-model configuration, and tampered browser data; assert honest handling and unchanged allocations.
+- [x] Run all eight test groups offline and create a meaningful assistant milestone commit with the real-provider verification status.
+
+Implementation: `src/components/AssistantPanel.tsx` and its CSS Module are mounted after the trace view. The panel sends only the question and visible content version, validates the returned answer/citation shape against the visible workbook/plan, and uses existing selection navigation for farm/client/segment/allocation/residual evidence. `tests/assistant.test.ts` records T7/T8; the earlier provider and route tests remain part of those assistant boundaries.
+
+Verification passed under Node.js 24.21.0 / npm 11.19.0: `npm test` (117 tests across 14 files), `npm run typecheck`, `npm run lint`, `npm run build`, and `git diff --check`. A browser smoke on an explicit blank-key process verified the no-key fallback and citation navigation. A separate live smoke used the already-present ignored private configuration; OpenRouter returned `TRUNCATED_OUTPUT`, so no model answer or citation was accepted. The key was not printed, returned to the browser, or committed. The original workbook, PDF, preserved pack README, checksum manifest, and credential files remain unchanged.
+
+Limitation: the formal full-workspace responsive/accessibility and failure-state audit remains Step 14. The panel's offline fixture exercises the validated provider rendering path; it does not substitute for live provider availability.
 
 Verification: all three supported questions work in summary mode; a validated provider fixture drives the real answer rendering path; failures cannot masquerade as AI success. If configured live inference is available, inspect its citations in the browser.
 
@@ -451,7 +457,7 @@ Do not pre-check these while writing documentation. Update each only after execu
 - [x] Step 10 — Allocation/local trace.
 - [x] Step 11 — Evidence and summaries.
 - [x] Step 12 — OpenRouter adapter and recorded live-check status (live inference unverified without a private key).
-- [ ] Step 13 — Assistant panel and tests.
+- [x] Step 13 — Assistant panel and tests (live inference remains unverified without a private key).
 - [ ] Step 14 — UX/accessibility/failure review.
 - [ ] Step 15 — Acceptance and changed inputs.
 - [ ] Step 16 — Clean-clone proof.

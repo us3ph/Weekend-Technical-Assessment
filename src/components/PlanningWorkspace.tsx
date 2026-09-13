@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useReducer, useState } from "react";
+import AssistantPanel from "@/components/AssistantPanel";
 import CommercialView from "@/components/CommercialView";
 import DecisionOverview from "@/components/DecisionOverview";
 import ProductionView from "@/components/ProductionView";
@@ -450,6 +451,13 @@ export default function PlanningWorkspace() {
             selection={selection}
             onSelect={setSelection}
             onClearSelection={() => setSelection(null)}
+          />
+          <AssistantPanel
+            key={`${workbook.snapshot.version.value}:${state.status === "planned" ? "planned" : "unplanned"}`}
+            workbook={workbook}
+            plan={state.status === "planned" ? state.plan : undefined}
+            onSelect={setSelection}
+            onReload={startLoad}
           />
         </div>
       ) : null}
