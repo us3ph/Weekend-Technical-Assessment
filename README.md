@@ -4,7 +4,7 @@ A browser workspace for the daily Production–Commercial committee: compare exp
 
 ## Current status
 
-Step 04 establishes the pure server-side deterministic planning engine: the supplied XLSX is read and validated, source cells are retained, validated inputs are versioned by content, production comparisons are calculated with Decimal arithmetic, and allocations/residuals/KPIs are calculated from actual receipts. The browser workspace and OpenRouter assistant are not implemented yet; the page still shows no invented results.
+Step 05 establishes the pure server-side deterministic planning engine and its six core test groups: the supplied XLSX is read and validated, source cells are retained, validated inputs are versioned by content, production comparisons are calculated with Decimal arithmetic, and allocations/residuals/KPIs are calculated from actual receipts. The browser workspace and OpenRouter assistant are not implemented yet; the page still shows no invented results.
 
 Follow [steps.md](steps.md) one step at a time. The technical/business specification is in [PROJECT_PLAN.md](PROJECT_PLAN.md); actual progress and checks are recorded in [docs/work-log.md](docs/work-log.md).
 
@@ -67,7 +67,7 @@ Reload the workspace or request `http://localhost:3000/api/workbook` again after
 - Next.js App Router with React and TypeScript keeps the interface and future server routes in one application with one install/start path.
 - CSS Modules and system fonts provide a small, maintainable visual foundation without a UI framework or build-time font download.
 - `src/lib/types.ts` defines source-backed inputs separately from calculated outputs; `src/lib/validation.ts` applies Zod structure checks and Decimal-based domain rules without importing React, Next.js, or network code. `src/lib/planner.ts` applies the exact price/ID, compatibility, quality-fit, 5 t, capacity, shortage-reason, residual, and conservation policy on the server.
-- Vitest is configured for `tests/**/*.test.ts` in a Node environment. The current suite covers validation, workbook loading, and focused T1–T5 planning behavior; completion of the six full core groups is scheduled for Step 05.
+- Vitest is configured for `tests/**/*.test.ts` in a Node environment. The suite covers validation, workbook loading, and six explicit offline core groups (T1–T6), including changed-input and invariant checks; assistant checks arrive in Step 13.
 - The supplied workbook is the authoritative input. Computed results will remain transient; this single-snapshot assessment does not need database persistence.
 - OpenRouter will use native server-side `fetch`; the model will explain server-calculated facts and will never choose allocations or calculate KPIs.
 
@@ -101,4 +101,4 @@ Use a separate workbook copy for future changed-input checks. Do not replace the
 
 ## Transparency
 
-This is an incomplete assessment implementation at Step 04. Workbook loading, validation, production comparisons, and the deterministic planning engine are available server-side. The business UI, planning route, evidence catalog, and live AI integration remain for later steps. [The work log](docs/work-log.md) records AI coding assistance, actual checks, time evidence, and remaining work. The final delivery notes, clean-clone acceptance audit, and 3–5-minute walkthrough are scheduled in later steps.
+This is an incomplete assessment implementation at Step 05. Workbook loading, validation, production comparisons, the deterministic planning engine, and six core offline test groups are available server-side. The business UI, planning route, evidence catalog, and live AI integration remain for later steps. [The work log](docs/work-log.md) records AI coding assistance, actual checks, time evidence, and remaining work. The final delivery notes, clean-clone acceptance audit, and 3–5-minute walkthrough are scheduled in later steps.

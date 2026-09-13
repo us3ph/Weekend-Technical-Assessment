@@ -1,6 +1,6 @@
 # Atlas Fresh — Step-by-step agent execution guide
 
-Status: Steps 01–04 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
+Status: Steps 01–05 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
 
 This guide implements [PROJECT_PLAN.md](PROJECT_PLAN.md), the planning file already present in this directory. There is no separate `plan.md`. Read that plan for the full business contract and source references. Use English throughout. The selected AI provider is **OpenRouter with free hosted models only**.
 
@@ -160,14 +160,14 @@ Exit condition: one pure engine produces an executable plan with no hard-coded b
 
 Objective: prove correctness beyond the supplied happy path.
 
-- [ ] T1: parse the actual workbook and assert the entire public baseline, production totals, all client statuses, residual composition, and trace conservation.
-- [ ] T2: assert price ordering, client-ID ties, quality-fit ordering, farm-ID ties, unchanged input objects, repeat-call determinism, and identical business results after shuffling source rows.
-- [ ] T3: assert EXACT rejects other segments, MINIMUM accepts upgrades but never worse fruit, requested segment is preferred, and upgrade revenue uses client price.
-- [ ] T4: assert all hard limits and conservation, zero actual/demand/capacity behavior, partial/unserved states, and reason precedence at processing time.
-- [ ] T5: assert local residual/value and relevant changed-input behavior. A reference-price change affects residual value but not client order or export revenue; expected-mix changes affect comparisons but not actual supply.
-- [ ] T6: complete parameterized invalid-ID/mode/segment/reference/mix/numeric/quantity/capacity cases, including missing structure and expected-capacity precision, with actionable errors.
-- [ ] Use independently specified expected outcomes and intentionally constrained fixtures. Avoid tests that merely repeat the implementation's calculations.
-- [ ] Fix failures, run the six groups, and create a meaningful engine/validation milestone commit with actual check results.
+- [x] T1: parse the actual workbook and assert the entire public baseline, production totals, all client statuses, residual composition, and trace conservation.
+- [x] T2: assert price ordering, client-ID ties, quality-fit ordering, farm-ID ties, unchanged input objects, repeat-call determinism, and identical business results after shuffling source rows.
+- [x] T3: assert EXACT rejects other segments, MINIMUM accepts upgrades but never worse fruit, requested segment is preferred, and upgrade revenue uses client price.
+- [x] T4: assert all hard limits and conservation, zero actual/demand/capacity behavior, partial/unserved states, and reason precedence at processing time.
+- [x] T5: assert local residual/value and relevant changed-input behavior. A reference-price change affects residual value but not client order or export revenue; expected-mix changes affect comparisons but not actual supply.
+- [x] T6: complete parameterized invalid-ID/mode/segment/reference/mix/numeric/quantity/capacity cases, including missing structure and expected-capacity precision, with actionable errors.
+- [x] Use independently specified expected outcomes and intentionally constrained fixtures. Avoid tests that merely repeat the implementation's calculations.
+- [x] Fix failures, run the six groups, and create a meaningful engine/validation milestone commit with actual check results.
 
 Required baseline assertions: export 500 t; local 60 t, all D; export rate 500/560, displayed 89.3%; export revenue EUR 549,500; local value EUR 4,500; total EUR 554,000; three at-risk clients. C02 gets 40/50 t, C09 30/50 t, C08 20/50 t; the other seven are COMPLETE.
 
@@ -411,7 +411,7 @@ Do not pre-check these while writing documentation. Update each only after execu
 - [x] Step 02 — Domain and validation.
 - [x] Step 03 — Workbook and production comparisons.
 - [x] Step 04 — Planning engine.
-- [ ] Step 05 — Six core test groups.
+- [x] Step 05 — Six core test groups.
 - [ ] Step 06 — Routes and workspace state.
 - [ ] Step 07 — Overview.
 - [ ] Step 08 — Production.

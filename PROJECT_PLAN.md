@@ -372,5 +372,6 @@ Proposed next three production steps to describe, without implementing them in t
 - [x] Complete Step 02 domain contracts and validation.
 - [x] Complete Step 03 workbook loading, source-aware parsing, and production comparisons.
 - [x] Complete Step 04 deterministic planning policy, balances, residuals, KPIs, and focused T1–T5 checks.
+- [x] Complete Step 05 six meaningful core test groups, including the full parameterized T6 validation matrix.
 
-The next implementation step is to complete the six core test groups in Step 05. The current focused engine checks do not yet claim the full T6 validation matrix.
+The next implementation step is Step 06: connect planning routes and workspace state. Assistant checks remain intentionally pending until Step 13.

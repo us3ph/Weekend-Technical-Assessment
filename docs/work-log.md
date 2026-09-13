@@ -66,3 +66,17 @@ Record actual work and checks, not the schedule's estimates. Dates below use UTC
 - Verification also includes `git diff --check` and `sha256sum --check docs/source-checksums.sha256`; the supplied workbook, PDF, and preserved pack README remain unchanged. No live OpenRouter request was made; provider integration is outside this step.
 - Limitation: Step 05 still owns completion of the full six-group core matrix, including the remaining parameterized T6 validation cases. The planning route and browser workspace are not implemented yet.
 - Implementation milestone commit: `fd5f0bf` (`feat: implement deterministic planning policy`).
+
+## Step 05 — Six core test groups — 13 September 2026
+
+- Completed the six offline core groups with independently specified fixtures in `tests/core-groups.test.ts`; no routes, UI, assistant, or later-step features were started.
+- T1 now parses the supplied workbook and asserts all published KPIs, all ten client outcomes and shortage reasons, exact residual composition, and farm-segment trace conservation.
+- T2 covers price and ID ties, quality-fit before farm ID, unchanged snapshots, repeat-call determinism, and identical output after shuffling source rows.
+- T3 covers EXACT/MINIMUM compatibility, requested-quality preference, rejection of worse fruit, upgrade levels, and client-price revenue.
+- T4 covers demand/supply/station limits, 5 t units, per-farm-segment/global conservation, zero actual/demand/capacity cases, partial/unserved states, and shortage-reason precedence at processing time.
+- T5 covers residual trace/value, reference-price changes, expected-mix changes that affect comparisons without changing actual-supply allocation, and changed supply/demand/priority/capacity behavior.
+- T6 adds parameterized missing/duplicate IDs, invalid mode/segment/reference rows, incomplete references, bad mix fractions/totals, missing/string/nonfinite/negative numeric values, invalid quantities/capacity precision, station cardinality/parameters, and missing workbook headers. Assertions require source locations and corrective text.
+- Approximate active effort: 55 minutes, including requirements review, fixture/test implementation, two expectation corrections found by the first run, strict TypeScript fixes, and final checks. Idle wall-clock time is excluded.
+- Verification passed under Node.js 24.21.0 / npm 11.19.0: `npm test` (64 tests across 4 files), `npm run lint`, `npm run typecheck`, and `npm run build`. `git diff --check` and `sha256sum --check docs/source-checksums.sha256` also passed; all three preserved source hashes remain unchanged.
+- Limitation: the browser planning route/workspace and OpenRouter assistant remain unimplemented by design; live inference was not attempted because it is outside this step.
+- Milestone commit: to be recorded after the final verification commit.
