@@ -65,4 +65,4 @@ Record actual work and checks, not the schedule's estimates. Dates below use UTC
 - Verification passed under Node.js 24.21.0 / npm 11.19.0: `npm test` (25 tests), `npm run lint`, `npm run typecheck`, and `npm run build`. The build completed with the existing dynamic `/api/workbook` route. The first attempted test command included unsupported Vitest option `--runInBand`; the documented command then passed.
 - Verification also includes `git diff --check` and `sha256sum --check docs/source-checksums.sha256`; the supplied workbook, PDF, and preserved pack README remain unchanged. No live OpenRouter request was made; provider integration is outside this step.
 - Limitation: Step 05 still owns completion of the full six-group core matrix, including the remaining parameterized T6 validation cases. The planning route and browser workspace are not implemented yet.
-- Implementation milestone commit: `e0e70dc` (`feat: implement deterministic planning policy`).
+- Implementation milestone commit: `fd5f0bf` (`feat: implement deterministic planning policy`).
