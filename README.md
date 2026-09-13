@@ -4,7 +4,7 @@ A browser workspace for the daily Production–Commercial committee: compare exp
 
 ## Current status
 
-Step 07 adds a decision overview to the server-owned Load → Compare → Plan workspace. After loading, the first decision view separates source health from business impact, compares expected and actual tonnes, shows plan-dependent station/value/risk metrics honestly, and offers keyboard-operable exception selections for later detail views. Decision detail views, evidence, and the OpenRouter assistant remain later steps.
+Step 08 adds a connected Production view to the server-owned Load → Compare → Plan workspace. After loading, the decision overview can focus all 20 farm records on a segment, client, or local residual; each farm keeps planned capacity/mix separate from actual receipts and exposes keyboard-operable expected/actual, balance, residual, and served-client details. Commercial detail views, evidence, and the OpenRouter assistant remain later steps.
 
 Follow [steps.md](steps.md) one step at a time. The technical/business specification is in [PROJECT_PLAN.md](PROJECT_PLAN.md); actual progress and checks are recorded in [docs/work-log.md](docs/work-log.md).
 
@@ -71,7 +71,7 @@ Reload the workspace or request `http://localhost:3000/api/workbook` again after
 - The supplied workbook is the authoritative input. Computed results will remain transient; this single-snapshot assessment does not need database persistence.
 - OpenRouter will use native server-side `fetch`; the model will explain server-calculated facts and will never choose allocations or calculate KPIs.
 
-The current source is `src/app` (layout, root page, global/page CSS, and the workbook/plan routes), `src/components` (shared header, planning workspace, and decision overview), and `src/lib` (domain contracts, validation, workbook parsing, production calculations, planning, overview projection, and workspace state). Dependencies are exact-pinned in `package.json` with transitive versions captured in `package-lock.json`.
+The current source is `src/app` (layout, root page, global/page CSS, and the workbook/plan routes), `src/components` (shared header, planning workspace, decision overview, and Production view), and `src/lib` (domain contracts, validation, workbook parsing, production calculations, planning, overview and farm projections, and workspace state). Dependencies are exact-pinned in `package.json` with transitive versions captured in `package-lock.json`.
 
 ## Domain contract and validation
 
@@ -101,4 +101,4 @@ Use a separate workbook copy for future changed-input checks. Do not replace the
 
 ## Transparency
 
-This is an incomplete assessment implementation at Step 07. Workbook loading, validation, production comparisons, the deterministic planning engine, six core offline test groups, the planning route, the Load → Compare → Plan workspace, and the decision overview are available. Production/commercial drill-downs, the evidence catalog, and live AI integration remain for later steps. [The work log](docs/work-log.md) records AI coding assistance, actual checks, time evidence, and remaining work. The final delivery notes, clean-clone acceptance audit, and 3–5-minute walkthrough are scheduled in later steps.
+This is an incomplete assessment implementation at Step 08. Workbook loading, validation, production comparisons, the deterministic planning engine, six core offline test groups, the planning route, the Load → Compare → Plan workspace, the decision overview, and the farm-level Production view are available. The Commercial view, allocation/local trace, evidence catalog, and live AI integration remain for later steps. [The work log](docs/work-log.md) records AI coding assistance, actual checks, time evidence, and remaining work. The final delivery notes, clean-clone acceptance audit, and 3–5-minute walkthrough are scheduled in later steps.

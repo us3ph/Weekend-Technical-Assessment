@@ -1,0 +1,551 @@
+.productionView {
+  display: grid;
+  gap: 1.25rem;
+  scroll-margin-top: 1rem;
+}
+
+.viewHeader,
+.focusBar,
+.productionSummary,
+.farmCard {
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--surface);
+}
+
+.viewHeader {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.sectionKicker,
+.focusKicker,
+.detailKicker {
+  margin: 0 0 0.35rem;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.viewHeader h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.3;
+}
+
+.viewLead {
+  max-width: 48rem;
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.badge,
+.successBadge,
+.focusBadge {
+  display: inline-block;
+  padding: 0.25rem 0.7rem;
+  border-radius: 1rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.badge {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.successBadge {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.focusBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.1rem;
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.focusKicker {
+  display: block;
+  margin-bottom: 0.1rem;
+  color: var(--accent);
+  font-size: 0.65rem;
+}
+
+.focusBar strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.focusBar p {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.clearFocusButton,
+.clientButton,
+.segmentAnchor {
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.clearFocusButton {
+  flex: 0 0 auto;
+  padding: 0.35rem 0;
+  background: transparent;
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.productionSummary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+}
+
+.productionSummary div {
+  min-width: 0;
+  padding-inline: 0.7rem;
+  border-left: 1px solid var(--border);
+}
+
+.productionSummary div:first-child {
+  border-left: 0;
+}
+
+.productionSummary span,
+.summaryMetricLabel,
+.traceNote {
+  display: block;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.productionSummary strong {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.noFocusNote {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--warning-border);
+  border-radius: 0.65rem;
+  background: var(--warning-soft);
+  color: var(--warning);
+  font-size: 0.82rem;
+}
+
+.farmGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.farmCard {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.focusedFarm {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+.focusBadge {
+  position: absolute;
+  top: 0.85rem;
+  right: 3.1rem;
+  z-index: 1;
+  padding: 0.18rem 0.5rem;
+  background: var(--accent);
+  color: var(--surface);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.farmDetails {
+  min-width: 0;
+}
+
+.farmSummary {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(7rem, 0.65fr) minmax(10rem, 1fr) auto;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 10.5rem;
+  padding: 1rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.farmSummary::-webkit-details-marker {
+  display: none;
+}
+
+.farmSummary:hover {
+  background: var(--background);
+}
+
+.farmSummary:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.farmHeading,
+.farmSummaryMetrics {
+  min-width: 0;
+}
+
+.farmId {
+  display: inline-block;
+  margin-bottom: 0.25rem;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.farmHeading h4 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.farmHeading p {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.farmHeading p strong {
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.farmSummaryMetrics {
+  display: grid;
+  gap: 0.12rem;
+}
+
+.farmSummaryMetrics strong {
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.receiptStrip,
+.mixStrip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.receiptSegment,
+.mixStrip li {
+  min-width: 0;
+  padding: 0.35rem 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: 0.35rem;
+  background: var(--background);
+  text-align: center;
+}
+
+.receiptSegment span,
+.mixStrip span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.64rem;
+  font-weight: 800;
+}
+
+.receiptSegment strong,
+.mixStrip strong {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.summaryChevron {
+  align-self: start;
+  color: var(--accent);
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.farmDetails[open] .summaryChevron {
+  transform: rotate(45deg);
+}
+
+.detailBody {
+  display: grid;
+  gap: 1.1rem;
+  padding: 0 1rem 1.2rem;
+}
+
+.planBlock,
+.allocationBlock {
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.detailHeading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.detailKicker {
+  margin-bottom: 0.2rem;
+  font-size: 0.62rem;
+}
+
+.detailHeading h5 {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.3;
+}
+
+.detailHeading > strong {
+  flex: 0 0 auto;
+  font-size: 0.9rem;
+}
+
+.mixStrip {
+  max-width: 24rem;
+  margin-top: 0.7rem;
+}
+
+.traceNote {
+  padding-top: 0.1rem;
+  text-align: right;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.segmentTable,
+.clientTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.76rem;
+}
+
+.segmentTable th,
+.segmentTable td,
+.clientTable th,
+.clientTable td {
+  padding: 0.55rem 0.45rem;
+  border-bottom: 1px solid var(--border);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.segmentTable th:first-child,
+.segmentTable td:first-child,
+.clientTable th:first-child,
+.clientTable td:first-child {
+  text-align: left;
+}
+
+.segmentTable thead th,
+.clientTable thead th {
+  color: var(--muted);
+  font-size: 0.62rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.segmentTable tbody th,
+.clientTable tbody th {
+  font-weight: 800;
+}
+
+.plannedHeader,
+.plannedCell {
+  background: var(--accent-soft);
+}
+
+.actualHeader,
+.actualCell {
+  background: #f3f6f1;
+}
+
+.selectedSegmentRow th,
+.selectedSegmentRow td {
+  box-shadow: inset 0 2px 0 var(--accent), inset 0 -2px 0 var(--accent);
+}
+
+.segmentAnchor {
+  padding: 0.2rem 0.35rem;
+  border-radius: 0.3rem;
+  background: transparent;
+  color: var(--accent);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.segmentAnchor:hover {
+  background: var(--accent-soft);
+}
+
+.clientButton {
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.2rem 0.35rem;
+  border-radius: 0.3rem;
+  background: transparent;
+  color: var(--accent);
+  text-align: left;
+}
+
+.clientButton:hover {
+  background: var(--accent-soft);
+}
+
+.clientButton span {
+  font-weight: 800;
+}
+
+.clientButton small {
+  max-width: 8rem;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.65rem;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.detailEmpty {
+  margin: 0.7rem 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.negativeVariance {
+  color: var(--danger);
+}
+
+.positiveVariance {
+  color: var(--success);
+}
+
+.neutralVariance {
+  color: var(--muted);
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 1080px) {
+  .farmSummary {
+    grid-template-columns: minmax(0, 1.3fr) minmax(6.5rem, 0.7fr) minmax(9rem, 1fr) auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .viewHeader,
+  .focusBar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .productionSummary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .productionSummary div:nth-child(odd) {
+    border-left: 0;
+  }
+
+  .farmGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .farmSummary {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .farmSummaryMetrics,
+  .receiptStrip {
+    grid-column: 1 / -1;
+  }
+
+  .summaryChevron {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 420px) {
+  .productionSummary {
+    grid-template-columns: 1fr;
+  }
+
+  .productionSummary div,
+  .productionSummary div:nth-child(odd) {
+    border-left: 0;
+    border-top: 1px solid var(--border);
+    padding-top: 0.65rem;
+  }
+
+  .productionSummary div:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .receiptStrip {
+    gap: 0.15rem;
+  }
+
+  .farmSummary {
+    padding-inline: 0.75rem;
+  }
+
+  .detailBody {
+    padding-inline: 0.75rem;
+  }
+}

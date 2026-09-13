@@ -2,6 +2,7 @@
 
 import { useRef, useReducer, useState } from "react";
 import DecisionOverview from "@/components/DecisionOverview";
+import ProductionView from "@/components/ProductionView";
 import {
   initialWorkspaceState,
   workspaceReducer,
@@ -421,6 +422,13 @@ export default function PlanningWorkspace() {
         <div className={styles.contentStack}>
           <DataHealthPanel workbook={workbook} />
           <DecisionOverview
+            workbook={workbook}
+            plan={state.status === "planned" ? state.plan : undefined}
+            selection={selection}
+            onSelect={setSelection}
+            onClearSelection={() => setSelection(null)}
+          />
+          <ProductionView
             workbook={workbook}
             plan={state.status === "planned" ? state.plan : undefined}
             selection={selection}

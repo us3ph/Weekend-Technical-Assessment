@@ -1,6 +1,6 @@
 # Atlas Fresh — Step-by-step agent execution guide
 
-Status: Steps 01–07 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
+Status: Steps 01–08 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
 
 This guide implements [PROJECT_PLAN.md](PROJECT_PLAN.md), the planning file already present in this directory. There is no separate `plan.md`. Read that plan for the full business contract and source references. Use English throughout. The selected AI provider is **OpenRouter with free hosted models only**.
 
@@ -207,11 +207,11 @@ Exit condition: business situation and next inspection action are clear without 
 
 Objective: every farm's production gap and downstream allocation can be inspected.
 
-- [ ] Show all farm IDs/names, expected capacity/mix, actual A/B/C/D receipts, total variance, useful segment variances, and residual local tonnes.
-- [ ] Add keyboard-operable farm details for full expected/actual segment comparisons and the clients served by each farm.
-- [ ] Support selection from a segment or overview exception, and a clear reset of active filters. Reuse the same server result throughout.
-- [ ] Keep planned production visibly distinct from actual supply. Retain all farms, including zero-supply farms.
-- [ ] Prepare ID/segment anchors or a shared selection handler for later trace and assistant links.
+- [x] Show all farm IDs/names, expected capacity/mix, actual A/B/C/D receipts, total variance, useful segment variances, and residual local tonnes.
+- [x] Add keyboard-operable farm details for full expected/actual segment comparisons and the clients served by each farm.
+- [x] Support selection from a segment or overview exception, and a clear reset of active filters. Reuse the same server result throughout.
+- [x] Keep planned production visibly distinct from actual supply. Retain all farms, including zero-supply farms.
+- [x] Prepare ID/segment anchors or a shared selection handler for later trace and assistant links.
 
 Verification: inspect F01 and F04 A deficits (-6.5 t and -6.0 t), and F20's C deficit (-18.9 t) alongside actual D receipt. Check that displayed local balances reconcile with the engine.
 
@@ -414,7 +414,7 @@ Do not pre-check these while writing documentation. Update each only after execu
 - [x] Step 05 — Six core test groups.
 - [x] Step 06 — Routes and workspace state.
 - [x] Step 07 — Overview.
-- [ ] Step 08 — Production.
+- [x] Step 08 — Production.
 - [ ] Step 09 — Commercial.
 - [ ] Step 10 — Allocation/local trace.
 - [ ] Step 11 — Evidence and summaries.
