@@ -1,6 +1,6 @@
 # Atlas Fresh — Step-by-step agent execution guide
 
-Status: Step 01 is complete. Later steps have not started; unchecked tasks are not claims of completed work.
+Status: Steps 01–02 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
 
 This guide implements [PROJECT_PLAN.md](PROJECT_PLAN.md), the planning file already present in this directory. There is no separate `plan.md`. Read that plan for the full business contract and source references. Use English throughout. The selected AI provider is **OpenRouter with free hosted models only**.
 
@@ -93,15 +93,15 @@ Objective: all calculations receive valid, typed data with actionable source err
 
 Agent tasks:
 
-- [ ] Define types for segments, acceptance modes, farms, clients, station/reference prices, input snapshot/version, comparisons, allocations, balances, client outcomes, KPIs, and validation issues.
-- [ ] Distinguish source inputs from calculated outputs. Keep names and source sheet/row/cell metadata for clear error reporting.
-- [ ] Implement nonempty/unique farm and client IDs, one valid station, EXACT/MINIMUM mode checks, and A/B/C/D segment checks without hard-coding baseline IDs or counts.
-- [ ] Require all numeric fields to be present and finite. Require complete, unique A/B/C/D reference prices.
-- [ ] Validate each expected mix fraction in [0, 1] and a total of exactly 1 using the agreed decimal arithmetic. Expected capacity is nonnegative with at most one decimal place.
-- [ ] Validate actual A/B/C/D tonnes, demand, and station capacity as nonnegative multiples of 5. Do not apply that restriction to expected segment tonnes.
-- [ ] Validate nonnegative finite prices and local ratio in [0, 1], documenting these numeric-domain assumptions.
-- [ ] Return structured issues with sheet, entity ID when present, row/cell, field, and corrective text. For missing IDs, identify the row. Never silently repair input.
-- [ ] Document zero-demand clients as COMPLETE and undefined percentages at zero denominators as N/A. Begin T6 validation subcases.
+- [x] Define types for segments, acceptance modes, farms, clients, station/reference prices, input snapshot/version, comparisons, allocations, balances, client outcomes, KPIs, and validation issues.
+- [x] Distinguish source inputs from calculated outputs. Keep names and source sheet/row/cell metadata for clear error reporting.
+- [x] Implement nonempty/unique farm and client IDs, one valid station, EXACT/MINIMUM mode checks, and A/B/C/D segment checks without hard-coding baseline IDs or counts.
+- [x] Require all numeric fields to be present and finite. Require complete, unique A/B/C/D reference prices.
+- [x] Validate each expected mix fraction in [0, 1] and a total of exactly 1 using the agreed decimal arithmetic. Expected capacity is nonnegative with at most one decimal place.
+- [x] Validate actual A/B/C/D tonnes, demand, and station capacity as nonnegative multiples of 5. Do not apply that restriction to expected segment tonnes.
+- [x] Validate nonnegative finite prices and local ratio in [0, 1], documenting these numeric-domain assumptions.
+- [x] Return structured issues with sheet, entity ID when present, row/cell, field, and corrective text. For missing IDs, identify the row. Never silently repair input.
+- [x] Document zero-demand clients as COMPLETE and undefined percentages at zero denominators as N/A. Begin T6 validation subcases.
 
 Verification: valid representative inputs pass; missing/duplicate IDs, invalid modes/segments/mix, negatives, and non-5 t quantities fail with useful locations. Keep domain modules independent of React and network calls.
 
@@ -408,7 +408,7 @@ Use this table during Step 15 and before submission. A row is complete only when
 Do not pre-check these while writing documentation. Update each only after executing its exit checks; retain separate pending subitems for unverified live inference or delivery actions.
 
 - [x] Step 01 — Foundation.
-- [ ] Step 02 — Domain and validation.
+- [x] Step 02 — Domain and validation.
 - [ ] Step 03 — Workbook and production comparisons.
 - [ ] Step 04 — Planning engine.
 - [ ] Step 05 — Six core test groups.

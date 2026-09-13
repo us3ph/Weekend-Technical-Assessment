@@ -30,3 +30,14 @@ Record actual work and checks, not the schedule's estimates. Dates below use UTC
 - npm install emitted a warning about an unapproved optional `unrs-resolver` postinstall script; it did not affect the verified checks. ESLint 9.39.5 emits a deprecation warning, documented in the README, because the Next.js React plugin's declared peer range excludes ESLint 10.
 - Approximate active effort for Step 01: 1 hour 15 minutes, including the workbook-reader compatibility investigation, setup, documentation, checks, and cleanup. An interruption/overnight wall-clock gap is excluded. The candidate should revise this estimate if their own timer differs.
 - Step 01 exit condition passed. The next step is Step 02, domain contracts and validation; it was not executed as part of Step 01.
+
+## Step 02 — Domain contracts and server validation — 13 September 2026
+
+- Completed the domain contract and validation step. Approximate active effort: 35 minutes, including implementation, fixture correction, documentation, and verification; no idle wall-clock time is included.
+- Added `src/lib/types.ts` with source-backed raw records, validated farm/client/station/reference inputs, content-version and snapshot contracts, calculated comparison/allocation/balance/outcome/KPI shapes, and structured validation issues. Source inputs and calculated outputs are separate types.
+- Added `src/lib/validation.ts`, a React/network-independent Zod structure gate and Decimal-based validator. It validates IDs, station cardinality, modes, A/B/C/D segments and reference uniqueness, finite numeric values, mix bounds/exact totals, expected-capacity precision, 5 t quantity rules, prices, and local ratio. It never coerces or repairs invalid input and includes sheet/row/cell/entity/field/corrective metadata in issues.
+- Added `tests/validation.test.ts` with 15 focused checks covering a valid representative snapshot, source metadata, duplicate/missing IDs, invalid modes/segments, reference/station errors, mix arithmetic, negative/non-finite values, capacity precision, non-5 t quantities, non-mutation, and the initial T6 subcases. Zero-demand `COMPLETE` and zero-denominator `N/A` behavior are documented in the contracts and README for later result/UI work.
+- Updated `README.md`, `steps.md`, and `PROJECT_PLAN.md` to reflect the Step 02 boundary and current validation coverage. Step 03 workbook parsing and production comparisons were not started.
+- Verification passed: `npm test` (15 tests), `npm run lint`, `npm run typecheck`, `git diff --check`, and `sha256sum --check docs/source-checksums.sha256` (workbook, PDF, and preserved README all OK).
+- Limitation: the validator accepts optional source metadata for small unit fixtures and supplies a fallback sheet/row; the Step 03 loader must provide exact source cell addresses. No workbook route, planning engine, browser integration, or OpenRouter request was added.
+- Commit: to be recorded after the final scope review.

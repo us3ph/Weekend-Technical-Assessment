@@ -4,7 +4,7 @@ A browser workspace for the daily Production–Commercial committee: compare exp
 
 ## Current status
 
-Step 01 establishes the application foundation: an English workspace preview, pinned tooling, configuration templates, and preserved assessment materials. Workbook loading, validation, allocation, business views, and the OpenRouter assistant are not implemented yet. The page shows no invented results.
+Step 02 establishes the shared domain contracts and server-side validation: source-backed records retain workbook locations, valid inputs become typed immutable data, and invalid values return actionable structured issues. Workbook loading, allocation, business views, and the OpenRouter assistant are not implemented yet. The page shows no invented results.
 
 Follow [steps.md](steps.md) one step at a time. The technical/business specification is in [PROJECT_PLAN.md](PROJECT_PLAN.md); actual progress and checks are recorded in [docs/work-log.md](docs/work-log.md).
 
@@ -33,11 +33,11 @@ Run from the repository root after `npm ci`:
 | --- | --- |
 | `npm run lint` | Next.js/TypeScript lint checks; warnings fail the check. |
 | `npm run typecheck` | Generate Next.js route types and run strict TypeScript checks. |
-| `npm test` | Run Vitest once; currently reports no test files and exits 1. |
+| `npm test` | Run the current Vitest validation suite once. |
 | `npm run build` | Build the production application. |
 | `npm start` | Serve the existing production build on port 3000. |
 
-Stop the development server before serving production on the same port. Tests are deliberately not configured to pass with no tests: domain/validation coverage begins in Step 02 and is completed in Step 05; assistant checks arrive in Step 13. Step 01 smoke checks are recorded separately, not represented as domain coverage.
+Stop the development server before serving production on the same port. Validation coverage begins in Step 02 and is completed across the core test groups in Step 05; assistant checks arrive in Step 13. Step 01 smoke checks are recorded separately, not represented as domain coverage.
 
 ## Configuration
 
@@ -47,18 +47,24 @@ No environment file is required for the current application. `.env.example` docu
 - `OPENROUTER_MODEL`: defaults to `openrouter/free`; the planned integration permits free hosted models only.
 - `WORKBOOK_PATH`: future server-only override for a separate edited XLSX copy. Leave it unset to use the supplied root workbook when Step 03 implements loading.
 
-These settings are placeholders in Step 01. No workbook or inference request is performed yet. Later OpenRouter use will require internet and an API key; the core planner and honest deterministic summary will remain available without a key. Free-model quotas and availability will be handled in the integration step.
+These settings remain placeholders until the workbook and assistant steps. No workbook or inference request is performed yet. Later OpenRouter use will require internet and an API key; the core planner and honest deterministic summary will remain available without a key. Free-model quotas and availability will be handled in the integration step.
 
 ## Architecture and choices
 
 - Next.js App Router with React and TypeScript keeps the interface and future server routes in one application with one install/start path.
 - CSS Modules and system fonts provide a small, maintainable visual foundation without a UI framework or build-time font download.
-- Future `src/lib` modules will isolate read-excel-file parsing, Zod validation, integer 5 t allocation units, decimal.js arithmetic, and grounded evidence from React and HTTP.
-- Vitest is configured for `tests/**/*.test.ts` in a Node environment. Domain modules and their tests will be created when implemented, rather than filled with placeholder code.
+- `src/lib/types.ts` defines source-backed inputs separately from calculated outputs; `src/lib/validation.ts` applies Zod structure checks and Decimal-based domain rules without importing React, Next.js, or network code. Future modules will add workbook parsing, allocation, and grounded evidence.
+- Vitest is configured for `tests/**/*.test.ts` in a Node environment. The current validation suite covers representative valid data and the initial T6 invalid-input subcases; the remaining core groups are scheduled for Step 05.
 - The supplied workbook is the authoritative input. Computed results will remain transient; this single-snapshot assessment does not need database persistence.
 - OpenRouter will use native server-side `fetch`; the model will explain server-calculated facts and will never choose allocations or calculate KPIs.
 
-The current source is `src/app` (layout, root page, global/page CSS) and `src/components` (shared header). Dependencies are exact-pinned in `package.json` with transitive versions captured in `package-lock.json`.
+The current source is `src/app` (layout, root page, global/page CSS), `src/components` (shared header), and `src/lib` (domain contracts and validation). Dependencies are exact-pinned in `package.json` with transitive versions captured in `package-lock.json`.
+
+## Domain contract and validation
+
+`src/lib/validation.ts` accepts normalized source rows with unknown values and returns either a typed input snapshot or source-aware validation issues. Farms, clients, station parameters, and reference prices retain their source sheet, row, and cell metadata. Calculated comparisons, allocations, balances, outcomes, and KPIs have separate output types in `src/lib/types.ts`, so source inputs cannot be confused with later results.
+
+The validator rejects missing/non-finite numbers, duplicate or blank IDs, unsupported modes or segments, incomplete/duplicate references, invalid mix totals, negative values, invalid precision, and quantities that are not multiples of 5 t. Expected mix totals use `decimal.js` equality. A zero-demand client is treated as `COMPLETE`; ratios whose denominator is zero are represented as `null` and must be shown as `N/A` by later views.
 
 The workbook reader is [read-excel-file](https://github.com/catamphetamine/read-excel-file). A dependency smoke check confirmed that its Node entry point reads the original workbook's XML namespaces, row positions, IDs, and numbers without modifying the file. This replaces the initial ExcelJS choice, which failed on that workbook. The application loader itself is still scheduled for Step 03.
 
@@ -82,4 +88,4 @@ Use a separate workbook copy for future changed-input checks. Do not replace the
 
 ## Transparency
 
-This is an incomplete assessment implementation at Step 01. There is no planning engine, business test coverage, or live AI integration yet. [The work log](docs/work-log.md) records AI coding assistance, actual checks, time evidence, and remaining work. The final delivery notes, clean-clone acceptance audit, and 3–5-minute walkthrough are scheduled in later steps.
+This is an incomplete assessment implementation at Step 02. There is no workbook loader, planning engine, business UI, or live AI integration yet. [The work log](docs/work-log.md) records AI coding assistance, actual checks, time evidence, and remaining work. The final delivery notes, clean-clone acceptance audit, and 3–5-minute walkthrough are scheduled in later steps.

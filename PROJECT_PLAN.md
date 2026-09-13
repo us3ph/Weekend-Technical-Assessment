@@ -1,6 +1,6 @@
 # Atlas Fresh — Daily Apple Export Planner: Project Plan
 
-Status: Step 01 application foundation is complete; later implementation steps have not started.
+Status: Steps 01–02 application foundation and domain validation are complete; later implementation steps have not started.
 
 Execution guide: [steps.md](steps.md) translates this plan into individually executable agent tasks. The selected model provider is OpenRouter, using free hosted models only.
 
@@ -369,6 +369,6 @@ Proposed next three production steps to describe, without implementing them in t
 - [x] Select OpenRouter free hosted inference and add the email's five evaluation criteria.
 - [x] Create the ordered agent execution guide in `steps.md`.
 - [x] Complete Step 01 application foundation: runnable Next.js shell, pinned tooling, preserved materials, and documented checks.
-- [ ] Continue with Step 02 domain contracts and validation.
+- [x] Complete Step 02 domain contracts and validation.
 
-The next implementation step is project setup followed by the server workbook loader and validation. No unresolved inconsistency in the supplied materials blocks that work.
+The next implementation step is the server workbook loader and production comparisons. No unresolved inconsistency in the supplied materials blocks that work.
