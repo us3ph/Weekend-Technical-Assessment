@@ -40,4 +40,4 @@ Record actual work and checks, not the schedule's estimates. Dates below use UTC
 - Updated `README.md`, `steps.md`, and `PROJECT_PLAN.md` to reflect the Step 02 boundary and current validation coverage. Step 03 workbook parsing and production comparisons were not started.
 - Verification passed: `npm test` (15 tests), `npm run lint`, `npm run typecheck`, `git diff --check`, and `sha256sum --check docs/source-checksums.sha256` (workbook, PDF, and preserved README all OK).
 - Limitation: the validator accepts optional source metadata for small unit fixtures and supplies a fallback sheet/row; the Step 03 loader must provide exact source cell addresses. No workbook route, planning engine, browser integration, or OpenRouter request was added.
-- Commit: to be recorded after the final scope review.
+- Commit: `e10fc7f` (`feat: add domain contracts and validation`).
