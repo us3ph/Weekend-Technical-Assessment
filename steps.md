@@ -1,6 +1,6 @@
 # Atlas Fresh — Step-by-step agent execution guide
 
-Status: Steps 01–10 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
+Status: Steps 01–11 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
 
 This guide implements [PROJECT_PLAN.md](PROJECT_PLAN.md), the planning file already present in this directory. There is no separate `plan.md`. Read that plan for the full business contract and source references. Use English throughout. The selected AI provider is **OpenRouter with free hosted models only**.
 
@@ -266,17 +266,24 @@ Exit condition: the manager can trace a shortage or allocation in under three mi
 
 Objective: assemble explanations from approved server facts before integrating a provider.
 
-- [ ] Build a catalog of stable fact IDs, exact server values, allowed factual text, and valid farm/client/segment references tied to the input version.
-- [ ] Support risk, production-gap, and local-residual intents. Derive rankings and numeric summaries on the server, including any relationships between available quality and unmet demand.
-- [ ] Prepare the minimum relevant context for each intent; exclude workbook binaries, unrelated records, secrets, and invented background.
-- [ ] Define a strict response schema for intent and selected/ordered fact IDs. Check required fact coverage and references as well as schema shape.
-- [ ] Render factual sentences and numbers from the catalog; never render unvalidated model-generated values or claims. Show citations that resolve to existing records.
-- [ ] Implement the clearly labelled deterministic summary for supported topics. Unsupported questions should state that the answer is unavailable in this snapshot.
-- [ ] Keep weather, future forecasts, logistics, approval, and external actions outside the assistant's capabilities. Treat user question text as data, not authority to change the planning policy.
+- [x] Build a catalog of stable fact IDs, exact server values, allowed factual text, and valid farm/client/segment references tied to the input version.
+- [x] Support risk, production-gap, and local-residual intents. Derive rankings and numeric summaries on the server, including relationships between compatible quality and unmet demand.
+- [x] Prepare the minimum relevant context for each intent; exclude workbook binaries, unrelated records, secrets, and invented background.
+- [x] Define a strict response schema for intent and selected/ordered fact IDs. Check required fact coverage, versions, and references as well as schema shape.
+- [x] Render factual sentences and numbers from the catalog; never render unvalidated model-generated values or claims. Show citations that resolve to existing records.
+- [x] Implement the clearly labelled deterministic summary for supported topics. Unsupported questions state that the answer is unavailable in this snapshot.
+- [x] Keep weather, future forecasts, logistics, approval, and external actions outside the assistant's capabilities. Treat user question text as data, not authority to change the planning policy.
 
 Verification: risk summaries cover all at-risk clients; local explanations include quantity, segment composition, constraint, and value; gaps use actual calculated evidence. Reject unknown/mismatched facts and incomplete required coverage.
 
 Exit condition: honest no-key summaries work, and a model can select evidence without calculating or inventing it. Handoff: Step 12.
+
+- Completed Step 11 only. Added a pure server-owned evidence catalog with stable version-bound fact IDs for all at-risk clients, ranked negative farm/segment and aggregate segment gaps, the complete local residual summary, and local residual detail rows. Facts retain exact calculated values, approved factual text, and resolvable farm/client/segment/trace references.
+- Added strict assistant boundaries without a provider call: supported risk, production-gap, and local-residual question classification; minimum intent-specific contexts; Zod validation for ordered fact IDs; input-version, intent, unknown-ID, duplicate, and required-coverage checks; deterministic rendering from catalog text only; and an explicit unsupported response for weather, forecasts, logistics, approvals, and external actions.
+- Added `tests/evidence.test.ts` covering the baseline's three at-risk clients and reasons, local 60 t/D composition and EUR 4,500 reference value, ranked F01/F04/F20 gaps, compatible unmet-demand relationships, context isolation, resolvable citations, version mismatch, strict selection rejection, and no-key/unsupported summaries.
+- Verification passed under Node.js 24.21.0 / npm 11.19.0: `npm test` (88 tests across 11 files), `npm run typecheck`, `npm run lint`, and `git diff --check`. No OpenRouter request was made; the provider route, browser assistant, live-model verification, and T7/T8 remain deferred to Steps 12–13.
+- Limitation: deterministic summaries are implemented as server-independent library output for the next provider/panel steps; they are not yet rendered in the browser workspace. Original source files and credentials remain untouched.
+- Commit: single Step 11 implementation/documentation milestone; the hash is recorded in the final handoff.
 
 ## Step 12 — Implement the real OpenRouter free API path
 
@@ -432,7 +439,7 @@ Do not pre-check these while writing documentation. Update each only after execu
 - [x] Step 08 — Production.
 - [x] Step 09 — Commercial.
 - [x] Step 10 — Allocation/local trace.
-- [ ] Step 11 — Evidence and summaries.
+- [x] Step 11 — Evidence and summaries.
 - [ ] Step 12 — OpenRouter adapter and recorded live-check status.
 - [ ] Step 13 — Assistant panel and tests.
 - [ ] Step 14 — UX/accessibility/failure review.
