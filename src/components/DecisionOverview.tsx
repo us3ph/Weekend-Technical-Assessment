@@ -119,7 +119,12 @@ function ComparisonTable({
   readonly onSelectSegment: (segment: Segment) => void;
 }) {
   return (
-    <div className={styles.tableWrap}>
+    <div
+      className={styles.tableWrap}
+      role="region"
+      aria-label="Expected and actual tonnes by segment table"
+      tabIndex={0}
+    >
       <table className={styles.comparisonTable}>
         <caption className={styles.visuallyHidden}>Expected and actual tonnes by segment</caption>
         <thead>

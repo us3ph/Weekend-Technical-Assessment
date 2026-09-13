@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, type SyntheticEvent } from "react";
 import { deriveProductionFarmFacts, segmentBalance, type ProductionFarmFacts } from "@/lib/production";
 import { SEGMENTS, type PlanningResult, type Segment, type WorkbookData } from "@/lib/types";
 import type { WorkspaceSelection } from "@/lib/workspace";
@@ -150,7 +150,12 @@ function ClientAllocations({
   }
 
   return (
-    <div className={styles.tableWrap}>
+    <div
+      className={styles.tableWrap}
+      role="region"
+      aria-label={`Clients served by ${facts.farm.farmId} table`}
+      tabIndex={0}
+    >
       <table className={styles.clientTable}>
         <caption className={styles.visuallyHidden}>{`Clients served by ${facts.farm.farmId}`}</caption>
         <thead>
@@ -202,9 +207,15 @@ function FarmDetail({
   readonly selectedSegmentValue?: Segment;
   readonly onSelect: (selection: WorkspaceSelection) => void;
 }) {
+  const summaryRef = useRef<HTMLElement | null>(null);
+
+  function handleToggle(event: SyntheticEvent<HTMLDetailsElement>): void {
+    if (!event.currentTarget.open) summaryRef.current?.focus();
+  }
+
   return (
-    <details className={styles.farmDetails}>
-      <summary className={styles.farmSummary}>
+    <details className={styles.farmDetails} onToggle={handleToggle}>
+      <summary ref={summaryRef} className={styles.farmSummary}>
         <div className={styles.farmHeading}>
           <span className={styles.farmId}>{facts.farm.farmId}</span>
           <h4>{facts.farm.farmName}</h4>
@@ -240,7 +251,12 @@ function FarmDetail({
           <ExpectedMix facts={facts} />
         </div>
 
-        <div className={styles.tableWrap}>
+        <div
+          className={styles.tableWrap}
+          role="region"
+          aria-label={`Expected and actual production for ${facts.farm.farmId} table`}
+          tabIndex={0}
+        >
           <table className={styles.segmentTable}>
             <caption className={styles.visuallyHidden}>{`Expected and actual production for ${facts.farm.farmId}`}</caption>
             <thead>
@@ -337,6 +353,7 @@ function FarmCard({
     <article
       id={farmAnchor(facts.farm.farmId)}
       className={`${styles.farmCard} ${focused ? styles.focusedFarm : ""}`}
+      tabIndex={-1}
     >
       {focused ? <span className={styles.focusBadge}>Focus</span> : null}
       <FarmDetail
@@ -369,11 +386,22 @@ export default function ProductionView({
 
   useEffect(() => {
     if (selection === null) return;
-    document.getElementById("production-view")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const view = document.getElementById("production-view");
+    if (!(view instanceof HTMLElement)) return;
+    view.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "start",
+    });
+    view.focus({ preventScroll: true });
   }, [selection]);
 
   return (
-    <section id="production-view" className={styles.productionView} aria-labelledby="production-view-title">
+    <section
+      id="production-view"
+      className={styles.productionView}
+      aria-labelledby="production-view-title"
+      tabIndex={-1}
+    >
       <div className={styles.viewHeader}>
         <div>
           <p className={styles.sectionKicker}>Inspect · Production</p>
@@ -387,7 +415,7 @@ export default function ProductionView({
         </span>
       </div>
 
-      <div className={styles.focusBar} role="status" aria-live="polite">
+      <div className={styles.focusBar} role="status" aria-live="polite" aria-atomic="true">
         <div>
           <span className={styles.focusKicker}>Active focus</span>
           <strong>{focusLabel(facts, selection)}</strong>
@@ -404,7 +432,7 @@ export default function ProductionView({
         ) : null}
       </div>
 
-      <div className={styles.productionSummary} aria-label="Production view totals">
+      <div className={styles.productionSummary} role="group" aria-label="Production view totals">
         <div>
           <span>Farms in source</span>
           <strong>{facts.length}</strong>

@@ -1,6 +1,6 @@
 # Atlas Fresh — Step-by-step agent execution guide
 
-Status: Steps 01–13 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
+Status: Steps 01–14 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
 
 This guide implements [PROJECT_PLAN.md](PROJECT_PLAN.md), the planning file already present in this directory. There is no separate `plan.md`. Read that plan for the full business contract and source references. Use English throughout. The selected AI provider is **OpenRouter with free hosted models only**.
 
@@ -341,17 +341,26 @@ Exit condition: the Explain journey is complete with honest provenance and recov
 
 Objective: finish the mandatory UX details across the full workspace.
 
-- [ ] Review at 1024 px and 1440 px. Keep key decisions visible; put the assistant beside the content at wider sizes and below when space is limited.
-- [ ] Prevent page-wide overflow. Give dense detail tables contained scrolling and keep important labels/values legible.
-- [ ] Verify keyboard navigation, visible focus, button/input labels, headings, table semantics, expandable rows, and evidence navigation; restore focus predictably after closing details.
-- [ ] Check contrast and ensure statuses/variances are communicated with text/signs as well as color. Announce errors and loading results appropriately.
-- [ ] Exercise unloaded, loading, loaded/unplanned, planning, valid zero-data, validation-error, source/server-error, stale-result, no-key, provider-failure, and successful-result states.
-- [ ] Verify Retry/Reload/Reset preserve useful context without mixing snapshots. Ensure the page never claims data is valid when validation failed or displays placeholder results as real results.
-- [ ] Simplify visual extras if needed; prioritize the connected decision journey and make a working UX milestone commit.
+- [x] Review at 1024 px and 1440 px. Keep key decisions visible; put the assistant beside the content at wider sizes and below when space is limited.
+- [x] Prevent page-wide overflow. Give dense detail tables contained scrolling and keep important labels/values legible.
+- [x] Verify keyboard navigation, visible focus, button/input labels, headings, table semantics, expandable rows, and evidence navigation; restore focus predictably after closing details.
+- [x] Check contrast and ensure statuses/variances are communicated with text/signs as well as color. Announce errors and loading results appropriately.
+- [x] Exercise unloaded, loading, loaded/unplanned, planning, valid zero-data, validation-error, source/server-error, stale-result, no-key, provider-failure, and successful-result states.
+- [x] Verify Retry/Reload/Reset preserve useful context without mixing snapshots. Ensure the page never claims data is valid when validation failed or displays placeholder results as real results.
+- [x] Simplify visual extras if needed; prioritize the connected decision journey and make a working UX milestone commit.
 
-Verification: perform Load → Compare → Plan → Decide → Explain with keyboard use at both widths, then provoke and recover from representative failures.
+Verification: passed under Node.js 24.21.0 / npm 11.19.0 with the full Load → Compare → Plan → Decide → Explain workflow at 1024 px and 1440 px. Chrome keyboard probes passed disclosure open/close focus restoration, destination focus after evidence selection, labelled tables/scroll regions, and zero unnamed buttons/captionless tables. Browser fixtures passed unloaded/loading, valid zero-data, validation 422, source/server 500, stale plan 409, no-key deterministic answer, provider failure, and retry/recovery states. `npm test`, `npm run typecheck`, `npm run lint`, `npm run build`, `git diff --check`, and original-source checksum verification passed. A real screen-reader session was not performed; native landmarks, headings, tables, status/alert semantics, and keyboard behavior were checked in Chrome, and this remains a precise manual-review limitation.
 
-Exit condition: mandatory UX states and accessibility checks are recorded as passed or with precise remaining issues. Handoff: Step 15.
+Exit condition: mandatory UX states and accessibility checks are recorded as passed with the screen-reader limitation above. Handoff: Step 15.
+
+### Step 14 completion record — 13 September 2026
+
+- Completed Step 14 only. Approximate active effort: 45 minutes, including the repository/Next.js accessibility-guide review, browser review, focused implementation, state probes, strict checks, and documentation; idle wall-clock time is excluded.
+- Added a wide-layout grid that places the assistant beside the trace at 1440 px and returns it below the workspace at 1024 px. Added contained, keyboard-focusable labelled regions for dense tables, reduced-motion-aware destination scrolling, predictable focus restoration after closing farm/client/conservation disclosures, and focusable destination view landmarks.
+- Strengthened loading, focus, selection, answer, cooldown, invalid-data, server-error, stale-result, and assistant failure announcements with native status/alert semantics and atomic updates. Non-2xx assistant responses explicitly state that no model answer was used.
+- Browser review passed at 1024 px and 1440 px with document width equal to the viewport, correct assistant placement, no unnamed buttons, captions on all tables, labelled scroll regions, keyboard disclosure/focus checks, and selection navigation. Response fixtures exercised unloaded, loading, valid zero-data, validation-error, source/server-error, stale-result, no-key, provider-failure, deterministic successful-result, and recovery states without editing the authoritative workbook.
+- Remaining limitation: no real screen-reader session was run; live successful OpenRouter inference remains unverified because the earlier configured smoke returned `TRUNCATED_OUTPUT`. The next step is Step 15.
+- Commit: final single Step 14 implementation/documentation milestone; the hash is reported in the handoff.
 
 ## Step 15 — Audit every acceptance criterion and changed inputs
 
@@ -458,7 +467,7 @@ Do not pre-check these while writing documentation. Update each only after execu
 - [x] Step 11 — Evidence and summaries.
 - [x] Step 12 — OpenRouter adapter and recorded live-check status (live inference unverified without a private key).
 - [x] Step 13 — Assistant panel and tests (live inference remains unverified without a private key).
-- [ ] Step 14 — UX/accessibility/failure review.
+- [x] Step 14 — UX/accessibility/failure review (screen-reader session not performed; live inference remains unverified).
 - [ ] Step 15 — Acceptance and changed inputs.
 - [ ] Step 16 — Clean-clone proof.
 - [ ] Step 17 — README and transparency.

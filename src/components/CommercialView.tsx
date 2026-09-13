@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type SyntheticEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type SyntheticEvent } from "react";
 import {
   deriveCommercialClientFacts,
   explainClientOutcome,
@@ -85,7 +85,7 @@ function FocusBar({
   readonly onClearSelection: () => void;
 }) {
   return (
-    <div className={styles.focusBar} role="status" aria-live="polite">
+    <div className={styles.focusBar} role="status" aria-live="polite" aria-atomic="true">
       <div>
         <span className={styles.focusKicker}>Active focus</span>
         <strong>{clientFocusLabel(facts, selection, workbook)}</strong>
@@ -126,7 +126,12 @@ function AllocationTable({
   }
 
   return (
-    <div className={styles.tableWrap}>
+    <div
+      className={styles.tableWrap}
+      role="region"
+      aria-label="Supplying farm-segment allocations table"
+      tabIndex={0}
+    >
       <table className={styles.allocationTable}>
         <caption className={styles.visuallyHidden}>Supplying farm-segment allocations</caption>
         <thead>
@@ -248,9 +253,11 @@ function ClientCard({
     (selection?.kind === "allocation" && facts.allocations.some((allocation) => allocation.allocationId === selection.allocationId));
   const focused = isCommercialFocus(facts, selection);
   const [expanded, setExpanded] = useState(selected);
+  const summaryRef = useRef<HTMLElement | null>(null);
 
   function handleToggle(event: SyntheticEvent<HTMLDetailsElement>): void {
     setExpanded(event.currentTarget.open);
+    if (!event.currentTarget.open) summaryRef.current?.focus();
   }
 
   const outcome = facts.outcome;
@@ -261,7 +268,7 @@ function ClientCard({
     <article id={`client-${facts.client.clientId}`} className={summaryClass}>
       {focused ? <span className={styles.focusBadge}>Focus</span> : null}
       <details className={styles.clientDetails} open={expanded || selected} onToggle={handleToggle}>
-        <summary className={styles.clientSummary}>
+        <summary ref={summaryRef} className={styles.clientSummary}>
           <div className={styles.clientIdentity}>
             <span className={styles.clientId}>{facts.client.clientId}</span>
             <h4>{facts.client.clientName}</h4>
@@ -396,11 +403,22 @@ export default function CommercialView({
 
   useEffect(() => {
     if (selection?.kind !== "client") return;
-    document.getElementById("commercial-view")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const view = document.getElementById("commercial-view");
+    if (!(view instanceof HTMLElement)) return;
+    view.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "start",
+    });
+    view.focus({ preventScroll: true });
   }, [selection]);
 
   return (
-    <section id="commercial-view" className={styles.commercialView} aria-labelledby="commercial-view-title">
+    <section
+      id="commercial-view"
+      className={styles.commercialView}
+      aria-labelledby="commercial-view-title"
+      tabIndex={-1}
+    >
       <div className={styles.viewHeader}>
         <div>
           <p className={styles.sectionKicker}>Inspect · Commercial</p>
@@ -421,7 +439,7 @@ export default function CommercialView({
         onClearSelection={onClearSelection}
       />
 
-      <div className={styles.commercialSummary} aria-label="Commercial view totals">
+      <div className={styles.commercialSummary} role="group" aria-label="Commercial view totals">
         <div>
           <span>Clients in source</span>
           <strong>{facts.length}</strong>

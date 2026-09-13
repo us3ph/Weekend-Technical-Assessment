@@ -49,6 +49,7 @@
   flex-wrap: wrap;
   justify-content: end;
   gap: 0.65rem;
+  min-width: 0;
 }
 
 .primaryButton,
@@ -201,6 +202,10 @@
 .contentStack {
   display: grid;
   gap: 1.25rem;
+}
+
+.contentStack > * {
+  min-width: 0;
 }
 
 .decisionStack {
@@ -422,8 +427,16 @@
 }
 
 .tableWrap {
+  max-width: 100%;
   margin-top: 1.15rem;
   overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+.tableWrap:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
 }
 
 .comparisonTable {
@@ -634,6 +647,28 @@
   .selectionBanner {
     align-items: start;
     flex-direction: column;
+  }
+}
+
+@media (min-width: 1180px) {
+  .contentStack {
+    grid-template-columns: minmax(0, 1.55fr) minmax(20rem, 0.8fr);
+    align-items: start;
+  }
+
+  .contentStack > :nth-child(-n + 4) {
+    grid-column: 1 / -1;
+  }
+
+  .contentStack > :nth-child(5) {
+    grid-column: 1;
+  }
+
+  .contentStack > :nth-child(6) {
+    grid-column: 2;
+    grid-row: 5;
+    position: sticky;
+    top: 1rem;
   }
 }
 

@@ -381,5 +381,6 @@ Proposed next three production steps to describe, without implementing them in t
 - [x] Complete Step 11 evidence catalog, intent-specific contexts, strict fact selection validation, and deterministic no-key summaries.
 - [x] Complete Step 12 free-only OpenRouter adapter, authoritative assistant route, strict output validation, sanitized failures, deterministic fallback, and mocked provider checks. Live inference remains unverified without a private key.
 - [x] Complete Step 13 browser assistant panel, three suggested questions, bounded free-text input, grounded answer/citation rendering, stale/failure/cooldown states, and T7/T8 assistant groups. A live smoke returned `TRUNCATED_OUTPUT`, so successful live inference remains unverified.
+- [x] Complete Step 14 responsive/accessibility/failure-state review: target widths, assistant placement, contained table scrolling, keyboard/focus behavior, status announcements, and representative recovery states. A real screen-reader session remains unperformed; live successful inference remains unverified.
 
-The next implementation step is Step 14: review responsive behavior, accessibility, and failure states across the full workspace. Later acceptance and delivery checks remain pending.
+The next implementation step is Step 15: audit acceptance criteria and changed-input behavior. Later clean-clone and delivery checks remain pending.

@@ -197,6 +197,13 @@ function responseErrorText(value: unknown, fallback: string): string {
     : fallback;
 }
 
+function honestRequestFailure(value: unknown, fallback: string): string {
+  const message = responseErrorText(value, fallback);
+  return message.includes("No model answer was used")
+    ? message
+    : `${message} No model answer was used.`;
+}
+
 async function responseBody(response: Response): Promise<unknown> {
   try {
     return await response.json();
@@ -405,7 +412,7 @@ export default function AssistantPanel({
         setPanelError({
           kind: "request",
           title: response.status === 422 ? "Source data needs attention" : "Assistant request failed",
-          message: responseErrorText(body, "The assistant could not prepare a grounded response. Try again."),
+          message: honestRequestFailure(body, "The assistant could not prepare a grounded response. Try again."),
         });
         return;
       }
@@ -472,7 +479,7 @@ export default function AssistantPanel({
         </span>
       </div>
 
-      <div className={styles.suggestionGrid} aria-label="Suggested assistant questions">
+      <div className={styles.suggestionGrid} role="group" aria-label="Suggested assistant questions">
         {suggestions.map((suggestion) => (
           <button
             key={suggestion}
@@ -514,13 +521,13 @@ export default function AssistantPanel({
       </form>
 
       {cooldownRemaining > 0 ? (
-        <p className={styles.cooldown} role="status">
+        <p className={styles.cooldown} role="status" aria-atomic="true">
           OpenRouter rate limit received. Retry is available in {formatCooldown(cooldownRemaining)}; no automatic retry will run.
         </p>
       ) : null}
 
       {status === "loading" ? (
-        <div className={styles.loading} role="status" aria-live="polite">
+        <div className={styles.loading} role="status" aria-live="polite" aria-atomic="true">
           <span className={styles.loadingDot} aria-hidden="true" />
           <div>
             <strong>Thinking</strong>
@@ -530,7 +537,11 @@ export default function AssistantPanel({
       ) : null}
 
       {panelError ? (
-        <div className={`${styles.panelMessage} ${panelError.kind === "stale" ? styles.warning : styles.error}`} role="alert">
+        <div
+          className={`${styles.panelMessage} ${panelError.kind === "stale" ? styles.warning : styles.error}`}
+          role="alert"
+          aria-atomic="true"
+        >
           <p className={styles.messageKicker}>{panelError.kind === "invalid-output" ? "Invalid output" : panelError.kind === "stale" ? "Stale snapshot" : "Request failed"}</p>
           <h4>{panelError.title}</h4>
           <p>{panelError.message}</p>
@@ -550,14 +561,24 @@ export default function AssistantPanel({
       ) : null}
 
       {notice ? (
-        <div className={`${styles.panelMessage} ${notice.tone === "warning" ? styles.warning : styles.info}`} role="status">
+        <div
+          className={`${styles.panelMessage} ${notice.tone === "warning" ? styles.warning : styles.info}`}
+          role="status"
+          aria-atomic="true"
+        >
           <p className={styles.messageKicker}>{notice.title}</p>
           <p>{notice.message}</p>
         </div>
       ) : null}
 
       {answer !== null && planReady && plan !== undefined ? (
-        <article className={styles.answer} aria-live="polite" aria-labelledby="assistant-answer-title">
+        <article
+          className={styles.answer}
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          aria-labelledby="assistant-answer-title"
+        >
           <div className={styles.answerHeader}>
             <div>
               <p className={styles.kicker}>Server-rendered answer</p>

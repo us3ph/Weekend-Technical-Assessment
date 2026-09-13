@@ -169,7 +169,11 @@ function FailurePanel({
 }) {
   if (state.status === "invalid-data") {
     return (
-      <section className={`${styles.messagePanel} ${styles.invalidPanel}`} role="alert">
+      <section
+        className={`${styles.messagePanel} ${styles.invalidPanel}`}
+        role="alert"
+        aria-atomic="true"
+      >
         <p className={styles.messageKicker}>Invalid source data</p>
         <h3>{state.message}</h3>
         <p>Planning stays disabled until the configured source is corrected and reloaded.</p>
@@ -191,7 +195,11 @@ function FailurePanel({
 
   if (state.status === "server-error") {
     return (
-      <section className={`${styles.messagePanel} ${styles.errorPanel}`} role="alert">
+      <section
+        className={`${styles.messagePanel} ${styles.errorPanel}`}
+        role="alert"
+        aria-atomic="true"
+      >
         <p className={styles.messageKicker}>Request failed</p>
         <h3>{state.message}</h3>
         <p>No server-calculated result was accepted into this workspace.</p>
@@ -204,7 +212,11 @@ function FailurePanel({
 
   if (state.status === "stale-result") {
     return (
-      <section className={`${styles.messagePanel} ${styles.warningPanel}`} role="alert">
+      <section
+        className={`${styles.messagePanel} ${styles.warningPanel}`}
+        role="alert"
+        aria-atomic="true"
+      >
         <p className={styles.messageKicker}>Reload required</p>
         <h3>{state.message}</h3>
         <p>
@@ -377,7 +389,9 @@ export default function PlanningWorkspace() {
         <div>
           <p className={styles.sectionKicker}>Workspace</p>
           <h2 id="workspace-title">Load, compare, and prepare</h2>
-          <p className={styles.statusText} aria-live="polite">{statusLabel(state)}</p>
+          <p className={styles.statusText} role="status" aria-live="polite" aria-atomic="true">
+            {statusLabel(state)}
+          </p>
         </div>
         <div className={styles.actionRow}>
           <button className={styles.primaryButton} type="button" onClick={startLoad} disabled={pending}>
@@ -408,7 +422,7 @@ export default function PlanningWorkspace() {
       ) : null}
 
       {state.status === "loading" ? (
-        <section className={styles.loadingState} aria-live="polite">
+        <section className={styles.loadingState} role="status" aria-live="polite" aria-atomic="true">
           <span className={styles.loadingDot} aria-hidden="true" />
           <div>
             <h3>Loading workbook</h3>

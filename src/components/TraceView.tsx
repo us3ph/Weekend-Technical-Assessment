@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, type SyntheticEvent } from "react";
 import {
   deriveAllocationLocalFacts,
   deriveTraceExplanations,
@@ -63,7 +63,7 @@ function TraceFocusBar({
   readonly onClearSelection: () => void;
 }) {
   return (
-    <div className={styles.focusBar} role="status" aria-live="polite">
+    <div className={styles.focusBar} role="status" aria-live="polite" aria-atomic="true">
       <div>
         <span className={styles.focusKicker}>Active trace focus</span>
         <strong>{selectionLabel(workbook, selection)}</strong>
@@ -94,7 +94,12 @@ function AllocationTable({
   readonly onSelect: (selection: WorkspaceSelection) => void;
 }) {
   return (
-    <div className={styles.tableWrap}>
+    <div
+      className={styles.tableWrap}
+      role="region"
+      aria-label="Export allocation trace table"
+      tabIndex={0}
+    >
       <table className={styles.traceTable}>
         <caption className={styles.visuallyHidden}>Export allocation trace</caption>
         <thead>
@@ -180,7 +185,12 @@ function LocalResidualTable({
   readonly onSelect: (selection: WorkspaceSelection) => void;
 }) {
   return (
-    <div className={styles.tableWrap}>
+    <div
+      className={styles.tableWrap}
+      role="region"
+      aria-label="Local residual trace table"
+      tabIndex={0}
+    >
       <table className={styles.traceTable}>
         <caption className={styles.visuallyHidden}>Local residual trace</caption>
         <thead>
@@ -255,10 +265,21 @@ function ConservationTable({
   readonly balances: readonly FarmSegmentBalance[];
   readonly selection: WorkspaceSelection | null;
 }) {
+  const summaryRef = useRef<HTMLElement | null>(null);
+
+  function handleToggle(event: SyntheticEvent<HTMLDetailsElement>): void {
+    if (!event.currentTarget.open) summaryRef.current?.focus();
+  }
+
   return (
-    <details className={styles.conservationDetails}>
-      <summary>Show per farm / segment conservation ({balances.length} rows)</summary>
-      <div className={styles.tableWrap}>
+    <details className={styles.conservationDetails} onToggle={handleToggle}>
+      <summary ref={summaryRef}>Show per farm / segment conservation ({balances.length} rows)</summary>
+      <div
+        className={styles.tableWrap}
+        role="region"
+        aria-label="Farm and segment conservation table"
+        tabIndex={0}
+      >
         <table className={styles.conservationTable}>
           <caption className={styles.visuallyHidden}>Farm and segment export/local conservation</caption>
           <thead>
@@ -312,11 +333,22 @@ export default function TraceView({
 
   useEffect(() => {
     if (selection?.kind !== "allocation" && selection?.kind !== "local") return;
-    document.getElementById("allocation-local-view")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const view = document.getElementById("allocation-local-view");
+    if (!(view instanceof HTMLElement)) return;
+    view.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "start",
+    });
+    view.focus({ preventScroll: true });
   }, [selection]);
 
   return (
-    <section id="allocation-local-view" className={styles.traceView} aria-labelledby="allocation-local-title">
+    <section
+      id="allocation-local-view"
+      className={styles.traceView}
+      aria-labelledby="allocation-local-title"
+      tabIndex={-1}
+    >
       <div className={styles.viewHeader}>
         <div>
           <p className={styles.sectionKicker}>Trace · Allocation &amp; Local</p>
@@ -338,7 +370,7 @@ export default function TraceView({
         </div>
       ) : (
         <>
-          <div className={styles.traceSummary} aria-label="Allocation and local totals">
+          <div className={styles.traceSummary} role="group" aria-label="Allocation and local totals">
             <div>
               <span>Export trace rows</span>
               <strong>{facts.allocations.length}</strong>
