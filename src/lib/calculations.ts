@@ -12,6 +12,13 @@ function asNumber(value: Decimal): number {
   return value.toNumber();
 }
 
+/** Compare IDs without locale-dependent collation or source-row dependence. */
+function compareIds(left: string, right: string): number {
+  if (left < right) return -1;
+  if (left > right) return 1;
+  return 0;
+}
+
 function zeroSegments(): SegmentMap<Decimal> {
   return { A: new Decimal(0), B: new Decimal(0), C: new Decimal(0), D: new Decimal(0) };
 }
@@ -27,7 +34,7 @@ export function calculateProductionComparison(
   const expectedBySegment = zeroSegments();
   const actualBySegment = zeroSegments();
 
-  const farms: FarmComparison[] = snapshot.farms.map((farm) => {
+  const farms: FarmComparison[] = [...snapshot.farms].sort((left, right) => compareIds(left.farmId, right.farmId)).map((farm) => {
     const expectedCapacity = new Decimal(farm.expectedDailyCapacityT);
     const farmActualBySegment = {} as SegmentMap<Decimal>;
     const segments = {} as SegmentMap<SegmentComparison>;

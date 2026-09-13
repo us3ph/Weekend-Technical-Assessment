@@ -1,6 +1,6 @@
 # Atlas Fresh — Step-by-step agent execution guide
 
-Status: Steps 01–03 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
+Status: Steps 01–04 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
 
 This guide implements [PROJECT_PLAN.md](PROJECT_PLAN.md), the planning file already present in this directory. There is no separate `plan.md`. Read that plan for the full business contract and source references. Use English throughout. The selected AI provider is **OpenRouter with free hosted models only**.
 
@@ -139,18 +139,18 @@ Objective: calculate allocations, statuses, residuals, and value entirely on the
 
 Agent tasks, in execution order:
 
-- [ ] Build independent available balances from actual farm-segment receipts only. Do not mutate the validated snapshot.
-- [ ] Sort clients by export price descending, then client ID ascending using a stable comparison.
-- [ ] For each client, filter positive supply by EXACT/MINIMUM compatibility. A is highest quality; MINIMUM accepts the requested segment or better.
-- [ ] Sort compatible balances by smallest upgrade, then farm ID. For MINIMUM C, use C before B before A even if a better segment comes from a lower farm ID.
-- [ ] Allocate in integer 5 t units, respecting demand, farm-segment balance, and remaining station capacity. Aggregate consecutive units into trace rows if useful.
-- [ ] Return each allocation's farm ID, segment, client ID, tonnes, upgrade information, and revenue based on the served client's price.
-- [ ] Finalize each client's demand/allocated/remaining/revenue/status and shortage reason when that client is processed. Capacity exhausted takes precedence at that moment; otherwise use insufficient compatible segment.
-- [ ] Preserve earlier segment-shortage reasons when later clients fill the station. Still produce outcomes for all clients after capacity becomes zero.
-- [ ] Send every remaining actual farm-segment tonne to local; price it using the workbook's ratio and that segment's reference export price. Local fruit does not consume the export station's capacity.
-- [ ] Return farm/segment actual-export-local balances and all server-calculated KPIs: expected, actual, station capacity/use, export rate, local volume/value, export revenue, total value, and at-risk count.
-- [ ] Enforce compatibility, nonnegative balances, demand/supply/capacity limits, 5 t units, and conservation per farm-segment and globally. Keep display rounding out of allocation decisions.
-- [ ] Define stable output ordering and deterministic identifiers for trace/evidence records. Document the policy and arithmetic decisions.
+- [x] Build independent available balances from actual farm-segment receipts only. Do not mutate the validated snapshot.
+- [x] Sort clients by export price descending, then client ID ascending using a stable comparison.
+- [x] For each client, filter positive supply by EXACT/MINIMUM compatibility. A is highest quality; MINIMUM accepts the requested segment or better.
+- [x] Sort compatible balances by smallest upgrade, then farm ID. For MINIMUM C, use C before B before A even if a better segment comes from a lower farm ID.
+- [x] Allocate in integer 5 t units, respecting demand, farm-segment balance, and remaining station capacity. Aggregate consecutive units into trace rows if useful.
+- [x] Return each allocation's farm ID, segment, client ID, tonnes, upgrade information, and revenue based on the served client's price.
+- [x] Finalize each client's demand/allocated/remaining/revenue/status and shortage reason when that client is processed. Capacity exhausted takes precedence at that moment; otherwise use insufficient compatible segment.
+- [x] Preserve earlier segment-shortage reasons when later clients fill the station. Still produce outcomes for all clients after capacity becomes zero.
+- [x] Send every remaining actual farm-segment tonne to local; price it using the workbook's ratio and that segment's reference export price. Local fruit does not consume the export station's capacity.
+- [x] Return farm/segment actual-export-local balances and all server-calculated KPIs: expected, actual, station capacity/use, export rate, local volume/value, export revenue, total value, and at-risk count.
+- [x] Enforce compatibility, nonnegative balances, demand/supply/capacity limits, 5 t units, and conservation per farm-segment and globally. Keep display rounding out of allocation decisions.
+- [x] Define stable output ordering and deterministic identifiers for trace/evidence records. Document the policy and arithmetic decisions in `src/lib/planner.ts` and the application README.
 
 Verification: begin T1–T5 with the workbook baseline and small focused fixtures. Check C02 and C09 retain `INSUFFICIENT_COMPATIBLE_SEGMENT`, while C08 receives `STATION_CAPACITY_REACHED`.
 
@@ -409,8 +409,8 @@ Do not pre-check these while writing documentation. Update each only after execu
 
 - [x] Step 01 — Foundation.
 - [x] Step 02 — Domain and validation.
-- [ ] Step 03 — Workbook and production comparisons.
-- [ ] Step 04 — Planning engine.
+- [x] Step 03 — Workbook and production comparisons.
+- [x] Step 04 — Planning engine.
 - [ ] Step 05 — Six core test groups.
 - [ ] Step 06 — Routes and workspace state.
 - [ ] Step 07 — Overview.

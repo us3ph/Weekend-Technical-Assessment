@@ -189,6 +189,8 @@ export interface QualityUpgrade {
 
 /** A server-calculated export trace row. */
 export interface Allocation {
+  /** Stable ordinal in the deterministic client/supply processing order. */
+  readonly allocationId: string;
   readonly farmId: string;
   readonly segment: Segment;
   readonly clientId: string;
@@ -209,6 +211,8 @@ export interface FarmSegmentBalance {
 }
 
 export interface LocalResidual {
+  /** Stable ordinal in farm ID, then segment order. */
+  readonly residualId: string;
   readonly farmId: string;
   readonly segment: Segment;
   readonly tonnes: number;

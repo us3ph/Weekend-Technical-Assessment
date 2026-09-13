@@ -1,6 +1,6 @@
 # Atlas Fresh — Daily Apple Export Planner: Project Plan
 
-Status: Steps 01–02 application foundation and domain validation are complete; later implementation steps have not started.
+Status: Steps 01–04 application foundation, validation, workbook loading, production comparisons, and deterministic planning are complete; later implementation steps have not started.
 
 Execution guide: [steps.md](steps.md) translates this plan into individually executable agent tasks. The selected model provider is OpenRouter, using free hosted models only.
 
@@ -371,5 +371,6 @@ Proposed next three production steps to describe, without implementing them in t
 - [x] Complete Step 01 application foundation: runnable Next.js shell, pinned tooling, preserved materials, and documented checks.
 - [x] Complete Step 02 domain contracts and validation.
 - [x] Complete Step 03 workbook loading, source-aware parsing, and production comparisons.
+- [x] Complete Step 04 deterministic planning policy, balances, residuals, KPIs, and focused T1–T5 checks.
 
-The next implementation step is the deterministic planning engine. No unresolved inconsistency in the supplied materials blocks that work.
+The next implementation step is to complete the six core test groups in Step 05. The current focused engine checks do not yet claim the full T6 validation matrix.

@@ -4,7 +4,7 @@ A browser workspace for the daily Production–Commercial committee: compare exp
 
 ## Current status
 
-Step 03 establishes server-side workbook loading and production comparisons: the supplied XLSX is read from the server, source cells are retained, validated inputs are versioned by content, and expected-versus-actual production results are calculated with Decimal arithmetic. Allocation, business views, and the OpenRouter assistant are not implemented yet. The page shows no invented results.
+Step 04 establishes the pure server-side deterministic planning engine: the supplied XLSX is read and validated, source cells are retained, validated inputs are versioned by content, production comparisons are calculated with Decimal arithmetic, and allocations/residuals/KPIs are calculated from actual receipts. The browser workspace and OpenRouter assistant are not implemented yet; the page still shows no invented results.
 
 Follow [steps.md](steps.md) one step at a time. The technical/business specification is in [PROJECT_PLAN.md](PROJECT_PLAN.md); actual progress and checks are recorded in [docs/work-log.md](docs/work-log.md).
 
@@ -33,7 +33,7 @@ Run from the repository root after `npm ci`:
 | --- | --- |
 | `npm run lint` | Next.js/TypeScript lint checks; warnings fail the check. |
 | `npm run typecheck` | Generate Next.js route types and run strict TypeScript checks. |
-| `npm test` | Run the current Vitest validation suite once. |
+| `npm test` | Run the current Vitest validation, workbook, and planning suite once. |
 | `npm run build` | Build the production application. |
 | `npm start` | Serve the existing production build on port 3000. |
 
@@ -66,8 +66,8 @@ Reload the workspace or request `http://localhost:3000/api/workbook` again after
 
 - Next.js App Router with React and TypeScript keeps the interface and future server routes in one application with one install/start path.
 - CSS Modules and system fonts provide a small, maintainable visual foundation without a UI framework or build-time font download.
-- `src/lib/types.ts` defines source-backed inputs separately from calculated outputs; `src/lib/validation.ts` applies Zod structure checks and Decimal-based domain rules without importing React, Next.js, or network code. Future modules will add workbook parsing, allocation, and grounded evidence.
-- Vitest is configured for `tests/**/*.test.ts` in a Node environment. The current validation suite covers representative valid data and the initial T6 invalid-input subcases; the remaining core groups are scheduled for Step 05.
+- `src/lib/types.ts` defines source-backed inputs separately from calculated outputs; `src/lib/validation.ts` applies Zod structure checks and Decimal-based domain rules without importing React, Next.js, or network code. `src/lib/planner.ts` applies the exact price/ID, compatibility, quality-fit, 5 t, capacity, shortage-reason, residual, and conservation policy on the server.
+- Vitest is configured for `tests/**/*.test.ts` in a Node environment. The current suite covers validation, workbook loading, and focused T1–T5 planning behavior; completion of the six full core groups is scheduled for Step 05.
 - The supplied workbook is the authoritative input. Computed results will remain transient; this single-snapshot assessment does not need database persistence.
 - OpenRouter will use native server-side `fetch`; the model will explain server-calculated facts and will never choose allocations or calculate KPIs.
 
@@ -75,11 +75,11 @@ The current source is `src/app` (layout, root page, global/page CSS, and the wor
 
 ## Domain contract and validation
 
-`src/lib/validation.ts` accepts normalized source rows with unknown values and returns either a typed input snapshot or source-aware validation issues. `src/lib/workbook.ts` reads the supported literal-cell tables using `read-excel-file/node`, preserves 1-based Excel locations, and rejects missing table structure before validation. `src/lib/calculations.ts` computes expected segment tonnes, actual totals, and variances on the server. Farms, clients, station parameters, and reference prices retain their source sheet, row, and cell metadata. Calculated comparisons, allocations, balances, outcomes, and KPIs have separate output types in `src/lib/types.ts`, so source inputs cannot be confused with later results.
+`src/lib/validation.ts` accepts normalized source rows with unknown values and returns either a typed input snapshot or source-aware validation issues. `src/lib/workbook.ts` reads the supported literal-cell tables using `read-excel-file/node`, preserves 1-based Excel locations, and rejects missing table structure before validation. `src/lib/calculations.ts` computes expected segment tonnes, actual totals, and variances on the server. `src/lib/planner.ts` creates private available balances from actual receipts, allocates in 5 t units, and calculates trace rows, residuals, outcomes, and KPIs without mutating source inputs. Farms, clients, station parameters, and reference prices retain their source sheet, row, and cell metadata. Calculated comparisons, allocations, balances, outcomes, and KPIs have separate output types in `src/lib/types.ts`, so source inputs cannot be confused with later results.
 
 The validator rejects missing/non-finite numbers, duplicate or blank IDs, unsupported modes or segments, incomplete/duplicate references, invalid mix totals, negative values, invalid precision, and quantities that are not multiples of 5 t. Expected mix totals use `decimal.js` equality. A zero-demand client is treated as `COMPLETE`; ratios whose denominator is zero are represented as `null` and must be shown as `N/A` by later views.
 
-The workbook reader is [read-excel-file](https://github.com/catamphetamine/read-excel-file). A dependency smoke check confirmed that its Node entry point reads the original workbook's XML namespaces, row positions, IDs, and numbers without modifying the file. This replaces the initial ExcelJS choice, which failed on that workbook. The application loader itself is still scheduled for Step 03.
+The workbook reader is [read-excel-file](https://github.com/catamphetamine/read-excel-file). A dependency smoke check confirmed that its Node entry point reads the original workbook's XML namespaces, row positions, IDs, and numbers without modifying the file. This replaces the initial ExcelJS choice, which failed on that workbook.
 
 ESLint remains on 9.39.5 because the Next.js configuration's React plugin does not yet declare ESLint 10 compatibility; npm may report its deprecation. The work log records dependency audit results and installation warnings.
 
@@ -101,4 +101,4 @@ Use a separate workbook copy for future changed-input checks. Do not replace the
 
 ## Transparency
 
-This is an incomplete assessment implementation at Step 02. There is no workbook loader, planning engine, business UI, or live AI integration yet. [The work log](docs/work-log.md) records AI coding assistance, actual checks, time evidence, and remaining work. The final delivery notes, clean-clone acceptance audit, and 3–5-minute walkthrough are scheduled in later steps.
+This is an incomplete assessment implementation at Step 04. Workbook loading, validation, production comparisons, and the deterministic planning engine are available server-side. The business UI, planning route, evidence catalog, and live AI integration remain for later steps. [The work log](docs/work-log.md) records AI coding assistance, actual checks, time evidence, and remaining work. The final delivery notes, clean-clone acceptance audit, and 3–5-minute walkthrough are scheduled in later steps.
