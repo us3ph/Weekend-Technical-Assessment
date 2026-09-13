@@ -1,6 +1,6 @@
 # Atlas Fresh — Step-by-step agent execution guide
 
-Status: Steps 01–11 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
+Status: Steps 01–12 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
 
 This guide implements [PROJECT_PLAN.md](PROJECT_PLAN.md), the planning file already present in this directory. There is no separate `plan.md`. Read that plan for the full business contract and source references. Use English throughout. The selected AI provider is **OpenRouter with free hosted models only**.
 
@@ -289,20 +289,30 @@ Exit condition: honest no-key summaries work, and a model can select evidence wi
 
 Objective: a working hosted model integration when a private API key is configured.
 
-- [ ] Recheck the official [free-router documentation](https://openrouter.ai/docs/guides/routing/routers/free-router). Default to `OPENROUTER_MODEL=openrouter/free`; allow only a verified available zero-cost `:free` alternative. Record returned model metadata because the free router may select different models.
-- [ ] Keep `OPENROUTER_API_KEY` server-only in ignored `.env.local`; `.env.example` has an empty key. The user creates/configures their key privately through [OpenRouter's key page](https://openrouter.ai/settings/keys).
-- [ ] Implement native server `fetch` to `https://openrouter.ai/api/v1/chat/completions` with Bearer authorization and JSON content type, following [authentication documentation](https://openrouter.ai/docs/api_reference/authentication). Do not make inference calls directly from the browser.
-- [ ] Send the user's supported question and minimum fact context. Request non-streaming JSON Schema output with `strict: true` and `provider.require_parameters: true`; independently validate it using Step 11. See [structured outputs](https://openrouter.ai/docs/guides/features/structured-outputs).
-- [ ] Reject paid model IDs before inference; never strip a `:free` suffix, fall back to paid routing, enable paid plugins, or instruct the user to buy credits. If a free compatible endpoint is unavailable, use the honest failure/summary path.
-- [ ] Bound timeout and output size. Handle missing/invalid keys, 402 account errors, 429 limits, 5xx/provider failures, network errors, aborts/timeouts, refusals, empty/truncated output, invalid JSON/schema, and unknown/inappropriate facts. Respect retry timing from [OpenRouter limits](https://openrouter.ai/docs/api_reference/limits); avoid automatic retry loops.
-- [ ] Implement `POST /api/assistant`: validate question/version, reload the authoritative source, recompute the plan, reject stale versions, derive evidence, then call the adapter or summary path. Do not trust browser KPIs.
-- [ ] Keep sanitized diagnostic model/status information separate from credentials and raw provider errors. No allocation changes or external-action tools are available to the model.
-- [ ] Use mocked provider responses for repeatable automated checks. If a key is privately configured, perform a small real free-model smoke check and record the requested/returned model, date, result, and citation validity without secrets.
-- [ ] If live inference cannot run because of missing credentials or provider availability, record it as unverified. Complete the adapter, offline checks, and fallback; do not replace it with a mock and call that a real integration.
+- [x] Recheck the official [free-router documentation](https://openrouter.ai/docs/guides/routing/routers/free-router). Default to `OPENROUTER_MODEL=openrouter/free`; allow only the free router or an explicitly configured zero-cost `:free` alternative, and reject non-free returned metadata. Record returned model metadata because the free router may select different models.
+- [x] Keep `OPENROUTER_API_KEY` server-only in ignored `.env.local`; `.env.example` has an empty key. The user creates/configures their key privately through [OpenRouter's key page](https://openrouter.ai/settings/keys).
+- [x] Implement native server `fetch` to `https://openrouter.ai/api/v1/chat/completions` with Bearer authorization and JSON content type, following [authentication documentation](https://openrouter.ai/docs/api_reference/authentication). Do not make inference calls directly from the browser.
+- [x] Send the user's supported question and minimum fact context. Request non-streaming JSON Schema output with `strict: true` and `provider.require_parameters: true`; independently validate it using Step 11. See [structured outputs](https://openrouter.ai/docs/guides/features/structured-outputs).
+- [x] Reject paid model IDs before inference; never strip a `:free` suffix, fall back to paid routing, enable paid plugins, or instruct the user to buy credits. If a free compatible endpoint is unavailable, use the honest failure/summary path.
+- [x] Bound timeout and output size. Handle missing/invalid keys, 402 account errors, 429 limits, 5xx/provider failures, network errors, aborts/timeouts, refusals, empty/truncated output, invalid JSON/schema, and unknown/inappropriate facts. Respect retry timing from [OpenRouter limits](https://openrouter.ai/docs/api_reference/limits); avoid automatic retry loops.
+- [x] Implement `POST /api/assistant`: validate question/version, reload the authoritative source, recompute the plan, reject stale versions, derive evidence, then call the adapter or summary path. Do not trust browser KPIs.
+- [x] Keep sanitized diagnostic model/status information separate from credentials and raw provider errors. No allocation changes or external-action tools are available to the model.
+- [x] Use mocked provider responses for repeatable automated checks. No private key is configured in this environment, so no live request was made; requested/returned model metadata is covered by the mock contract.
+- [x] Record live inference as unverified because credentials/provider availability were not available. The real adapter, offline checks, and deterministic fallback are complete; the mock is not reported as a live integration.
 
 Verification: the request/response contract works under mocked success/failure; paid configuration is rejected before any inference call; model text cannot inject values. A live success is claimed only when an actual request succeeds and its evidence passes validation. No key reaches client bundles, responses, or logs.
 
 Exit condition: real OpenRouter adapter and honest failure states exist; actual live-check status is documented. Handoff: Step 13.
+
+- Completed Step 12 only. Approximate active effort: 50 minutes, including official provider-documentation review, adapter/route implementation, mocked failure coverage, strict checks, and documentation; idle wall-clock time is excluded.
+- Added `src/lib/openrouter.ts` with a native server-side, non-streaming OpenRouter Chat Completions adapter. It defaults to `openrouter/free`, rejects paid model IDs before inference, accepts only free variants, records requested/returned model metadata, sends intent-specific evidence context, requests strict JSON Schema output with `provider.require_parameters`, bounds response/timeout size, and never retries automatically. The model can return only an evidence selection; server-owned text and citations are rendered after independent Step 11 validation.
+- Added `src/app/api/assistant/route.ts`. It accepts only a question and SHA-256 input version, reloads the authoritative workbook, recomputes the deterministic plan, rejects stale snapshots, derives the version-bound catalog, skips unsupported questions, and returns either a model-labelled server-rendered answer or a separately labelled deterministic fallback. Browser KPIs, allocations, credentials, and raw provider errors are not accepted or returned.
+- Added `tests/openrouter.test.ts` and `tests/assistant-route.test.ts` covering mocked success, strict request shape, free-only model enforcement, missing/invalid credentials, 402/429/403/404/5xx failures, Retry-After capture without retry loops, network/timeout, refusal, truncation, invalid JSON/selection, stale input, unsupported questions, browser result injection, and server-rendered text protection. The intentionally injected extra model prose is rejected by the strict schema.
+- Updated `src/lib/assistant.ts`, `.env.example`, `README.md`, and `PROJECT_PLAN.md` for the model-labelled answer boundary and private configuration behavior. The browser assistant panel remains intentionally deferred to Step 13.
+- Verification passed under Node.js 24.21.0 / npm 11.19.0: `npm test` (112 tests across 13 files), `npm run typecheck`, `npm run lint`, `npm run build`, and `git diff --check`. No live OpenRouter request was made because no private key was configured; live inference and actual provider availability remain unverified. Original workbook, PDF, preserved pack README, checksum manifest, and credential files remain unchanged.
+- Built-app smoke passed with both OpenRouter variables unset: `GET /api/workbook` returned the content version, and `POST /api/assistant` returned three risk facts with `source=deterministic`, `status=unavailable`, and `code=MISSING_API_KEY`. The private key was not printed or sent.
+- Limitation: there is no browser assistant panel yet, and this environment cannot claim a live model/citation smoke result. The next step is Step 13.
+- Commit: single Step 12 implementation/documentation milestone; the final hash is reported in the handoff.
 
 ## Step 13 — Build the assistant panel and its two test groups
 
@@ -440,7 +450,7 @@ Do not pre-check these while writing documentation. Update each only after execu
 - [x] Step 09 — Commercial.
 - [x] Step 10 — Allocation/local trace.
 - [x] Step 11 — Evidence and summaries.
-- [ ] Step 12 — OpenRouter adapter and recorded live-check status.
+- [x] Step 12 — OpenRouter adapter and recorded live-check status (live inference unverified without a private key).
 - [ ] Step 13 — Assistant panel and tests.
 - [ ] Step 14 — UX/accessibility/failure review.
 - [ ] Step 15 — Acceptance and changed inputs.

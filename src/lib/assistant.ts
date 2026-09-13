@@ -51,8 +51,12 @@ export type QuestionClassification =
   | { readonly intent: "unsupported"; readonly reason: "unsupported-topic" | "unrecognized" };
 
 export interface GroundedAnswer {
-  readonly source: "deterministic";
-  readonly sourceLabel: "Deterministic summary — no model used";
+  readonly source: "deterministic" | "openrouter";
+  readonly sourceLabel:
+    | "Deterministic summary — no model used"
+    | "OpenRouter free model — server-rendered evidence";
+  /** Present only when OpenRouter selected the evidence facts. */
+  readonly model?: string;
   readonly inputVersion: InputVersion;
   readonly intent: EvidenceIntent | "unsupported";
   readonly title: string;
@@ -232,6 +236,24 @@ export function renderGroundedSelection(
     paragraphs: facts.map((fact) => fact.allowedText),
     factIds: selection.selectedFactIds,
     citations,
+  };
+}
+
+/**
+ * Render a validated model selection with the same server-owned text as the
+ * deterministic path. The model's prose is deliberately never rendered.
+ */
+export function renderModelSelection(
+  catalog: EvidenceCatalog,
+  selection: ValidatedEvidenceSelection,
+  returnedModel: string,
+): GroundedAnswer {
+  const grounded = renderGroundedSelection(catalog, selection);
+  return {
+    ...grounded,
+    source: "openrouter",
+    sourceLabel: "OpenRouter free model — server-rendered evidence",
+    model: returnedModel,
   };
 }
 

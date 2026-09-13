@@ -1,6 +1,6 @@
 # Atlas Fresh — Daily Apple Export Planner: Project Plan
 
-Status: Steps 01–11 application foundation, validation, workbook loading, production comparisons, deterministic planning, the initial planning workspace, the decision overview, the Production view, the Commercial view, the Allocation & Local trace, and the grounded evidence/deterministic-summary boundary are complete; later implementation steps have not started.
+Status: Steps 01–12 application foundation, validation, workbook loading, production comparisons, deterministic planning, the initial planning workspace, the decision overview, the Production view, the Commercial view, the Allocation & Local trace, the grounded evidence/deterministic-summary boundary, and the real free-only OpenRouter server path are complete; later implementation steps have not started.
 
 Execution guide: [steps.md](steps.md) translates this plan into individually executable agent tasks. The selected model provider is OpenRouter, using free hosted models only.
 
@@ -230,7 +230,7 @@ Use native buttons and tables, visible focus, meaningful headings/labels, suffic
 
 ## 7. Grounded assistant plan
 
-Implement one real OpenRouter integration using native server-side `fetch`. Send requests to `https://openrouter.ai/api/v1/chat/completions` with a Bearer token from `OPENROUTER_API_KEY`; use `OPENROUTER_MODEL=openrouter/free` by default. The [OpenRouter authentication documentation](https://openrouter.ai/docs/api_reference/authentication) describes the key and request headers. Keep the key in an ignored local environment file, never in `NEXT_PUBLIC_*`, browser requests, logs, screenshots, or committed files. Commit only blank/placeholder configuration in `.env.example`.
+Implemented one real OpenRouter integration using native server-side `fetch`. Requests go to `https://openrouter.ai/api/v1/chat/completions` with a Bearer token from `OPENROUTER_API_KEY`; `OPENROUTER_MODEL=openrouter/free` is the default. The [OpenRouter authentication documentation](https://openrouter.ai/docs/api_reference/authentication) describes the key and request headers. The key stays in an ignored local environment file, never in `NEXT_PUBLIC_*`, browser requests, logs, screenshots, or committed files. Only blank/placeholder configuration is committed in `.env.example`.
 
 Allow only `openrouter/free` or a currently available, verified zero-cost model ID ending in `:free`. Reject paid model configuration before making an inference request; do not silently switch to a paid model or enable paid tools/plugins. Model availability must be checked when implementing and preparing the demo. With the free router, record the actual model returned by the API as well as the requested route; the underlying model can change between requests. This does not affect the deterministic planning engine.
 
@@ -259,7 +259,7 @@ Without an API key, explicitly show `AI unavailable — OpenRouter API key not c
 
 For unsupported questions, such as weather causes, future forecasts, or delivery confirmation, say the information is unavailable in the supplied snapshot. Do not manufacture an answer from a nearby fact. Free-form questions are limited to the three supported planning topics; document this limitation.
 
-A provider mock verifies boundaries but does not replace the real integration. When an OpenRouter key is configured, run a small actual free-model smoke check and record the requested route, returned model, date, and result without secrets. Keep ordinary tests offline and do not consume API quota during builds. If no key or free endpoint is available, record live inference as unverified and disclose the exact limitation while retaining the implemented provider path and honest fallback. Do not ask the candidate to paste a key into the conversation.
+The provider mock verifies boundaries but does not replace the real integration. The adapter and `POST /api/assistant` are implemented with ordinary tests kept offline; builds do not consume API quota. When an OpenRouter key is configured, run a small actual free-model smoke check and record the requested route, returned model, date, result, and citation validity without secrets. If no key or free endpoint is available, record live inference as unverified and disclose the exact limitation while retaining the implemented provider path and honest fallback. Do not ask the candidate to paste a key into the conversation.
 
 ## 8. Verification and acceptance checklist
 
@@ -379,5 +379,6 @@ Proposed next three production steps to describe, without implementing them in t
 - [x] Complete Step 09 Commercial view with all-client outcomes, processing-point shortage explanations, allocation drill-downs, and production links.
 - [x] Complete Step 10 Allocation & Local trace with per-row navigation, conservation audit, and shared connected selections.
 - [x] Complete Step 11 evidence catalog, intent-specific contexts, strict fact selection validation, and deterministic no-key summaries.
+- [x] Complete Step 12 free-only OpenRouter adapter, authoritative assistant route, strict output validation, sanitized failures, deterministic fallback, and mocked provider checks. Live inference remains unverified without a private key.
 
-The next implementation step is Step 12: implement the real OpenRouter free-model adapter. Provider and browser assistant checks remain intentionally pending until Steps 12–13.
+The next implementation step is Step 13: build the browser assistant panel and its two assistant test groups. Formal UX/accessibility review and later acceptance/delivery checks remain pending.
