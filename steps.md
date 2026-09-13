@@ -1,6 +1,6 @@
 # Atlas Fresh — Step-by-step agent execution guide
 
-Status: Steps 01–08 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
+Status: Steps 01–09 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
 
 This guide implements [PROJECT_PLAN.md](PROJECT_PLAN.md), the planning file already present in this directory. There is no separate `plan.md`. Read that plan for the full business contract and source references. Use English throughout. The selected AI provider is **OpenRouter with free hosted models only**.
 
@@ -221,15 +221,22 @@ Exit condition: a manager can move from a segment gap to its farms and actual se
 
 Objective: explain complete, partial, and unserved orders with traceable reasons.
 
-- [ ] Show every client ID/name, acceptance rule, requested segment, demand, allocated, remaining, export revenue, status, and readable shortage reason.
-- [ ] Surface at-risk clients and allow inspection of all clients; use text labels as well as status color.
-- [ ] Expand/select a client to show its supplying farm-segment allocations, including upgrades and client-price revenue.
-- [ ] Explain the relevant segment supply and higher-priced allocations using calculated evidence. Link back to production comparisons.
-- [ ] Distinguish a compatibility shortage from capacity reached at this client's processing point. Do not infer causes solely from final station usage.
+- [x] Show every client ID/name, acceptance rule, requested segment, demand, allocated, remaining, export revenue, status, and readable shortage reason.
+- [x] Surface at-risk clients and allow inspection of all clients; use text labels as well as status color.
+- [x] Expand/select a client to show its supplying farm-segment allocations, including upgrades and client-price revenue.
+- [x] Explain the relevant segment supply and higher-priced allocations using calculated evidence. Link back to production comparisons.
+- [x] Distinguish a compatibility shortage from capacity reached at this client's processing point. Do not infer causes solely from final station usage.
 
 Verification: C02, C09, and C08 show the expected quantities and distinct reasons. All seven complete clients remain discoverable, and an unserved fixture renders correctly.
 
 Exit condition: each client risk has a useful explanation and an allocation drill-down. Handoff: Step 10.
+
+- Completed the Commercial view only. Added a pure client projection over the matching server plan, including compatible actual supply, higher-priority compatible allocations, processing-time station room, and the engine-owned shortage reason. The projection keeps allocation-dependent fields absent before plan generation.
+- Added the keyboard-operable Commercial view with all client requests, an at-risk-first layout, complete-client discovery, readable status/reason labels, expandable farm-segment allocation rows, upgrade levels, client-price revenue, production links, and shared client/segment focus state. No farm is described as the cause of a shortage; farm links expose shared supply evidence for later trace work.
+- Added Commercial view tests for the seeded C02/C09/C08 quantities and reasons, all seven complete clients, pre-plan absence, client-price allocation rows, and a zero-capacity unserved fixture rendered with the capacity reason.
+- Verification passed under Node.js 24.21.0 / npm 11.19.0: `npm test` (77 tests across 9 files), `npm run lint`, `npm run typecheck`, `npm run build`, and `git diff --check`. Chrome headless smoke passed the pre-plan state, generated-plan C02/C09/C08 checks, seven complete clients, allocation detail, Commercial-to-Production focus handoff, and 1024/1440 px page-width checks.
+- Limitation: allocation/local is still a separate view planned for Step 10; Production links currently land on the existing Production view/farm anchors. The evidence catalog and assistant remain intentionally deferred.
+- Commit: final single Step 09 implementation/documentation milestone; the hash is recorded in the final handoff.
 
 ## Step 10 — Complete allocation/local trace and connected navigation
 
@@ -415,7 +422,7 @@ Do not pre-check these while writing documentation. Update each only after execu
 - [x] Step 06 — Routes and workspace state.
 - [x] Step 07 — Overview.
 - [x] Step 08 — Production.
-- [ ] Step 09 — Commercial.
+- [x] Step 09 — Commercial.
 - [ ] Step 10 — Allocation/local trace.
 - [ ] Step 11 — Evidence and summaries.
 - [ ] Step 12 — OpenRouter adapter and recorded live-check status.

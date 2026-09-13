@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useReducer, useState } from "react";
+import CommercialView from "@/components/CommercialView";
 import DecisionOverview from "@/components/DecisionOverview";
 import ProductionView from "@/components/ProductionView";
 import {
@@ -429,6 +430,13 @@ export default function PlanningWorkspace() {
             onClearSelection={() => setSelection(null)}
           />
           <ProductionView
+            workbook={workbook}
+            plan={state.status === "planned" ? state.plan : undefined}
+            selection={selection}
+            onSelect={setSelection}
+            onClearSelection={() => setSelection(null)}
+          />
+          <CommercialView
             workbook={workbook}
             plan={state.status === "planned" ? state.plan : undefined}
             selection={selection}
