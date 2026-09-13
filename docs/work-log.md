@@ -1,0 +1,32 @@
+# Work log
+
+Record actual work and checks, not the schedule's estimates. Dates below use UTC. The assessment caps total effort at 12 hours, including planning, implementation, fixes, and delivery.
+
+## Prior planning — 12 September 2026
+
+- Read the email, nine-page brief, and all workbook sheets; calculated production comparison totals; wrote `PROJECT_PLAN.md` and `steps.md`.
+- Selected OpenRouter free hosted models, documented the five evaluation criteria, and mapped the mandatory workflow and delivery requirements.
+- AI coding assistance: Codex assisted with document/data inspection and planning. These activities are separate from the future in-product OpenRouter integration.
+- Actual effort: not timed in those turns; the candidate must supply an honest estimate. The plan's 30-minute allowance is not a measured duration.
+- Existing planning commit at the start of Step 01: `b013b3a`.
+
+## Step 01 — Application foundation
+
+- Started: 2026-09-12 20:47:59 UTC. Completion time and measured session duration will be recorded after verification.
+- Initial repository: clean `main`, with the two planning files committed. No applicable `AGENTS.md` files were present.
+- The workbook, PDF, and pack README were absent from the working tree. Restored those exact files from the original assessment ZIP in Downloads; their SHA-256 hashes match the earlier planning inspection. Preserved the pack README separately under `docs/` before replacing the root README.
+- Installed and selected Node.js 24.21.0 / npm 11.19.0 for task commands without changing the user's global runtime default. `.nvmrc` and package engines pin the documented project runtime.
+- Manually scaffolded Next.js App Router, strict TypeScript, CSS Modules, a semantic empty workspace, and a reusable header. No remote fonts, images, or model calls are needed to render the shell.
+- Added exact dependency versions and npm lockfile, ESLint/Vitest configuration, run/check scripts, secret ignores, and placeholder OpenRouter configuration. Marked the project as ESM so Vitest loads its configuration without a CommonJS/ESM warning.
+- Reader compatibility correction: an actual-file smoke check failed in ExcelJS 4.4.0 (`workbook.sheets` undefined). Inspection showed valid `x:workbook` / `x:sheets` elements in the supplied XML, while ExcelJS's parser matches unprefixed tag names. Replaced it with read-excel-file 9.3.10; a read-only smoke check passed for all four sheets, original row indexes, IDs, and numeric fractions using `trim: false`. Updated the plan and Step 03 instructions to match. This is dependency verification, not a workbook-route implementation.
+- Removing ExcelJS also removed its vulnerable transitive UUID dependency; no override remains in the final package configuration. The earlier audit found two moderate entries for that dependency chain; the updated installation reported zero vulnerabilities. Retained ESLint 9.39.5 because the Next.js React plugin's declared peer range excludes ESLint 10, despite npm's deprecation notice.
+- npm reports an unapproved optional `unrs-resolver` postinstall script; no script approval was added. The installed platform dependencies are sufficient for the verified lint/build commands.
+- Architecture choice: one application and shared TypeScript reduce setup overhead; future server modules will own workbook validation and planning. read-excel-file, Zod, and decimal.js are installed for those later steps. No database, separate backend, provider SDK, or empty domain modules were added.
+- The first development startup generated framework-owned `AGENTS.md` and `CLAUDE.md`. Read their instructions and the relevant bundled Next.js guides; preserve these generated instruction files in Git as the framework requests.
+- Next.js setup/lint configuration follows the official [installation](https://nextjs.org/docs/app/getting-started/installation) and [ESLint](https://nextjs.org/docs/app/api-reference/config/eslint) guidance. Business tests will use [Vitest](https://vitest.dev/guide/).
+- Verification completed: `npm ci` succeeded under Node 24.21.0 / npm 11.19.0; `npm run lint`, `npm run typecheck`, and `npm run build` passed; `npm audit --audit-level=moderate` reported zero vulnerabilities. A production server responded HTTP 200 and a response smoke check confirmed English metadata, truthful empty state, skip link, no `x-powered-by` header, and no exposed key. Screenshots were checked at 1440×1000 and 1024×768; the shell remained readable with no page-wide overflow.
+- Verification completed: read-excel-file 9.3.10 read all four original workbook sheets, row positions, IDs, decimal fractions, and numeric cells without changes. Original PDF/workbook/preserved README hashes passed. Secret ignore checks and `git diff --check` passed.
+- Expected limitation: `npm test` exits 1 with `No test files found`. This is intentional at Step 01; no domain test coverage exists yet and Step 02/05 must add it. No live OpenRouter inference was attempted because this step only creates configuration placeholders; no API key is required or stored.
+- npm install emitted a warning about an unapproved optional `unrs-resolver` postinstall script; it did not affect the verified checks. ESLint 9.39.5 emits a deprecation warning, documented in the README, because the Next.js React plugin's declared peer range excludes ESLint 10.
+- Approximate active effort for Step 01: 1 hour 15 minutes, including the workbook-reader compatibility investigation, setup, documentation, checks, and cleanup. An interruption/overnight wall-clock gap is excluded. The candidate should revise this estimate if their own timer differs.
+- Step 01 exit condition passed. The next step is Step 02, domain contracts and validation; it was not executed as part of Step 01.

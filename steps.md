@@ -1,6 +1,6 @@
 # Atlas Fresh — Step-by-step agent execution guide
 
-Status: execution has not started. This file contains instructions for future implementation; unchecked tasks are not claims of completed work.
+Status: Step 01 is complete. Later steps have not started; unchecked tasks are not claims of completed work.
 
 This guide implements [PROJECT_PLAN.md](PROJECT_PLAN.md), the planning file already present in this directory. There is no separate `plan.md`. Read that plan for the full business contract and source references. Use English throughout. The selected AI provider is **OpenRouter with free hosted models only**.
 
@@ -72,16 +72,16 @@ Objective: a runnable project with preserved assessment materials and a document
 
 Agent tasks:
 
-- [ ] Inspect the current files and Git state; preserve existing user changes. Initialize Git only if needed.
-- [ ] Read the actual PDF, pack README, workbook layout, and project plan. Preserve the original README as `docs/assessment-pack-readme.md` before creating application instructions.
-- [ ] Record source workbook/PDF hashes and create `docs/work-log.md` with the task/time record. Keep the originals intact.
-- [ ] Configure Node.js 24 LTS for this project; pin the tested version. Scaffold Next.js App Router with TypeScript and CSS/CSS Modules without overwriting the supplied files.
-- [ ] Add compatible, pinned dependencies for ExcelJS, Zod, decimal.js, and Vitest. Commit the npm lockfile. Use native `fetch` for OpenRouter.
-- [ ] Establish `src/app`, `src/components`, `src/lib`, `tests`, and `docs` as needed. Avoid creating empty abstraction layers without a purpose.
-- [ ] Define `dev`, `test`, `lint`, `typecheck`, `build`, and `start` scripts. Initial absence of tests must not be represented as passing domain coverage.
-- [ ] Ignore build artifacts, dependencies, and private environment files; explicitly allow `.env.example`. Include blank `OPENROUTER_API_KEY`, default `OPENROUTER_MODEL=openrouter/free`, and an explanation of the optional `WORKBOOK_PATH` override.
-- [ ] Create the minimal root page and layout with English language metadata, semantic structure, and system fonts. Avoid build-time remote font dependencies.
-- [ ] Write the initial README start instructions and a short rationale for the stack, single app, and no database. Create a meaningful setup commit when the foundation works.
+- [x] Inspect the current files and Git state; preserve existing user changes. Initialize Git only if needed.
+- [x] Read the actual PDF, pack README, workbook layout, and project plan. Preserve the original README as `docs/assessment-pack-readme.md` before creating application instructions.
+- [x] Record source workbook/PDF hashes and create `docs/work-log.md` with the task/time record. Keep the originals intact.
+- [x] Configure Node.js 24 LTS for this project; pin the tested version. Scaffold Next.js App Router with TypeScript and CSS/CSS Modules without overwriting the supplied files.
+- [x] Add compatible, pinned dependencies for read-excel-file, Zod, decimal.js, and Vitest. Commit the npm lockfile. Use native `fetch` for OpenRouter. Reader selection was corrected during Step 01 after ExcelJS failed to read the original workbook's XML namespace format; see the work log.
+- [x] Establish `src/app`, `src/components`, `src/lib`, `tests`, and `docs` as needed. Avoid creating empty abstraction layers without a purpose.
+- [x] Define `dev`, `test`, `lint`, `typecheck`, `build`, and `start` scripts. Initial absence of tests must not be represented as passing domain coverage.
+- [x] Ignore build artifacts, dependencies, and private environment files; explicitly allow `.env.example`. Include blank `OPENROUTER_API_KEY`, default `OPENROUTER_MODEL=openrouter/free`, and an explanation of the optional `WORKBOOK_PATH` override.
+- [x] Create the minimal root page and layout with English language metadata, semantic structure, and system fonts. Avoid build-time remote font dependencies.
+- [x] Write the initial README start instructions and a short rationale for the stack, single app, and no database. Create a meaningful setup commit when the foundation works.
 
 Verification: dependency installation, development startup, lint/typecheck, and an initial production build succeed without API configuration. Check that secret files are ignored and original source hashes still match.
 
@@ -113,7 +113,7 @@ Objective: load the authoritative XLSX through a server route and show trustwort
 
 Agent tasks:
 
-- [ ] Implement a server-only ExcelJS loader with a default path to the supplied workbook and a server environment override for an edited copy.
+- [ ] Implement a server-only read-excel-file loader using `read-excel-file/node`, with `trim: false`, a default path to the supplied workbook, and a server environment override for an edited copy. Its raw row arrays retain the source positions needed for validation errors.
 - [ ] Read required sheets/tables by their headers: Farms/Clients row 4 with data from row 5, Station parameters rows 4–5, references rows 16–20. Ignore titles/merged explanatory cells; reject missing structure explicitly.
 - [ ] Preserve source locations while parsing. Support the provided literal-cell workbook format; handle unsupported cell types explicitly rather than accepting stale or malformed values silently.
 - [ ] Run all Step 02 validation before returning a usable snapshot. Keep original data unchanged.
@@ -407,7 +407,7 @@ Use this table during Step 15 and before submission. A row is complete only when
 
 Do not pre-check these while writing documentation. Update each only after executing its exit checks; retain separate pending subitems for unverified live inference or delivery actions.
 
-- [ ] Step 01 — Foundation.
+- [x] Step 01 — Foundation.
 - [ ] Step 02 — Domain and validation.
 - [ ] Step 03 — Workbook and production comparisons.
 - [ ] Step 04 — Planning engine.

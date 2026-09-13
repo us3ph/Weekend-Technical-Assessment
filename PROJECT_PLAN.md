@@ -1,6 +1,6 @@
 # Atlas Fresh — Daily Apple Export Planner: Project Plan
 
-Status: planning only; application implementation has not started.
+Status: Step 01 application foundation is complete; later implementation steps have not started.
 
 Execution guide: [steps.md](steps.md) translates this plan into individually executable agent tasks. The selected model provider is OpenRouter, using free hosted models only.
 
@@ -14,7 +14,7 @@ The supplied sources are:
 
 - `Qarizmi_Atlas Fresh_Weekend_Technical_Assessment.pdf`: the nine-page product brief, allocation policy, acceptance checklist, and scoring rubric.
 - `Atlas_Fresh_Production_Commercial_Data.xlsx`: the authoritative synthetic input, with `Read Me`, `Farms`, `Clients`, and `Station` sheets.
-- `README.md`: the pack introduction and submission summary.
+- `docs/assessment-pack-readme.md`: the preserved pack introduction and submission summary; root `README.md` now contains application instructions.
 - The recruitment email: submit a repository URL, a 3–5-minute video URL, optional deployment URL, approximate time spent, and private-repository access instructions if needed.
 
 The supplied README refers to `Qarizmi_Universal_Weekend_Technical_Assessment.pdf` and a DOCX that are not present. Use the actual PDF listed above; no missing document is needed to begin.
@@ -104,14 +104,16 @@ Use one TypeScript application with a Next.js browser interface and server route
 | Runtime | Node.js 24 LTS and npm; pin the tested runtime and commit the dependency lockfile. Node 24 is currently an LTS release according to the [Node release table](https://nodejs.org/en/about/previous-releases). |
 | Application | Next.js App Router and React, with explicit server route handlers for workbook loading, planning, and explanations. See the [route-handler documentation](https://nextjs.org/docs/app/getting-started/route-handlers). |
 | Styling | Plain CSS/CSS Modules, a small set of reusable components, system fonts, and semantic HTML. Focus effort on the workspace layout and interactions. |
-| Workbook parsing | [ExcelJS](https://github.com/exceljs/exceljs), used only on the server to read the supplied XLSX. |
+| Workbook parsing | [read-excel-file](https://github.com/catamphetamine/read-excel-file), using its Node entry point on the server. A Step 01 compatibility check confirmed that it reads the unchanged supplied XLSX. |
 | Validation | [Zod](https://zod.dev/) for parsed inputs, request bodies, and assistant output; additional domain checks for cross-field rules. |
 | Arithmetic | Integer counts of 5 t allocation units; [decimal.js](https://mikemcl.github.io/decimal.js/) for expected quantities, prices, ratios, and money. Round only for display. |
 | Tests | [Vitest](https://vitest.dev/guide/) for the pure planning engine, validation, parser integration, and assistant boundaries. |
 | Model integration | Server-side HTTP calls to OpenRouter, defaulting to `openrouter/free`; optionally configure a verified available `:free` model. The [free-router documentation](https://openrouter.ai/docs/guides/routing/routers/free-router) describes routing to free hosted models. |
 | Storage | The unchanged source workbook and transient computed results; no database. |
 
-The local environment currently has Node 20.20.0 and npm 10.8.2. Configure the documented project runtime during setup, then pin compatible package versions. Do not install dependencies or change runtimes during this planning stage. The [Next.js installation guide](https://nextjs.org/docs/app/getting-started/installation) documents setup and build commands; verify the chosen versions together when scaffolding.
+The original default environment had Node 20.20.0 and npm 10.8.2. Step 01 pins the project to Node 24.21.0 and npm 11.19.0, with exact dependency versions and a lockfile. The [Next.js installation guide](https://nextjs.org/docs/app/getting-started/installation) documents setup and build commands.
+
+Reader decision from Step 01: ExcelJS 4.4.0 could not parse the supplied workbook's valid `x:`-prefixed XML elements. Replaced that preliminary choice with read-excel-file 9.3.10 after checking all four sheets, row positions, IDs, and numeric cells against the original file. Step 03 must use `trim: false` so the reader does not silently clean text values; business validation remains separate. No source XML or workbook values were modified.
 
 One application keeps startup and debugging simple. Domain modules remain independent of React and HTTP, so the business policy can be tested and explained directly. OpenRouter inference requires an API key and internet access when enabled; ordinary application startup, planning, and automated tests must work without either. No local model installation is part of the project.
 
@@ -366,6 +368,7 @@ Proposed next three production steps to describe, without implementing them in t
 - [x] Create this English planning file.
 - [x] Select OpenRouter free hosted inference and add the email's five evaluation criteria.
 - [x] Create the ordered agent execution guide in `steps.md`.
-- [ ] Start application implementation.
+- [x] Complete Step 01 application foundation: runnable Next.js shell, pinned tooling, preserved materials, and documented checks.
+- [ ] Continue with Step 02 domain contracts and validation.
 
 The next implementation step is project setup followed by the server workbook loader and validation. No unresolved inconsistency in the supplied materials blocks that work.

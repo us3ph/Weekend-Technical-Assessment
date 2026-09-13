@@ -1,0 +1,18 @@
+# Dependencies and generated output
+node_modules/
+.next/
+out/
+build/
+dist/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Private configuration; only the blank template belongs in Git
+.env*
+!.env.example
+
+# Local logs, operating-system files, and deployment metadata
+*.log
+.DS_Store
+.vercel/
