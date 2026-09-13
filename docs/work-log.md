@@ -41,3 +41,16 @@ Record actual work and checks, not the schedule's estimates. Dates below use UTC
 - Verification passed: `npm test` (15 tests), `npm run lint`, `npm run typecheck`, `git diff --check`, and `sha256sum --check docs/source-checksums.sha256` (workbook, PDF, and preserved README all OK).
 - Limitation: the validator accepts optional source metadata for small unit fixtures and supplies a fallback sheet/row; the Step 03 loader must provide exact source cell addresses. No workbook route, planning engine, browser integration, or OpenRouter request was added.
 - Commit: `e10fc7f` (`feat: add domain contracts and validation`).
+
+## Step 03 — Workbook loading and production comparisons — 13 September 2026
+
+- Completed the workbook-loading and production-comparison step. Approximate active effort: 50 minutes, including workbook/API inspection, implementation, runtime setup, tests, build verification, and documentation; idle wall-clock time is excluded.
+- Added `src/lib/workbook.ts`, a server-side `read-excel-file/node` loader using `trim: false`. It reads the fixed supported tables by their declared headers, ignores title/merged rows, preserves 1-based source cells, rejects missing headers and unsupported structure, supports `WORKBOOK_PATH`, and leaves the original workbook untouched.
+- Added `src/lib/calculations.ts` for Decimal-backed expected segment tonnes, actual totals, and farm/segment/overall variances. Added `DataHealth` and `WorkbookData` contracts without mixing source records and calculated results.
+- Added uncached Node `GET /api/workbook`. Valid workbook data returns the snapshot, content-derived SHA-256 version, data health, and comparisons. Validation failures return structured 422 issues; unreadable files return a safe 500 response without filesystem details or stack traces.
+- Added `tests/workbook.test.ts`: the real workbook loads with 20 farms and 10 clients, source locations are retained, baseline production comparisons are reproduced (600 t expected, 560 t actual; A -11.7 t, B -8.3 t, C -27.9 t, D +7.9 t), versions are stable across reads, required headers are checked, route caching is disabled, and unreadable overrides are handled safely.
+- Documented the separate-copy `WORKBOOK_PATH` override/reload procedure in `README.md`. The supplied workbook remains the default authoritative input and was not edited.
+- The shell initially had Node 20.20.0 despite the prior setup note; installed and used the pinned Node 24.21.0 / npm 11.19.0 before final checks. This installation is outside the repository.
+- Verification passed under Node 24.21.0 / npm 11.19.0: `npm test` (20 tests), `npm run lint`, `npm run typecheck`, `npm run build`, `git diff --check`, and `sha256sum --check docs/source-checksums.sha256`. The build reports `/api/workbook` as dynamic. No OpenRouter request was made; it is outside this step.
+- Limitation: the browser shell is not connected to the workbook route, and allocation/planning/business views remain for later steps. Workbook support intentionally targets the supplied literal-cell table layout rather than a generic spreadsheet importer.
+- The Step 03 implementation milestone commit is recorded in the final handoff after commit creation.

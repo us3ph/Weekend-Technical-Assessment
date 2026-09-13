@@ -1,6 +1,6 @@
 # Atlas Fresh — Step-by-step agent execution guide
 
-Status: Steps 01–02 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
+Status: Steps 01–03 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
 
 This guide implements [PROJECT_PLAN.md](PROJECT_PLAN.md), the planning file already present in this directory. There is no separate `plan.md`. Read that plan for the full business contract and source references. Use English throughout. The selected AI provider is **OpenRouter with free hosted models only**.
 
@@ -113,14 +113,14 @@ Objective: load the authoritative XLSX through a server route and show trustwort
 
 Agent tasks:
 
-- [ ] Implement a server-only read-excel-file loader using `read-excel-file/node`, with `trim: false`, a default path to the supplied workbook, and a server environment override for an edited copy. Its raw row arrays retain the source positions needed for validation errors.
-- [ ] Read required sheets/tables by their headers: Farms/Clients row 4 with data from row 5, Station parameters rows 4–5, references rows 16–20. Ignore titles/merged explanatory cells; reject missing structure explicitly.
-- [ ] Preserve source locations while parsing. Support the provided literal-cell workbook format; handle unsupported cell types explicitly rather than accepting stale or malformed values silently.
-- [ ] Run all Step 02 validation before returning a usable snapshot. Keep original data unchanged.
-- [ ] Calculate expected segment tonnes, actual totals, per-farm/per-segment variances, and overall production totals on the server with decimal arithmetic.
-- [ ] Build a content-derived input version and a data-health summary. Stable business data must not depend on request timestamps.
-- [ ] Implement uncached `GET /api/workbook`, with structured validation errors and a safe server-error response.
-- [ ] Start the real-workbook integration test and document the workbook override/reload procedure.
+- [x] Implement a server-only read-excel-file loader using `read-excel-file/node`, with `trim: false`, a default path to the supplied workbook, and a server environment override for an edited copy. Its raw row arrays retain the source positions needed for validation errors.
+- [x] Read required sheets/tables by their headers: Farms/Clients row 4 with data from row 5, Station parameters rows 4–5, references rows 16–20. Ignore titles/merged explanatory cells; reject missing structure explicitly.
+- [x] Preserve source locations while parsing. Support the provided literal-cell workbook format; handle unsupported cell types explicitly rather than accepting stale or malformed values silently.
+- [x] Run all Step 02 validation before returning a usable snapshot. Keep original data unchanged.
+- [x] Calculate expected segment tonnes, actual totals, per-farm/per-segment variances, and overall production totals on the server with decimal arithmetic.
+- [x] Build a content-derived input version and a data-health summary. Stable business data must not depend on request timestamps.
+- [x] Implement uncached `GET /api/workbook`, with structured validation errors and a safe server-error response.
+- [x] Start the real-workbook integration test and document the workbook override/reload procedure.
 
 Verification: 20 farms and 10 clients load; total expected = 600 t, actual = 560 t, capacity = 500 t. Compare these calculated segment results:
 

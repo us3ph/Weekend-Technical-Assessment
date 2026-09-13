@@ -161,6 +161,23 @@ export interface ProductionComparison {
   readonly farms: readonly FarmComparison[];
 }
 
+/** Stable source-health facts returned alongside a validated workbook. */
+export interface DataHealth {
+  readonly status: "VALID";
+  readonly sourceFileName: string;
+  readonly farmCount: number;
+  readonly clientCount: number;
+  readonly stationCount: number;
+  readonly referencePriceCount: number;
+}
+
+/** The Step 03 response assembled entirely on the server. */
+export interface WorkbookData {
+  readonly snapshot: InputSnapshot;
+  readonly production: ProductionComparison;
+  readonly health: DataHealth;
+}
+
 export interface QualityUpgrade {
   /** The actual received segment used to serve the client. */
   readonly fromSegment: Segment;

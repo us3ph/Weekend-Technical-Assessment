@@ -370,5 +370,6 @@ Proposed next three production steps to describe, without implementing them in t
 - [x] Create the ordered agent execution guide in `steps.md`.
 - [x] Complete Step 01 application foundation: runnable Next.js shell, pinned tooling, preserved materials, and documented checks.
 - [x] Complete Step 02 domain contracts and validation.
+- [x] Complete Step 03 workbook loading, source-aware parsing, and production comparisons.
 
-The next implementation step is the server workbook loader and production comparisons. No unresolved inconsistency in the supplied materials blocks that work.
+The next implementation step is the deterministic planning engine. No unresolved inconsistency in the supplied materials blocks that work.

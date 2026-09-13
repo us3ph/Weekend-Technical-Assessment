@@ -4,7 +4,7 @@ A browser workspace for the daily Production–Commercial committee: compare exp
 
 ## Current status
 
-Step 02 establishes the shared domain contracts and server-side validation: source-backed records retain workbook locations, valid inputs become typed immutable data, and invalid values return actionable structured issues. Workbook loading, allocation, business views, and the OpenRouter assistant are not implemented yet. The page shows no invented results.
+Step 03 establishes server-side workbook loading and production comparisons: the supplied XLSX is read from the server, source cells are retained, validated inputs are versioned by content, and expected-versus-actual production results are calculated with Decimal arithmetic. Allocation, business views, and the OpenRouter assistant are not implemented yet. The page shows no invented results.
 
 Follow [steps.md](steps.md) one step at a time. The technical/business specification is in [PROJECT_PLAN.md](PROJECT_PLAN.md); actual progress and checks are recorded in [docs/work-log.md](docs/work-log.md).
 
@@ -45,9 +45,22 @@ No environment file is required for the current application. `.env.example` docu
 
 - `OPENROUTER_API_KEY`: optional server-only key for the future explanation assistant; never use `NEXT_PUBLIC_*` for it or commit a real value.
 - `OPENROUTER_MODEL`: defaults to `openrouter/free`; the planned integration permits free hosted models only.
-- `WORKBOOK_PATH`: future server-only override for a separate edited XLSX copy. Leave it unset to use the supplied root workbook when Step 03 implements loading.
+- `WORKBOOK_PATH`: optional server-only override for a separate edited XLSX copy. Leave it unset to use the supplied root workbook.
 
-These settings remain placeholders until the workbook and assistant steps. No workbook or inference request is performed yet. Later OpenRouter use will require internet and an API key; the core planner and honest deterministic summary will remain available without a key. Free-model quotas and availability will be handled in the integration step.
+OpenRouter remains a placeholder until the assistant steps. Workbook loading is server-side and needs no API key; later OpenRouter use will require internet and an API key. The core planner and honest deterministic summary will remain available without a key.
+
+## Workbook loading
+
+`GET /api/workbook` reads `Atlas_Fresh_Production_Commercial_Data.xlsx` from the repository root by default. It returns validated source records, source sheet/row/cell locations, a content-derived SHA-256 input version, data health, and production comparisons. The route is uncached and never accepts a browser-provided filesystem path.
+
+To test a changed workbook, copy the original first, edit only the copy, and start the server with an absolute or repository-relative override:
+
+```bash
+cp Atlas_Fresh_Production_Commercial_Data.xlsx /tmp/atlas-fresh-edited.xlsx
+WORKBOOK_PATH=/tmp/atlas-fresh-edited.xlsx npm run dev
+```
+
+Reload the workspace or request `http://localhost:3000/api/workbook` again after changing the copy. Unset `WORKBOOK_PATH` and restart to return to the authoritative root workbook. Never edit or replace the supplied original.
 
 ## Architecture and choices
 
@@ -58,11 +71,11 @@ These settings remain placeholders until the workbook and assistant steps. No wo
 - The supplied workbook is the authoritative input. Computed results will remain transient; this single-snapshot assessment does not need database persistence.
 - OpenRouter will use native server-side `fetch`; the model will explain server-calculated facts and will never choose allocations or calculate KPIs.
 
-The current source is `src/app` (layout, root page, global/page CSS), `src/components` (shared header), and `src/lib` (domain contracts and validation). Dependencies are exact-pinned in `package.json` with transitive versions captured in `package-lock.json`.
+The current source is `src/app` (layout, root page, global/page CSS, and the workbook route), `src/components` (shared header), and `src/lib` (domain contracts, validation, workbook parsing, and production calculations). Dependencies are exact-pinned in `package.json` with transitive versions captured in `package-lock.json`.
 
 ## Domain contract and validation
 
-`src/lib/validation.ts` accepts normalized source rows with unknown values and returns either a typed input snapshot or source-aware validation issues. Farms, clients, station parameters, and reference prices retain their source sheet, row, and cell metadata. Calculated comparisons, allocations, balances, outcomes, and KPIs have separate output types in `src/lib/types.ts`, so source inputs cannot be confused with later results.
+`src/lib/validation.ts` accepts normalized source rows with unknown values and returns either a typed input snapshot or source-aware validation issues. `src/lib/workbook.ts` reads the supported literal-cell tables using `read-excel-file/node`, preserves 1-based Excel locations, and rejects missing table structure before validation. `src/lib/calculations.ts` computes expected segment tonnes, actual totals, and variances on the server. Farms, clients, station parameters, and reference prices retain their source sheet, row, and cell metadata. Calculated comparisons, allocations, balances, outcomes, and KPIs have separate output types in `src/lib/types.ts`, so source inputs cannot be confused with later results.
 
 The validator rejects missing/non-finite numbers, duplicate or blank IDs, unsupported modes or segments, incomplete/duplicate references, invalid mix totals, negative values, invalid precision, and quantities that are not multiples of 5 t. Expected mix totals use `decimal.js` equality. A zero-demand client is treated as `COMPLETE`; ratios whose denominator is zero are represented as `null` and must be shown as `N/A` by later views.
 
