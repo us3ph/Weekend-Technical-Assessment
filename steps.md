@@ -1,6 +1,6 @@
 # Atlas Fresh — Step-by-step agent execution guide
 
-Status: Steps 01–14 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
+Status: Steps 01–15 are complete. Later steps have not started; unchecked tasks are not claims of completed work.
 
 This guide implements [PROJECT_PLAN.md](PROJECT_PLAN.md), the planning file already present in this directory. There is no separate `plan.md`. Read that plan for the full business contract and source references. Use English throughout. The selected AI provider is **OpenRouter with free hosted models only**.
 
@@ -366,17 +366,27 @@ Exit condition: mandatory UX states and accessibility checks are recorded as pas
 
 Objective: prove the product matches the brief, including evaluator changes.
 
-- [ ] Create a concise actual-results checklist in `docs/verification.md` covering acceptance A–I and email criteria E1–E5. Use the coverage map below.
-- [ ] Run all automated tests, lint, and type checking. Fix failures relevant to the requested scope.
-- [ ] Recheck every public baseline metric and C02/C09/C08 quantities/reasons in both server results and the interface.
-- [ ] Create a separate valid workbook copy, reduce station capacity from 500 to 495 t, select it through `WORKBOOK_PATH`, and reload. Expect export 495 t, local 65 t, C08 allocation 15 t, export revenue EUR 546,000, local value EUR 4,875, and total EUR 550,875. These are verification expectations, never application constants.
-- [ ] Confirm dependent cards, balances, client details, evidence, and local-question wording update. Keep C02/C09's segment-shortage reasons intact.
-- [ ] Use an invalid workbook copy, such as F01 actual A = 27 t. Confirm server rejection, the correct sheet/farm/field message, disabled planning, and successful recovery after reloading valid data.
-- [ ] Verify no stale assistant answer survives a changed snapshot. Check both grounded/unsupported behavior and actual provider status without requiring API calls in tests.
-- [ ] Timed UX review: the situation is understood in under one minute; one shortage/allocation is traced in under three minutes. If only self-reviewed, say so explicitly.
-- [ ] Restore the default source selection, verify original workbook/PDF hashes, and record failures/omissions truthfully. Do not modify the originals to create demo errors.
+- [x] Create a concise actual-results checklist in `docs/verification.md` covering acceptance A–I and email criteria E1–E5. Use the coverage map below.
+- [x] Run all automated tests, lint, and type checking. Fix failures relevant to the requested scope.
+- [x] Recheck every public baseline metric and C02/C09/C08 quantities/reasons in both server results and the interface.
+- [x] Create a separate valid workbook copy, reduce station capacity from 500 to 495 t, select it through `WORKBOOK_PATH`, and reload. Expect export 495 t, local 65 t, C08 allocation 15 t, export revenue EUR 546,000, local value EUR 4,875, and total EUR 550,875. These are verification expectations, never application constants.
+- [x] Confirm dependent cards, balances, client details, evidence, and local-question wording update. Keep C02/C09's segment-shortage reasons intact.
+- [x] Use an invalid workbook copy, such as F01 actual A = 27 t. Confirm server rejection, the correct sheet/farm/field message, disabled planning, and successful recovery after reloading valid data.
+- [x] Verify no stale assistant answer survives a changed snapshot. Check both grounded/unsupported behavior and actual provider status without requiring API calls in tests.
+- [x] Timed UX review: the situation is understood in under one minute; one shortage/allocation is traced in under three minutes. If only self-reviewed, say so explicitly.
+- [x] Restore the default source selection, verify original workbook/PDF hashes, and record failures/omissions truthfully. Do not modify the originals to create demo errors.
 
 Exit condition: A–I and E1–E5 have recorded evidence, and all in-scope fixable blockers are resolved within the timebox. Handoff: Step 16.
+
+### Step 15 completion record — 13 September 2026
+
+- Completed Step 15 only. Approximate active effort: 1 hour 5 minutes, including the acceptance evidence record, default and changed-input API/UI checks, invalid-copy recovery, stale-answer review, timed self-review, strict checks, and documentation; idle wall-clock time is excluded.
+- Added [docs/verification.md](docs/verification.md), a concise actual-results checklist for acceptance A–I and email criteria E1–E5. It records the exact default and 495 t capacity results, C02/C09/C08 outcomes, invalid F01 validation/recovery, stale/unsupported/no-key behavior, provider status, and original-source integrity.
+- No application code change was required: the existing implementation passed all Step 15 checks. The valid temporary copy changed only Station `B5` from 500 to 495; the invalid temporary copy changed only Farms `H5` for F01 from 25 to 27. Both remained outside the repository.
+- Verification passed under Node.js 24.21.0 / npm 11.19.0: `npm test` (117 tests across 14 files), `npm run lint`, `npm run typecheck`, `npm run build`, `git diff --check`, and `sha256sum --check docs/source-checksums.sha256`. Chrome self-review covered default/changed metrics, plan-dependent UI, C02/C09/C08 cards, dynamic local evidence, invalid-source recovery, stale answer removal, unsupported no-request, and no-key fallback.
+- Actual provider status: the existing configured smoke returned `TRUNCATED_OUTPUT`; no model answer or citation was accepted. Changed-input checks forced blank provider variables and returned `MISSING_API_KEY`; successful live inference remains unverified. No real screen-reader or independent usability session was performed; the timed result is explicitly self-reviewed.
+- Acceptance I is recorded as pending Step 16 clean-clone proof. The original workbook, PDF, preserved pack README, checksum manifest, and credential files were unchanged. The pre-existing `.gitignore` edit and `steps.md` Step 14-record removal were preserved.
+- Next step: Step 16 — Verify a clean clone and production startup.
 
 ## Step 16 — Verify a clean clone and production startup
 
@@ -468,7 +478,7 @@ Do not pre-check these while writing documentation. Update each only after execu
 - [x] Step 12 — OpenRouter adapter and recorded live-check status (live inference unverified without a private key).
 - [x] Step 13 — Assistant panel and tests (live inference remains unverified without a private key).
 - [x] Step 14 — UX/accessibility/failure review (screen-reader session not performed; live inference remains unverified).
-- [ ] Step 15 — Acceptance and changed inputs.
+- [x] Step 15 — Acceptance and changed inputs (acceptance I awaits Step 16 clean-clone proof).
 - [ ] Step 16 — Clean-clone proof.
 - [ ] Step 17 — README and transparency.
 - [ ] Step 18 — Walkthrough and submission assets.
