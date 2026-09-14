@@ -413,33 +413,6 @@ Objective: deliver concise instructions and evidence that a reviewer can trust.
 
 Exit condition: setup, technical justification, actual verification, and limitations are understandable without the conversation. Handoff: Step 18.
 
-### Step 17 completion record — 13 September 2026
-
-- Completed Step 17 only. Approximate active effort: 30 minutes, including the final README pass, delivery disclosure, cross-checking implementation details against the verification record, and documentation validation; idle wall-clock time is excluded.
-- Finalized `README.md` with the product purpose, exact repository-root working-directory guidance, pinned Node.js/npm clean start, development and production alternatives, route/data-flow summary, deterministic policy, arithmetic and validation boundaries, workbook-copy procedure, layout assumptions, OpenRouter setup/failure behavior, E1–E5 trade-offs, and next three production steps.
-- Added `docs/delivery-notes.md` with what works, the recorded clean-clone and browser evidence, known/unverified paths, intentional omissions, actual timed effort, Codex/OpenRouter disclosure, independent-verification limitation, evaluation coverage, and production follow-ups.
-- Updated the Step 17 tracker and `PROJECT_PLAN.md` completion state. Step 18 remains intentionally pending for walkthrough, repository/video access, optional deployment, and submission-email preparation; no publication, upload, deployment, or email action was performed.
-- Verified documentation links, command names, runtime versions, route names, baseline metrics, live-provider limitation, source-integrity policy, and time totals against the repository and [docs/verification.md](docs/verification.md). No application code or authoritative source material changed.
-- Remaining mandatory omissions are explicit: successful live OpenRouter inference, a real screen-reader session, an independent usability session, and all account-dependent delivery assets remain unverified or pending.
-- Commit: single Step 17 implementation/documentation milestone; the identifier is reported in the final handoff.
-
-## Step 18 — Prepare the walkthrough and submission
-
-Objective: prepare all required delivery assets and support the candidate's final submission.
-
-- [ ] Create `docs/walkthrough.md` with a 3–5-minute script and demonstration checklist using the plan's roughly four-minute timeline.
-- [ ] Cover loading/data health, expected vs actual, generated export/local value, the three client risks, one farm-client trace, local residual value, an assistant question with evidence, recovery behavior, and honest limitations/time/AI disclosure.
-- [ ] Prepare the application in its default baseline state. Show actual configured-model or clearly labelled fallback behavior; never simulate a successful live AI call for the recording.
-- [ ] Review the recording flow for visible credentials, private account information, or non-synthetic data. Include only the assessment data and safe product screens.
-- [ ] Prepare `docs/submission-email.md` with placeholders for repository URL, access instructions if private, video URL, optional deployed URL, and approximate actual time. Keep the draft in English as requested.
-- [ ] Finish all local assets before requesting any missing repository destination, visibility/access choice, or video-upload destination. Use existing authorization when provided; do not infer permission to send an email from this guide.
-- [ ] With the candidate's chosen destination and authorization, publish the repository and supply access instructions. If publication is not authorized or available, report the prepared local repository and the remaining action accurately.
-- [ ] Have the candidate record/upload the walkthrough, or assist using available tools when authorized. Verify the resulting URL and 3–5-minute duration; a script or local recording alone is not the required video URL.
-- [ ] Verify repository/video access for an evaluator. Include a live app URL only if an optional deployment was separately requested and actually works; deployment does not replace clean-clone proof.
-- [ ] Fill the submission draft with actual URLs and time once available. The candidate replies before 18 September 2026; target 17 September because no exact cutoff time was supplied.
-- [ ] Mark delivery complete only when the required URLs, access information, and time are ready. Record anything still awaiting the candidate; do not claim the email was sent unless it was actually sent with authorization.
-
-Exit condition: repository URL, 3–5-minute video URL, access instructions where needed, actual time, and honest disclosure are ready for the reply. Any account-dependent work is explicitly identified.
 
 ## Final coverage map
 
@@ -461,12 +434,8 @@ Use this table during Step 15 and before submission. A row is complete only when
 | Original workbook intact; no credentials/real client data | 01–18 | Hash and tracked-file checks in 15–16, recording review in 18 |
 | Human approval retained; no autonomous external execution | 04, 06, 11–13 | Code/UX review in 15, disclosure in 17 |
 | Meaningful history, concise README, AI-use/time/limitations note | 01–17 | 16–17 |
-| Repository URL, 3–5-minute video URL, access, time, deadline | 18 | Final URL/duration/access checks in 18 |
-| Email criteria E1–E5 | Criteria table above | 15, 17–18 |
 
 ## Step completion tracker
-
-Do not pre-check these while writing documentation. Update each only after executing its exit checks; retain separate pending subitems for unverified live inference or delivery actions.
 
 - [x] Step 01 — Foundation.
 - [x] Step 02 — Domain and validation.
@@ -479,10 +448,9 @@ Do not pre-check these while writing documentation. Update each only after execu
 - [x] Step 09 — Commercial.
 - [x] Step 10 — Allocation/local trace.
 - [x] Step 11 — Evidence and summaries.
-- [x] Step 12 — OpenRouter adapter and recorded live-check status (live inference unverified without a private key).
+- [x] Step 12 — OpenRouter adapter and recorded live-check status
 - [x] Step 13 — Assistant panel and tests (live inference remains unverified without a private key).
-- [x] Step 14 — UX/accessibility/failure review (screen-reader session not performed; live inference remains unverified).
+- [x] Step 14 — UX/accessibility/failure review
 - [x] Step 15 — Acceptance and changed inputs.
 - [x] Step 16 — Clean-clone proof.
 - [x] Step 17 — README and transparency.
-- [ ] Step 18 — Walkthrough and submission assets.

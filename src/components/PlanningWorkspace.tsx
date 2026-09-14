@@ -117,6 +117,33 @@ function formatTonnes(value: number): string {
   return `${tonnesFormatter.format(value)} t`;
 }
 
+function ButtonIcon({ kind }: { readonly kind: "load" | "plan" | "reset" }) {
+  if (kind === "load") {
+    return (
+      <svg className={styles.buttonIcon} viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M3.5 5.5h13v10h-13z" />
+        <path d="M6 3.5h8v4H6zM7 12.5h6" />
+      </svg>
+    );
+  }
+
+  if (kind === "plan") {
+    return (
+      <svg className={styles.buttonIcon} viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M4 4.5h12v11H4z" />
+        <path d="M7 2.5v4M13 2.5v4M7 9h6M7 12h4" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg className={styles.buttonIcon} viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M4 7.5A6.5 6.5 0 1 1 3.8 12" />
+      <path d="M3.5 3.5v4h4" />
+    </svg>
+  );
+}
+
 function workbookFromState(state: WorkspaceState): WorkbookData | undefined {
   switch (state.status) {
     case "loaded":
@@ -236,12 +263,20 @@ function FailurePanel({
 function DataHealthPanel({ workbook }: { readonly workbook: WorkbookData }) {
   return (
     <section className={styles.healthPanel} aria-labelledby="data-health-title">
-      <div>
-        <p className={styles.sectionKicker}>Source status</p>
-        <h3 id="data-health-title">Data health: valid</h3>
-        <p className={styles.mutedText}>
-          {workbook.health.sourceFileName} · version {workbook.snapshot.version.value.slice(0, 12)}…
-        </p>
+      <div className={styles.healthIdentity}>
+        <span className={styles.healthIcon} aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 3.5 19 6v5.2c0 4.2-2.9 7.8-7 9.3-4.1-1.5-7-5.1-7-9.3V6l7-2.5Z" />
+            <path d="m8.5 11.8 2.2 2.2 4.8-5" />
+          </svg>
+        </span>
+        <div>
+          <p className={styles.sectionKicker}>Authoritative source</p>
+          <h3 id="data-health-title">Workbook validated</h3>
+          <p className={styles.mutedText}>
+            {workbook.health.sourceFileName} · version {workbook.snapshot.version.value.slice(0, 12)}…
+          </p>
+        </div>
       </div>
       <dl className={styles.healthList}>
         <div>
@@ -381,24 +416,67 @@ export default function PlanningWorkspace() {
   const workbook = workbookFromState(state);
   const pending = state.status === "loading" || state.status === "planning";
   const canPlan = state.status === "loaded" || state.status === "planned";
-  const loadLabel = state.status === "unloaded" ? "Load workbook" : "Reload workbook";
+  const loadLabel = state.status === "loading"
+    ? "Loading workbook…"
+    : state.status === "unloaded"
+      ? "Load workbook"
+      : "Reload workbook";
+  const planLabel = state.status === "planning"
+    ? "Generating plan…"
+    : state.status === "planned"
+      ? "Regenerate plan"
+      : "Generate plan";
+  const sourceReady = workbook !== undefined;
+  const planReady = state.status === "planned";
 
   return (
     <section className={styles.workspace} aria-labelledby="workspace-title" aria-busy={pending}>
       <div className={styles.workspaceHeader}>
-        <div>
-          <p className={styles.sectionKicker}>Workspace</p>
-          <h2 id="workspace-title">Load, compare, and prepare</h2>
+        <div className={styles.workspaceIntro}>
+          <p className={styles.sectionKicker}>Decision run</p>
+          <h2 id="workspace-title">Prepare today&apos;s plan</h2>
           <p className={styles.statusText} role="status" aria-live="polite" aria-atomic="true">
+            <span className={styles.statusDot} aria-hidden="true" />
             {statusLabel(state)}
           </p>
         </div>
+
+        <ol className={styles.runSteps} aria-label="Planning progress">
+          <li data-state={sourceReady ? "complete" : state.status === "loading" ? "current" : "upcoming"}>
+            <span aria-hidden="true"><span>1</span></span>
+            <div><strong>Source</strong><small>Load &amp; validate</small></div>
+          </li>
+          <li data-state={sourceReady ? "complete" : "upcoming"}>
+            <span aria-hidden="true"><span>2</span></span>
+            <div><strong>Compare</strong><small>Review signals</small></div>
+          </li>
+          <li
+            data-state={planReady ? "complete" : state.status === "planning" || sourceReady ? "current" : "upcoming"}
+            aria-current={!planReady && sourceReady ? "step" : undefined}
+          >
+            <span aria-hidden="true"><span>3</span></span>
+            <div><strong>Plan</strong><small>Trace &amp; review</small></div>
+          </li>
+        </ol>
+
         <div className={styles.actionRow}>
-          <button className={styles.primaryButton} type="button" onClick={startLoad} disabled={pending}>
-            {loadLabel}
+          <button
+            className={sourceReady ? styles.secondaryButton : styles.primaryButton}
+            type="button"
+            onClick={startLoad}
+            disabled={pending}
+          >
+            {state.status === "loading" ? <span className={styles.buttonSpinner} aria-hidden="true" /> : <ButtonIcon kind="load" />}
+            <span>{loadLabel}</span>
           </button>
-          <button className={styles.primaryButton} type="button" onClick={startPlan} disabled={!canPlan || pending}>
-            {state.status === "planned" ? "Regenerate plan" : "Generate plan"}
+          <button
+            className={sourceReady ? styles.primaryButton : styles.secondaryButton}
+            type="button"
+            onClick={startPlan}
+            disabled={!canPlan || pending}
+          >
+            {state.status === "planning" ? <span className={styles.buttonSpinner} aria-hidden="true" /> : <ButtonIcon kind="plan" />}
+            <span>{planLabel}</span>
           </button>
           <button
             className={styles.tertiaryButton}
@@ -406,18 +484,32 @@ export default function PlanningWorkspace() {
             onClick={resetWorkspace}
             disabled={state.status === "unloaded"}
           >
-            Reset
+            <ButtonIcon kind="reset" />
+            <span>Reset</span>
           </button>
         </div>
       </div>
 
       {state.status === "unloaded" ? (
         <section className={styles.emptyState} aria-labelledby="empty-workspace-title">
-          <span className={styles.badge}>Not loaded</span>
-          <h3 id="empty-workspace-title">Start with the supplied workbook</h3>
-          <p>
-            Load the authoritative source to see its health and production comparison. No allocations or financial results are shown before the server generates a plan.
-          </p>
+          <span className={styles.emptyIcon} aria-hidden="true">
+            <svg viewBox="0 0 28 28">
+              <path d="M6 3.5h11l5 5v16H6z" />
+              <path d="M17 3.5v5h5M9.5 13h9M9.5 17h9M9.5 21h6" />
+            </svg>
+          </span>
+          <div>
+            <span className={styles.badge}>Ready to begin</span>
+            <h3 id="empty-workspace-title">Start with the supplied workbook</h3>
+            <p>
+              Load the authoritative source to validate its health and compare expected production with actual receipts. Financial and allocation results stay hidden until the server prepares a plan.
+            </p>
+            <ul className={styles.emptyChecklist}>
+              <li>Source versioning</li>
+              <li>Production comparison</li>
+              <li>Plan-ready validation</li>
+            </ul>
+          </div>
         </section>
       ) : null}
 
@@ -433,6 +525,17 @@ export default function PlanningWorkspace() {
 
       {state.status === "invalid-data" || state.status === "server-error" || state.status === "stale-result" ? (
         <FailurePanel state={state} onRetry={state.status === "server-error" && state.workbook ? startPlan : startLoad} onReload={startLoad} />
+      ) : null}
+
+      {workbook ? (
+        <nav className={styles.viewNavigation} aria-label="Workspace sections">
+          <span>Jump to</span>
+          <a href="#decision-overview">Overview</a>
+          <a href="#production-view">Production</a>
+          <a href="#commercial-view">Commercial</a>
+          <a href="#allocation-local-view">Allocation &amp; local</a>
+          <a href="#assistant-panel">Assistant</a>
+        </nav>
       ) : null}
 
       {workbook ? (

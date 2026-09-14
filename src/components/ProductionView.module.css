@@ -1,7 +1,7 @@
 .productionView {
   display: grid;
-  gap: 1.25rem;
-  scroll-margin-top: 1rem;
+  gap: 1.5rem;
+  scroll-margin-top: 5.5rem;
 }
 
 .viewHeader,
@@ -9,8 +9,9 @@
 .productionSummary,
 .farmCard {
   border: 1px solid var(--border);
-  border-radius: 1rem;
+  border-radius: var(--radius-lg);
   background: var(--surface);
+  box-shadow: var(--shadow-xs);
 }
 
 .viewHeader {
@@ -19,6 +20,9 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 1.5rem;
+  border-color: var(--border-strong);
+  background: linear-gradient(110deg, var(--surface) 0 74%, var(--surface-tint) 74% 100%);
+  box-shadow: var(--shadow-sm);
 }
 
 .sectionKicker,
@@ -105,7 +109,10 @@
 
 .clearFocusButton {
   flex: 0 0 auto;
-  padding: 0.35rem 0;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.35rem 0.6rem;
   background: transparent;
   color: var(--accent);
   font-size: 0.8rem;
@@ -118,7 +125,9 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.75rem;
-  padding: 0.85rem 1rem;
+  padding: 0.95rem 1rem;
+  background: var(--surface-subtle);
+  box-shadow: var(--shadow-xs);
 }
 
 .productionSummary div {
@@ -145,6 +154,7 @@
   margin-top: 0.15rem;
   font-size: 1.05rem;
   line-height: 1.25;
+  font-variant-numeric: tabular-nums;
 }
 
 .noFocusNote {
@@ -167,6 +177,10 @@
   position: relative;
   min-width: 0;
   overflow: hidden;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .focusedFarm {
@@ -196,7 +210,7 @@
   grid-template-columns: minmax(0, 1.4fr) minmax(7rem, 0.65fr) minmax(10rem, 1fr) auto;
   align-items: center;
   gap: 0.8rem;
-  min-height: 10.5rem;
+  min-height: 9.5rem;
   padding: 1rem;
   cursor: pointer;
   list-style: none;
@@ -207,7 +221,7 @@
 }
 
 .farmSummary:hover {
-  background: var(--background);
+  background: var(--accent-faint);
 }
 
 .farmSummary:focus-visible {
@@ -418,6 +432,11 @@
 }
 
 .segmentAnchor {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
   padding: 0.2rem 0.35rem;
   border-radius: 0.3rem;
   background: transparent;
@@ -433,7 +452,9 @@
 
 .clientButton {
   display: grid;
+  align-content: center;
   gap: 0.1rem;
+  min-height: 2.75rem;
   padding: 0.2rem 0.35rem;
   border-radius: 0.3rem;
   background: transparent;
@@ -446,6 +467,11 @@
 }
 
 .localButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
   padding: 0.2rem 0.35rem;
   border-radius: 0.3rem;
   background: transparent;

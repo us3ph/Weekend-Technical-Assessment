@@ -312,7 +312,11 @@ export default function DecisionOverview({
 
   return (
     <div className={styles.decisionStack}>
-      <section className={`${styles.card} ${styles.overviewCard}`} aria-labelledby="decision-overview-title">
+      <section
+        id="decision-overview"
+        className={`${styles.card} ${styles.overviewCard}`}
+        aria-labelledby="decision-overview-title"
+      >
         <div className={styles.cardHeading}>
           <div>
             <p className={styles.sectionKicker}>Decide</p>
